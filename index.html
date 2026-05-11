@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenzin Academy | Excellence in Education</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: { extend: { colors: { primary: '#0080FF', accent: '#e4e62d', darkbg: '#111827' } } }
+  }
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Open+Sans:wght@300;400;600;700&display=swap');
+:root { --primary: #0080FF; --accent: #e4e62d; }
+body { font-family: 'Open Sans', sans-serif; transition: background-color 0.3s, color 0.3s; overflow-x: hidden; }
+h1,h2,h3,h4,h5,h6 { font-family: 'Cinzel', serif; }
+html { scroll-behavior: smooth; }
+.text-primary{color:var(--primary)}.bg-primary{background-color:var(--primary)}.text-accent{color:var(--accent)}.bg-accent{background-color:var(--accent)}
+.dark .bg-white{background-color:#1f2937;color:#e5e7eb}.dark .bg-gray-50{background-color:#111827}.dark .text-gray-900{color:#f9fafb}.dark .text-gray-600{color:#9ca3af}
+.dark input,.dark select,.dark textarea{background-color:#374151;color:white;border-color:#4b5563}
+.page-section{display:none;opacity:0;transition:opacity 0.4s ease}
+.page-section.active{display:block;animation:fadeIn 0.4s ease forwards}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hero-animated{background:linear-gradient(135deg,#0080FF 0%,#004a99 100%);position:relative;overflow:hidden}
+.hero-animated::before{content:'';position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>');background-size:300px;animation:float 20s infinite linear;pointer-events:none}
+@keyframes float{0%{transform:translateY(0) rotate(0deg)}100%{transform:translateY(-50px) rotate(360deg)}}
+.glass-card{background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);border-radius:20px;box-shadow:0 8px 32px 0 rgba(0,0,0,0.2)}
+.dark .glass-card{background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.05)}
+.hover-lift{transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
+.hover-lift:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 30px 60px rgba(0,0,0,0.15);z-index:10}
+.perspective-container{perspective:1000px}
+.perspective-img{transform:rotateY(-10deg) rotateX(5deg);transition:transform 0.5s ease;box-shadow:0 30px 60px rgba(0,0,0,0.3);border-radius:20px;overflow:hidden}
+.perspective-img:hover{transform:rotateY(0deg) rotateX(0deg)}
+.gradient-text{background:linear-gradient(135deg,#e4e62d,#ffecb3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.reveal{opacity:0;transform:translateY(40px);transition:all 0.8s ease}
+.reveal.active{opacity:1;transform:translateY(0)}
+.glow-btn{animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(228,230,45,0.7)}70%{box-shadow:0 0 0 10px rgba(228,230,45,0)}100%{box-shadow:0 0 0 0 rgba(228,230,45,0)}}
+.upload-zone{border:2px dashed #cbd5e1;transition:0.2s;cursor:pointer}
+.upload-zone:hover{border-color:var(--primary);background-color:rgba(0,128,255,0.05)}
+.dark .upload-zone{border-color:#4b5563}
+.upload-zone.dragover{border-color:var(--primary);background-color:rgba(0,128,255,0.1)}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+.dark ::-webkit-scrollbar-thumb{background:#4b5563}
+.modal{display:none;position:fixed;z-index:2000;inset:0;background-color:rgba(0,0,0,0.8);backdrop-filter:blur(4px);align-items:center;justify-content:center}
+.modal.open{display:flex}
+.modal-content{background:#fff;width:90%;max-width:500px;border-radius:12px;animation:slideUp 0.3s cubic-bezier(0.16,1,0.3,1);overflow:hidden;max-height:90vh;overflow-y:auto}
+.dark .modal-content{background:#1f2937;border:1px solid #374151}
+@keyframes slideUp{from{transform:translateY(50px);opacity:0}to{transform:translateY(0);opacity:1}}
+#toast-container{position:fixed;bottom:20px;right:20px;z-index:3000;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast{background:#333;color:white;padding:12px 20px;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.2);transform:translateX(120%);transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);pointer-events:auto;display:flex;align-items:center;gap:10px;font-weight:500}
+.toast.show{transform:translateX(0)}
+.toast.success{border-left:4px solid #10b981}
+.toast.error{border-left:4px solid #ef4444}
+.toast.info{border-left:4px solid #3b82f6}
+.file-card{transition:all 0.2s ease}
+.file-card:hover{transform:translateX(4px);background-color:rgba(0,128,255,0.05)}
+/* Back to top */
+#back-top{position:fixed;bottom:28px;right:28px;z-index:1400;width:44px;height:44px;background:var(--primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transform:translateY(10px);transition:opacity 0.3s,transform 0.3s;box-shadow:0 4px 14px rgba(0,128,255,0.4)}
+#back-top.visible{opacity:1;transform:translateY(0)}
+/* Countdown */
+.cd-box{background:rgba(255,255,255,0.15);border-radius:12px;padding:10px 16px;min-width:60px;text-align:center;backdrop-filter:blur(8px)}
+/* Lightbox */
+#lightbox{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.93);display:none;align-items:center;justify-content:center;flex-direction:column}
+#lightbox.open{display:flex}
+#lightbox img{max-width:92vw;max-height:80vh;border-radius:12px;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,0.8)}
+/* Fee calculator */
+.fee-result{transition:all 0.4s ease}
+/* Validation */
+.field-error{border-color:#ef4444 !important}
+.field-ok{border-color:#10b981 !important}
+.err-msg{color:#ef4444;font-size:0.73rem;margin-top:2px}
+/* Progress bar */
+#page-progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:9999;width:0%;transition:width 0.2s}
+/* Search */
+#search-overlay{position:fixed;inset:0;z-index:2500;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;padding-top:80px}
+#search-overlay.open{display:flex}
+</style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+<div id="page-progress"></div>
+<div id="toast-container"></div>
+
+<!-- Back to Top -->
+<div id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to Top"><i class="fas fa-chevron-up text-sm"></i></div>
+
+<!-- AI Chatbot FAB -->
+<div id="search-overlay" onclick="if(event.target===this) app.closeSearch()">
+  <div class="w-full max-w-xl px-4">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+      <div class="flex items-center gap-3 p-4 border-b dark:border-gray-700">
+        <i class="fas fa-search text-gray-400"></i>
+        <input id="search-input" type="text" placeholder="Search pages, programs, faculty…" class="flex-1 text-sm focus:outline-none dark:bg-gray-800 dark:text-white" oninput="app.doSearch(this.value)" onkeydown="if(event.key==='Escape') app.closeSearch()">
+        <button onclick="app.closeSearch()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="search-results" class="max-h-72 overflow-y-auto p-2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="bg-primary text-white shadow-lg sticky top-0 z-50 border-b-4 border-accent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20 items-center">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="app.navigate('home')">
+        <div class="w-14 h-14 flex items-center justify-center hover:rotate-12 transition-transform duration-300">
+          <img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-school text-accent text-2xl\'></i>'">
+        </div>
+        <div class="leading-tight">
+          <span class="font-bold text-xl tracking-wider font-serif text-accent block">TENZIN ACADEMY</span>
+          <span class="text-[10px] uppercase tracking-widest opacity-90">Paro, Bhutan</span>
+        </div>
+      </div>
+      <div class="hidden lg:flex items-center space-x-6">
+        <button onclick="app.navigate('home')" class="font-bold hover:text-accent transition relative group text-sm">Home<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="app.navigate('about')" class="font-bold hover:text-accent transition relative group text-sm">About<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="app.navigate('programs')" class="font-bold hover:text-accent transition relative group text-sm">Academics<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="app.navigate('page-admissions')" class="font-bold hover:text-accent transition relative group text-sm">Admissions<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="app.navigate('faculty')" class="font-bold hover:text-accent transition relative group text-sm">Faculty<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="app.navigate('page-gallery')" class="font-bold hover:text-accent transition relative group text-sm">Gallery<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="app.navigate('page-contact')" class="font-bold hover:text-accent transition relative group text-sm">Contact<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="app.openSearch()" class="p-2 rounded-full hover:bg-white/10 transition" title="Search"><i class="fas fa-search"></i></button>
+        <button onclick="app.toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition" title="Toggle Dark Mode"><i class="fas fa-moon" id="theme-icon"></i></button>
+      </div>
+      <button class="lg:hidden text-2xl focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden lg:hidden bg-primary border-t border-blue-400 absolute w-full shadow-xl z-50">
+    <button onclick="app.navigate('home');document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Home</button>
+    <button onclick="app.navigate('about');document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">About</button>
+    <button onclick="app.navigate('programs');document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Academics</button>
+    <button onclick="app.navigate('page-admissions');document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Admissions</button>
+    <button onclick="app.navigate('faculty');document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Faculty</button>
+    <button onclick="app.navigate('page-gallery');document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Gallery</button>
+    <button onclick="app.navigate('page-contact');document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Contact</button>
+    <button onclick="app.openSearch();document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500"><i class="fas fa-search mr-2"></i>Search</button>
+  </div>
+</nav>
+
+<!-- PAGE: HOME -->
+<div id="home" class="page-section active">
+  <section class="hero-animated relative min-h-[600px] flex items-center justify-center p-4">
+    <div class="container max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 relative z-10 px-4">
+      <div class="flex-1 w-full text-center md:text-left">
+        <div class="glass-card p-8 md:p-12 reveal active">
+          <h1 class="text-4xl md:text-6xl font-extrabold mb-4 gradient-text">Inspiring Excellence</h1>
+          <p class="text-lg md:text-xl text-white/90 mb-6 font-light">An educated and enlightened society of GNH, built and sustained on the unique Bhutanese values of tha-dam-tsig ley-gyu-drey.</p>
+          <!-- Countdown Timer -->
+          <div class="mb-6">
+            <p class="text-white/70 text-xs uppercase tracking-widest mb-2">Second Term Opens In</p>
+            <div class="flex gap-3 justify-center md:justify-start" id="countdown-row">
+              <div class="cd-box"><div class="text-2xl font-bold text-accent" id="cd-days">--</div><div class="text-white/60 text-xs">Days</div></div>
+              <div class="cd-box"><div class="text-2xl font-bold text-accent" id="cd-hrs">--</div><div class="text-white/60 text-xs">Hours</div></div>
+              <div class="cd-box"><div class="text-2xl font-bold text-accent" id="cd-min">--</div><div class="text-white/60 text-xs">Mins</div></div>
+              <div class="cd-box"><div class="text-2xl font-bold text-accent" id="cd-sec">--</div><div class="text-white/60 text-xs">Secs</div></div>
+            </div>
+            <p class="text-white/50 text-xs mt-1" id="cd-label">Jul 20, 2026 (Second Term)</p>
+          </div>
+          <div class="flex gap-4 justify-center md:justify-start flex-wrap">
+            <button onclick="app.navigate('page-admissions')" class="bg-accent text-blue-900 px-8 py-3 rounded-full font-bold shadow-lg glow-btn hover:scale-105 transition">Join Us</button>
+            <button onclick="app.scrollToSection('programs','sec-lower')" class="border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-blue-900 transition hover:scale-105">Programs</button>
+            
+          </div>
+        </div>
+      </div>
+      <div class="flex-1 perspective-container hidden md:block w-full">
+        <div class="perspective-img">
+          <div class="w-full h-[400px] bg-gray-300 relative overflow-hidden rounded-2xl" id="hero-slideshow">
+            <img src="campuslife.jpg" alt="Campus Life" class="slideshow-img w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 opacity-100" data-index="0">
+            <img src="students.jpg" alt="Students" class="slideshow-img w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 opacity-0" data-index="1">
+            <img src="sports.jpg" alt="Sports Day" class="slideshow-img w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 opacity-0" data-index="2">
+            <img src="classroom.jpg" alt="Classroom" class="slideshow-img w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 opacity-0" data-index="3">
+            <img src="cultural.jpg" alt="Cultural Event" class="slideshow-img w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 opacity-0" data-index="4">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+              <p class="text-white font-bold text-xl" id="slideshow-caption">Campus Life @ Tenzin</p>
+            </div>
+            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+              <button class="slideshow-dot w-2 h-2 rounded-full bg-white transition" data-index="0"></button>
+              <button class="slideshow-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition" data-index="1"></button>
+              <button class="slideshow-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition" data-index="2"></button>
+              <button class="slideshow-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition" data-index="3"></button>
+              <button class="slideshow-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition" data-index="4"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bg-white dark:bg-gray-800 py-12 relative z-20 shadow-xl border-b dark:border-gray-700">
+    <div class="max-w-7xl mx-auto flex justify-around flex-wrap gap-6 px-4">
+      <div class="text-center reveal hover:scale-110 transition duration-300"><div class="text-4xl font-bold text-primary counter" data-target="100" data-suffix="%">0%</div><div class="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Pass Rate</div></div>
+      <div class="text-center reveal hover:scale-110 transition duration-300 delay-100"><div class="text-4xl font-bold text-primary">1:20</div><div class="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Teacher Ratio</div></div>
+      <div class="text-center reveal hover:scale-110 transition duration-300 delay-200"><div class="text-4xl font-bold text-primary counter" data-target="600" data-suffix="+">0+</div><div class="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Students</div></div>
+      <div class="text-center reveal hover:scale-110 transition duration-300 delay-300"><div class="text-4xl font-bold text-primary counter" data-target="30" data-suffix="+">0+</div><div class="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Faculty Members</div></div>
+      <div class="text-center reveal hover:scale-110 transition duration-300 delay-200"><div class="text-4xl font-bold text-primary">GNH</div><div class="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Values Based</div></div>
+    </div>
+  </div>
+
+  <section class="py-20 px-4 bg-gray-50 dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12 reveal"><h2 class="text-3xl font-bold dark:text-white">Academic Pathways</h2><p class="text-gray-500 mt-2">Choose your journey to success</p></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div onclick="app.navigate('page-middle')" class="hover-lift bg-white dark:bg-gray-800 p-6 rounded-2xl cursor-pointer border-t-4 border-purple-600 reveal group">
+          <div class="h-12 w-12 bg-purple-100 rounded-full flex items-center justify-center mb-4 text-purple-600"><i class="fas fa-book text-xl"></i></div>
+          <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Class X</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">Rigorous BCSE preparation with focus on core subjects.</p>
+          <span class="text-purple-600 font-bold group-hover:translate-x-2 transition-transform inline-block">View Curriculum &rarr;</span>
+        </div>
+        <div onclick="app.navigate('page-science')" class="hover-lift bg-white dark:bg-gray-800 p-6 rounded-2xl cursor-pointer border-t-4 border-green-600 reveal delay-100 group">
+          <div class="h-12 w-12 bg-green-100 rounded-full flex items-center justify-center mb-4 text-green-600"><i class="fas fa-flask text-xl"></i></div>
+          <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Science</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">Physics, Chemistry, Biology & Math for innovators.</p>
+          <span class="text-green-600 font-bold group-hover:translate-x-2 transition-transform inline-block">Explore Stream &rarr;</span>
+        </div>
+        <div onclick="app.navigate('page-commerce')" class="hover-lift bg-white dark:bg-gray-800 p-6 rounded-2xl cursor-pointer border-t-4 border-blue-600 reveal delay-200 group">
+          <div class="h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 text-blue-600"><i class="fas fa-chart-line text-xl"></i></div>
+          <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Commerce</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">Accounting & Business for future leaders.</p>
+          <span class="text-blue-600 font-bold group-hover:translate-x-2 transition-transform inline-block">View Details &rarr;</span>
+        </div>
+        <div onclick="app.navigate('page-arts')" class="hover-lift bg-white dark:bg-gray-800 p-6 rounded-2xl cursor-pointer border-t-4 border-orange-600 reveal delay-300 group">
+          <div class="h-12 w-12 bg-orange-100 rounded-full flex items-center justify-center mb-4 text-orange-600"><i class="fas fa-landmark text-xl"></i></div>
+          <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Arts</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">Humanities, Media & Culture for creative minds.</p>
+          <span class="text-orange-600 font-bold group-hover:translate-x-2 transition-transform inline-block">Explore Arts &rarr;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PAGE: GALLERY -->
+<div id="page-gallery" class="page-section">
+  <header class="bg-primary text-white py-16 text-center hero-animated relative overflow-hidden">
+    <div class="relative z-10">
+      <h1 class="text-4xl font-bold"><i class="fas fa-images mr-3"></i>Photo Gallery</h1>
+      <p class="mt-2 opacity-80">Moments from Tenzin Academy</p>
+    </div>
+  </header>
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <div class="flex flex-wrap gap-3 mb-8" id="gallery-filter-btns">
+      <button onclick="app.filterGallery('all')" class="gallery-filter-btn active px-4 py-2 rounded-full text-sm font-bold bg-primary text-white" data-filter="all">All</button>
+      <button onclick="app.filterGallery('campus')" class="gallery-filter-btn px-4 py-2 rounded-full text-sm font-bold bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" data-filter="campus">Campus</button>
+      <button onclick="app.filterGallery('sports')" class="gallery-filter-btn px-4 py-2 rounded-full text-sm font-bold bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" data-filter="sports">Sports</button>
+      <button onclick="app.filterGallery('cultural')" class="gallery-filter-btn px-4 py-2 rounded-full text-sm font-bold bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" data-filter="cultural">Cultural</button>
+      <button onclick="app.filterGallery('academic')" class="gallery-filter-btn px-4 py-2 rounded-full text-sm font-bold bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300" data-filter="academic">Academic</button>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery-grid"></div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="app.closeLightbox()">
+  <button class="absolute top-6 right-6 text-white text-3xl hover:text-accent z-10" onclick="app.closeLightbox()"><i class="fas fa-times"></i></button>
+  <button class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-accent z-10" onclick="event.stopPropagation();app.lbNav(-1)"><i class="fas fa-chevron-left"></i></button>
+  <img id="lightbox-img" src="" alt="">
+  <p id="lightbox-cap" class="text-white mt-4 text-sm opacity-80"></p>
+  <button class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-accent z-10" onclick="event.stopPropagation();app.lbNav(1)"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<!-- PAGE: ADMISSIONS -->
+<div id="page-admissions" class="page-section">
+  <header class="bg-blue-800 text-white py-16 text-center hero-animated relative overflow-hidden">
+    <img src="campuslife.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-20">
+    <div class="relative z-10">
+      <h1 class="text-4xl font-bold">Admissions 2026</h1>
+      <p class="mt-2">Join the Tenzin Academy Family</p>
+    </div>
+  </header>
+  <div class="max-w-7xl mx-auto px-4 py-12">
+
+    <!-- Fee Calculator -->
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-t-4 border-accent mb-10 reveal">
+      <h2 class="text-xl font-bold text-primary mb-4"><i class="fas fa-calculator mr-2"></i>Fee Calculator 2026</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+        <div>
+          <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Stream / Class</label>
+          <select id="calc-stream" onchange="app.calcFee()" class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+            <option value="">Select stream</option>
+            <option value="science">Science (XI & XII)</option>
+            <option value="general">General (VII–X, Arts & Commerce)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Student Type</label>
+          <select id="calc-type" onchange="app.calcFee()" class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+            <option value="">Select type</option>
+            <option value="boarder">Boarder</option>
+            <option value="day">Day Scholar</option>
+          </select>
+        </div>
+        <div id="calc-result" class="fee-result p-4 rounded-lg bg-blue-50 dark:bg-gray-700 hidden">
+          <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">Estimated Annual Fee</p>
+          <p class="text-3xl font-bold text-primary" id="calc-amount">Nu. 0</p>
+          <p class="text-xs text-gray-400" id="calc-note"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-t-4 border-accent reveal">
+          <h2 class="text-2xl font-bold text-primary mb-6"><i class="fas fa-money-bill-wave mr-2"></i>Fee Structure 2026</h2>
+
+          <!-- Science Stream -->
+          <div class="mb-6">
+            <h3 class="font-bold text-lg text-green-600 border-b dark:border-gray-700 pb-2 mb-2">Science Stream (XI & XII)</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border-collapse">
+                <thead class="bg-green-50 dark:bg-gray-700">
+                  <tr><th class="p-2 text-left dark:text-gray-300">Fee Type</th><th class="p-2 text-right dark:text-gray-300">Term-I</th><th class="p-2 text-right dark:text-gray-300">Term-II</th></tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                  <tr><td class="p-2">Tuition Fee</td><td class="p-2 text-right">Nu. 45,000</td><td class="p-2 text-right">Nu. 35,000</td></tr>
+                  <tr><td class="p-2">Hostel Fee</td><td class="p-2 text-right">Nu. 25,000</td><td class="p-2 text-right">Nu. 25,000</td></tr>
+                  <tr class="font-bold bg-green-50 dark:bg-gray-700"><td class="p-2">Total Fee</td><td class="p-2 text-right">Nu. 70,000</td><td class="p-2 text-right">Nu. 60,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-3 p-3 bg-green-100 dark:bg-green-900/30 rounded-lg text-center">
+              <span class="text-xs text-green-700 dark:text-green-400 uppercase tracking-wider">Annual Fee</span>
+              <p class="text-2xl font-bold text-green-700 dark:text-green-400">Nu. 130,000</p>
+            </div>
+          </div>
+
+          <!-- Science Day Scholars -->
+          <div class="mb-6">
+            <h3 class="font-bold text-lg text-blue-600 border-b dark:border-gray-700 pb-2 mb-2">Science Day Scholars (XI & XII)</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border-collapse">
+                <thead class="bg-blue-50 dark:bg-gray-700">
+                  <tr><th class="p-2 text-left dark:text-gray-300">Fee Type</th><th class="p-2 text-right dark:text-gray-300">Term-I</th><th class="p-2 text-right dark:text-gray-300">Term-II</th></tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                  <tr><td class="p-2">Tuition Fee</td><td class="p-2 text-right">Nu. 45,000</td><td class="p-2 text-right">Nu. 35,000</td></tr>
+                  <tr class="font-bold bg-blue-50 dark:bg-gray-700"><td class="p-2">Total Fee</td><td class="p-2 text-right">Nu. 45,000</td><td class="p-2 text-right">Nu. 35,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-3 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-center">
+              <span class="text-xs text-blue-700 dark:text-blue-400 uppercase tracking-wider">Annual Fee</span>
+              <p class="text-2xl font-bold text-blue-700 dark:text-blue-400">Nu. 80,000</p>
+            </div>
+          </div>
+
+          <!-- General Boarders -->
+          <div class="mb-6">
+            <h3 class="font-bold text-lg text-purple-600 border-b dark:border-gray-700 pb-2 mb-2">General Boarders (VII–X, Arts & Commerce)</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border-collapse">
+                <thead class="bg-purple-50 dark:bg-gray-700">
+                  <tr><th class="p-2 text-left dark:text-gray-300">Fee Type</th><th class="p-2 text-right dark:text-gray-300">Term-I</th><th class="p-2 text-right dark:text-gray-300">Term-II</th></tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                  <tr><td class="p-2">Tuition Fee</td><td class="p-2 text-right">Nu. 30,000</td><td class="p-2 text-right">Nu. 30,000</td></tr>
+                  <tr><td class="p-2">Hostel & Mess</td><td class="p-2 text-right">Nu. 25,000</td><td class="p-2 text-right">Nu. 25,000</td></tr>
+                  <tr class="font-bold bg-purple-50 dark:bg-gray-700"><td class="p-2">Total Fee</td><td class="p-2 text-right">Nu. 55,000</td><td class="p-2 text-right">Nu. 55,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-3 p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg text-center">
+              <span class="text-xs text-purple-700 dark:text-purple-400 uppercase tracking-wider">Annual Fee</span>
+              <p class="text-2xl font-bold text-purple-700 dark:text-purple-400">Nu. 110,000</p>
+            </div>
+          </div>
+
+          <!-- General Day Scholars -->
+          <div class="mb-6">
+            <h3 class="font-bold text-lg text-orange-600 border-b dark:border-gray-700 pb-2 mb-2">General Day Scholars (VII–X, Arts & Commerce)</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border-collapse">
+                <thead class="bg-orange-50 dark:bg-gray-700">
+                  <tr><th class="p-2 text-left dark:text-gray-300">Fee Type</th><th class="p-2 text-right dark:text-gray-300">Term-I</th><th class="p-2 text-right dark:text-gray-300">Term-II</th></tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                  <tr><td class="p-2">Tuition Fee</td><td class="p-2 text-right">Nu. 30,000</td><td class="p-2 text-right">Nu. 30,000</td></tr>
+                  <tr class="font-bold bg-orange-50 dark:bg-gray-700"><td class="p-2">Total Fee</td><td class="p-2 text-right">Nu. 30,000</td><td class="p-2 text-right">Nu. 30,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-3 p-3 bg-orange-100 dark:bg-orange-900/30 rounded-lg text-center">
+              <span class="text-xs text-orange-700 dark:text-orange-400 uppercase tracking-wider">Annual Fee</span>
+              <p class="text-2xl font-bold text-orange-700 dark:text-orange-400">Nu. 60,000</p>
+            </div>
+          </div>
+
+          <!-- Other Contributions -->
+          <div class="mb-6">
+            <h3 class="font-bold text-lg text-red-600 border-b dark:border-gray-700 pb-2 mb-2"><i class="fas fa-plus-circle mr-2"></i>Other Contributions (One-Time)</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border-collapse">
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                  <tr><td class="p-2">Uniform</td><td class="p-2 text-right">Nu. 2,000</td></tr>
+                  <tr><td class="p-2">Tracksuit</td><td class="p-2 text-right">Nu. 2,000</td></tr>
+                  <tr><td class="p-2">Security Deposit</td><td class="p-2 text-right">Nu. 2,000</td></tr>
+                  <tr><td class="p-2">Admission Fee</td><td class="p-2 text-right">Nu. 1,000</td></tr>
+                  <tr><td class="p-2">Bedsheet</td><td class="p-2 text-right">Nu. 500</td></tr>
+                  <tr><td class="p-2">Annual Rrimdo</td><td class="p-2 text-right">Nu. 500</td></tr>
+                  <tr><td class="p-2">Plate, Cup & Spoon</td><td class="p-2 text-right">Nu. 400</td></tr>
+                  <tr><td class="p-2">Badge</td><td class="p-2 text-right">Nu. 100</td></tr>
+                  <tr><td class="p-2">T-shirt</td><td class="p-2 text-right">Nu. 500</td></tr>
+                  <tr><td class="p-2">Dish Washing Soap</td><td class="p-2 text-right">Nu. 500</td></tr>
+                  <tr><td class="p-2">School Diary</td><td class="p-2 text-right">Nu. 100</td></tr>
+                  <tr><td class="p-2">Advance Semso</td><td class="p-2 text-right">Nu. 500</td></tr>
+                  <tr class="font-bold bg-red-50 dark:bg-gray-700"><td class="p-2">Total Other Contributions</td><td class="p-2 text-right">Nu. 10,100</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boarder Necessities -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg reveal delay-100">
+          <h2 class="text-xl font-bold text-primary mb-4"><i class="fas fa-clipboard-list mr-2"></i>Boarder Necessities</h2>
+          <p class="text-xs text-gray-500 mb-4">As per Ministry of Education Notification Ref.No.ED/NTA/Notification/(5.1)/2026-27/</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border-collapse">
+              <thead class="bg-gray-100 dark:bg-gray-700">
+                <tr><th class="p-2 text-left dark:text-gray-300 w-8">#</th><th class="p-2 text-left dark:text-gray-300">Item</th><th class="p-2 text-left dark:text-gray-300">Qty</th><th class="p-2 text-left dark:text-gray-300">Remarks</th></tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                <tr><td class="p-2">1</td><td class="p-2">School uniform</td><td class="p-2">1 set or more</td><td class="p-2 text-xs text-gray-500">To be purchased from school</td></tr>
+                <tr><td class="p-2">2</td><td class="p-2">Track suit</td><td class="p-2">1 set or more</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">3</td><td class="p-2">Bed sheet</td><td class="p-2">1 or more</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">4</td><td class="p-2">Plate, cup and spoons</td><td class="p-2">1 set</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">5</td><td class="p-2">Stationery</td><td class="p-2">Whole set</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">6</td><td class="p-2">Mattress</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">School facilitates</td></tr>
+                <tr><td class="p-2">7</td><td class="p-2">Black shoes with lace (Boys)</td><td class="p-2">1 pair</td><td class="p-2 text-xs text-gray-500">Students to purchase on your own as per specification</td></tr>
+                <tr><td class="p-2">8</td><td class="p-2">Black shoes with lace or buckles (Girls)</td><td class="p-2">1 pair</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">9</td><td class="p-2">Sneakers</td><td class="p-2">1 pair</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">10</td><td class="p-2">Black stockings (Boys)</td><td class="p-2">2 pairs</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">11</td><td class="p-2">Black socks (Girls)</td><td class="p-2">2 pairs</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">12</td><td class="p-2">Lagays (Boys)</td><td class="p-2">2 pairs</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">13</td><td class="p-2">White hair bands (Girls)</td><td class="p-2">3 nos</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">14</td><td class="p-2">Kabney & Rachu</td><td class="p-2">1 each</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">15</td><td class="p-2">Pillow with covers</td><td class="p-2">2 nos</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">16</td><td class="p-2">Bucket & jug</td><td class="p-2">1 each</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">17</td><td class="p-2">Hard brooms</td><td class="p-2">1 each</td><td class="p-2 text-xs text-gray-500">Boys</td></tr>
+                <tr><td class="p-2">18</td><td class="p-2">Soft brooms</td><td class="p-2">1 each</td><td class="p-2 text-xs text-gray-500">Girls</td></tr>
+                <tr><td class="p-2">19</td><td class="p-2">Washing soaps (Dettol/Lifebuoy)</td><td class="p-2">5 each</td><td class="p-2 text-xs text-gray-500">Both boys & girls</td></tr>
+                <tr><td class="p-2">20</td><td class="p-2">Clothes drying clips</td><td class="p-2">10 each</td><td class="p-2 text-xs text-gray-500">Both boys & girls</td></tr>
+                <tr><td class="p-2">21</td><td class="p-2">Sportswear and equipment</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">Depends on interest</td></tr>
+                <tr><td class="p-2">22</td><td class="p-2">Medical documents (if chronic illness)</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">To be produced at admission</td></tr>
+                <tr><td class="p-2">23</td><td class="p-2">Certificates and recommendations (if owned)</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">24</td><td class="p-2">School leaving certificate, marksheet, character certificate</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">25</td><td class="p-2">CID copies of student, parents (if possessed)</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">26</td><td class="p-2">Flat file</td><td class="p-2">1 no</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">27</td><td class="p-2">Half photo</td><td class="p-2">2 nos</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">28</td><td class="p-2">Legal stamp</td><td class="p-2">2 nos</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">29</td><td class="p-2">Mobile phone</td><td class="p-2">1 only</td><td class="p-2 text-xs text-gray-500">—</td></tr>
+                <tr><td class="p-2">30</td><td class="p-2">School fee for Term-I</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+            <h4 class="font-bold text-yellow-800 dark:text-yellow-400 text-sm mb-2"><i class="fas fa-exclamation-triangle mr-1"></i>Important Notes:</h4>
+            <ol class="text-xs text-yellow-700 dark:text-yellow-300 space-y-1 list-decimal list-inside">
+              <li>Bring casual dresses (both for winter and summer) & warm blankets.</li>
+              <li>Not allowed to bring electronic gadgets, jewelries, water boiler.</li>
+              <li>Strictly prohibited to bring sharp objects or weapons, nuts, tobacco, drug related items & junk food.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal delay-200">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-t-4 border-blue-600 sticky top-24">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Online Registration</h2>
+          <!-- Progress steps -->
+          <div class="flex items-center mb-6">
+            <div class="step-dot w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold" id="step1-dot">1</div>
+            <div class="flex-1 h-1 bg-gray-200 dark:bg-gray-700" id="step-line"></div>
+            <div class="step-dot w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-400 flex items-center justify-center text-xs font-bold" id="step2-dot">2</div>
+            <div class="flex-1 h-1 bg-gray-200 dark:bg-gray-700" id="step-line2"></div>
+            <div class="step-dot w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-400 flex items-center justify-center text-xs font-bold" id="step3-dot">3</div>
+          </div>
+          <form id="admission-form" novalidate>
+            <!-- Step 1 -->
+            <div id="form-step1">
+              <p class="text-xs text-gray-400 uppercase tracking-wider mb-4 font-bold">Step 1 — Personal Details</p>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Full Name <span class="text-red-500">*</span></label>
+                  <input type="text" name="fullName" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" oninput="app.validateField(this)">
+                  <div class="err-msg hidden">Please enter full name</div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Class Applying <span class="text-red-500">*</span></label>
+                    <select name="classApplying" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" onchange="app.validateField(this)">
+                      <option value="">Select Class</option>
+                      <option>Class VII</option><option>Class VIII</option><option>Class IX</option><option>Class X</option>
+                      <option>XI - Science</option><option>XI - Commerce</option><option>XI - Arts</option>
+                      <option>XII - Science</option><option>XII - Commerce</option><option>XII - Arts</option>
+                    </select>
+                    <div class="err-msg hidden">Please select a class</div>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Date of Birth <span class="text-red-500">*</span></label>
+                    <input type="date" name="dob" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" onchange="app.validateField(this)">
+                    <div class="err-msg hidden">Please enter date of birth</div>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">CID Number <span class="text-red-500">*</span></label>
+                  <input type="text" name="cid" required pattern="\d{11}" class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="e.g. 1060XXXXXXX" oninput="app.validateField(this)">
+                  <div class="err-msg hidden">Enter valid 11-digit CID</div>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Parent Contact <span class="text-red-500">*</span></label>
+                  <input type="tel" name="contact" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="+975-XXXXXXXX" oninput="app.validateField(this)">
+                  <div class="err-msg hidden">Please enter contact number</div>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Student Type <span class="text-red-500">*</span></label>
+                  <div class="grid grid-cols-2 gap-4">
+                    <label class="flex items-center gap-3 p-3 border dark:border-gray-600 rounded-lg cursor-pointer hover:bg-blue-50 dark:hover:bg-gray-700 transition">
+                      <input type="radio" name="studentType" value="Boarder" required class="text-primary w-4 h-4">
+                      <div><span class="font-bold text-sm dark:text-white">Boarder</span><p class="text-xs text-gray-500 dark:text-gray-400">Residential student</p></div>
+                      <i class="fas fa-bed text-primary ml-auto"></i>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 border dark:border-gray-600 rounded-lg cursor-pointer hover:bg-blue-50 dark:hover:bg-gray-700 transition">
+                      <input type="radio" name="studentType" value="Day Scholar" required class="text-primary w-4 h-4">
+                      <div><span class="font-bold text-sm dark:text-white">Day Scholar</span><p class="text-xs text-gray-500 dark:text-gray-400">Non-residential</p></div>
+                      <i class="fas fa-home text-primary ml-auto"></i>
+                    </label>
+                  </div>
+                </div>
+                <button type="button" onclick="app.nextStep(1)" class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-600 shadow-lg transition mt-2">Next — School Info &rarr;</button>
+              </div>
+            </div>
+            <!-- Step 2 -->
+            <div id="form-step2" class="hidden">
+              <p class="text-xs text-gray-400 uppercase tracking-wider mb-4 font-bold">Step 2 — Previous School</p>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Previous School Name <span class="text-red-500">*</span></label>
+                  <input type="text" name="previousSchool" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="Name of previous school">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Previous Class <span class="text-red-500">*</span></label>
+                    <select name="previousClass" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                      <option value="">Select</option>
+                      <option>Class VI</option><option>Class VII</option><option>Class VIII</option><option>Class IX</option><option>Class X</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Percentage <span class="text-red-500">*</span></label>
+                    <input type="number" name="previousPercentage" min="0" max="100" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="e.g. 78.5">
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Upload Marksheet <span class="text-red-500">*</span></label>
+                  <div class="upload-zone rounded-xl p-6 text-center" id="marksheet-zone" onclick="document.getElementById('marksheet-input').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="event.preventDefault();this.classList.remove('dragover');app.handleFilePreview(event,'marksheet')">
+                    <input type="file" id="marksheet-input" name="marksheet" accept=".pdf,.jpg,.jpeg,.png" required class="hidden" onchange="app.handleFilePreview(event,'marksheet')">
+                    <i class="fas fa-file-upload text-3xl text-blue-400 mb-2" id="marksheet-icon"></i>
+                    <p class="text-gray-600 dark:text-gray-300 font-bold" id="marksheet-text">Click or drag marksheet here</p>
+                    <p class="text-xs text-gray-400">PDF, JPG, PNG (max 5MB)</p>
+                    <p class="text-xs text-green-600 mt-1 hidden" id="marksheet-filename"></p>
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <button type="button" onclick="app.prevStep(2)" class="flex-1 border-2 border-primary text-primary font-bold py-3 rounded-lg hover:bg-blue-50 transition">&larr; Back</button>
+                  <button type="button" onclick="app.nextStep(2)" class="flex-1 bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-600 transition">Next &rarr;</button>
+                </div>
+              </div>
+            </div>
+            <!-- Step 3 -->
+            <div id="form-step3" class="hidden">
+              <p class="text-xs text-gray-400 uppercase tracking-wider mb-4 font-bold">Step 3 — Review & Submit</p>
+              <div id="review-box" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-sm mb-4 space-y-1 dark:text-gray-200"></div>
+              <div class="flex gap-3">
+                <button type="button" onclick="app.prevStep(3)" class="flex-1 border-2 border-primary text-primary font-bold py-3 rounded-lg hover:bg-blue-50 transition">&larr; Back</button>
+                <button type="submit" id="submit-btn" class="flex-1 bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-600 shadow-lg glow-btn transition">Submit Application</button>
+              </div>
+            </div>
+          </form>
+          <div id="admission-confirmation" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+            <p class="text-green-700 dark:text-green-400 text-sm font-bold"><i class="fas fa-check-circle mr-2"></i>Application submitted successfully!</p>
+            <p class="text-xs text-gray-500 mt-1">We will contact you within 3 business days.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scholarship Section -->
+  <div id="admissions-scholarship" class="max-w-7xl mx-auto px-4 mt-4 pb-16 pt-4 border-t dark:border-gray-700 reveal">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-primary mb-2"><i class="fas fa-award mr-2"></i>Scholarship Application 2025</h2>
+      <p class="text-gray-600 dark:text-gray-300">Financial Support for Deserving Students</p>
+    </div>
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-t-4 border-accent mb-8">
+        <h3 class="text-xl font-bold text-primary mb-4">Apply for Scholarship</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">Tenzin Academy offers scholarships to meritorious and deserving students.</p>
+        <form id="scholarship-form">
+          <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Full Name <span class="text-red-500">*</span></label>
+                <input type="text" name="scholarName" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Current Class <span class="text-red-500">*</span></label>
+                <select name="scholarClass" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                  <option value="">Select Class</option>
+                  <option>Class VII</option><option>Class VIII</option><option>Class IX</option><option>Class X</option><option>Class XI</option><option>Class XII</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">CID Number <span class="text-red-500">*</span></label>
+                <input type="text" name="scholarCid" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="e.g. 1060XXXXXXX">
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Parent Contact <span class="text-red-500">*</span></label>
+                <input type="tel" name="scholarContact" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="+975-XXXXXXXX">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Scholarship Category <span class="text-red-500">*</span></label>
+              <select name="scholarCategory" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                <option value="">Select Category</option>
+                <option>Merit-Based (Academic Excellence)</option>
+                <option>Need-Based (Financial Assistance)</option>
+                <option>Sports Excellence</option>
+                <option>Cultural Talent</option>
+                <option>GNH Values & Community Service</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Why do you deserve this scholarship? (100 words max) <span class="text-red-500">*</span></label>
+              <textarea name="scholarReason" rows="4" maxlength="500" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="Describe your achievements, circumstances, or talents…"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Previous Academic Percentage <span class="text-red-500">*</span></label>
+              <input type="number" name="scholarPercentage" min="0" max="100" step="0.01" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="e.g. 85.5">
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Upload Latest Marksheet <span class="text-red-500">*</span></label>
+              <div class="upload-zone rounded-xl p-6 text-center" id="scholar-marksheet-zone" onclick="document.getElementById('scholar-marksheet-input').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="event.preventDefault();this.classList.remove('dragover');app.handleFilePreview(event,'scholarMarksheet')">
+                <input type="file" id="scholar-marksheet-input" name="scholarMarksheet" accept=".pdf,.jpg,.jpeg,.png" required class="hidden" onchange="app.handleFilePreview(event,'scholarMarksheet')">
+                <i class="fas fa-file-upload text-3xl text-blue-400 mb-2" id="scholar-marksheet-icon"></i>
+                <p class="text-gray-600 dark:text-gray-300 font-bold" id="scholar-marksheet-text">Click or drag marksheet here</p>
+                <p class="text-xs text-gray-400">PDF, JPG, PNG (max 5MB)</p>
+                <p class="text-xs text-green-600 mt-1 hidden" id="scholar-marksheet-filename"></p>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Upload Supporting Certificate (if any)</label>
+              <div class="upload-zone rounded-xl p-6 text-center" id="scholar-cert-zone" onclick="document.getElementById('scholar-cert-input').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="event.preventDefault();this.classList.remove('dragover');app.handleFilePreview(event,'scholarCert')">
+                <input type="file" id="scholar-cert-input" name="scholarCert" accept=".pdf,.jpg,.jpeg,.png" class="hidden" onchange="app.handleFilePreview(event,'scholarCert')">
+                <i class="fas fa-certificate text-3xl text-accent mb-2" id="scholar-cert-icon"></i>
+                <p class="text-gray-600 dark:text-gray-300 font-bold" id="scholar-cert-text">Click or drag certificate here</p>
+                <p class="text-xs text-gray-400">Sports, Cultural, or other achievement certificates</p>
+                <p class="text-xs text-green-600 mt-1 hidden" id="scholar-cert-filename"></p>
+              </div>
+            </div>
+            <button type="submit" id="scholar-submit-btn" class="w-full bg-accent text-blue-900 font-bold py-3 rounded-lg hover:bg-yellow-400 shadow-lg glow-btn mt-4">Apply for Scholarship</button>
+          </div>
+        </form>
+        <div id="scholarship-confirmation" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+          <p class="text-green-700 dark:text-green-400 text-sm font-bold"><i class="fas fa-check-circle mr-2"></i>Scholarship application submitted successfully!</p>
+          <p class="text-xs text-gray-500 mt-1">We will review your application and contact you within 7 business days.</p>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+        <h3 class="text-xl font-bold text-primary mb-4">Scholarship Categories</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="flex items-start gap-3 p-3 bg-yellow-50 dark:bg-gray-700 rounded-lg"><i class="fas fa-medal text-yellow-600 text-xl mt-1"></i><div><h4 class="font-bold dark:text-white">Merit-Based</h4><p class="text-xs text-gray-600 dark:text-gray-400">For students with 80%+ academic performance</p></div></div>
+          <div class="flex items-start gap-3 p-3 bg-green-50 dark:bg-gray-700 rounded-lg"><i class="fas fa-hand-holding-heart text-green-600 text-xl mt-1"></i><div><h4 class="font-bold dark:text-white">Need-Based</h4><p class="text-xs text-gray-600 dark:text-gray-400">For families demonstrating financial need</p></div></div>
+          <div class="flex items-start gap-3 p-3 bg-blue-50 dark:bg-gray-700 rounded-lg"><i class="fas fa-running text-blue-600 text-xl mt-1"></i><div><h4 class="font-bold dark:text-white">Sports Excellence</h4><p class="text-xs text-gray-600 dark:text-gray-400">For outstanding athletes at district/national level</p></div></div>
+          <div class="flex items-start gap-3 p-3 bg-purple-50 dark:bg-gray-700 rounded-lg"><i class="fas fa-palette text-purple-600 text-xl mt-1"></i><div><h4 class="font-bold dark:text-white">Cultural Talent</h4><p class="text-xs text-gray-600 dark:text-gray-400">For excellence in traditional arts, music, dance</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: PROGRAMS -->
+<div id="programs" class="page-section">
+  <header class="bg-gray-900 text-white py-20 text-center hero-animated"><h1 class="text-4xl font-bold relative z-10">Academic Programs</h1></header>
+  <main class="max-w-6xl mx-auto px-4 py-16 space-y-20">
+    <section id="sec-lower" class="flex flex-col md:flex-row gap-12 items-center reveal">
+      <div class="md:w-1/3 text-center text-6xl text-blue-500 perspective-container"><div class="perspective-img bg-blue-50 p-10 rounded-xl"><i class="fas fa-book-reader"></i></div></div>
+      <div class="md:w-2/3">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 border-l-4 border-primary pl-4">Lower Secondary (VI-VIII)</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Foundation years focusing on literacy and numeracy. Our curriculum emphasizes holistic development through GNH values.</p>
+        <button onclick="app.navigate('page-lower')" class="bg-primary text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-blue-600">View Details</button>
+      </div>
+    </section>
+    <section id="sec-middle" class="flex flex-col md:flex-row-reverse gap-12 items-center reveal">
+      <div class="md:w-1/3 text-center text-6xl text-purple-600 perspective-container"><div class="perspective-img bg-purple-50 p-10 rounded-xl"><i class="fas fa-graduation-cap"></i></div></div>
+      <div class="md:w-2/3 text-right">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 border-r-4 border-purple-600 pr-4">Middle Secondary (IX-X)</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Rigorous preparation for BCSE Board Examinations with extensive support and mock exams.</p>
+        <button onclick="app.navigate('page-middle')" class="bg-purple-600 text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-purple-700">View Curriculum</button>
+      </div>
+    </section>
+    <section id="sec-higher" class="reveal">
+      <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-10">Higher Secondary (XI-XII)</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div onclick="app.navigate('page-science')" class="bg-white dark:bg-gray-800 p-6 rounded-xl border-t-4 border-green-600 shadow hover-lift cursor-pointer"><h3 class="font-bold mb-2 dark:text-white">Science</h3><p class="text-sm text-gray-600 dark:text-gray-400">Physics, Chemistry, Biology/Math</p></div>
+        <div onclick="app.navigate('page-commerce')" class="bg-white dark:bg-gray-800 p-6 rounded-xl border-t-4 border-blue-600 shadow hover-lift cursor-pointer"><h3 class="font-bold mb-2 dark:text-white">Commerce</h3><p class="text-sm text-gray-600 dark:text-gray-400">Accounting, Econ, B.Math</p></div>
+        <div onclick="app.navigate('page-arts')" class="bg-white dark:bg-gray-800 p-6 rounded-xl border-t-4 border-orange-600 shadow hover-lift cursor-pointer"><h3 class="font-bold mb-2 dark:text-white">Arts</h3><p class="text-sm text-gray-600 dark:text-gray-400">History, Geo, Rigzhung</p></div>
+      </div>
+    </section>
+    <section class="reveal">
+      <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-10">Life at Tenzin</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="relative h-64 rounded-xl overflow-hidden group hover-lift"><img src="students.jpg" alt="Student Activities" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div><div class="absolute bottom-0 left-0 p-6"><h3 class="text-white font-bold text-xl mb-1">Student Activities</h3><p class="text-white/80 text-sm">Clubs, societies, and leadership</p></div></div>
+        <div class="relative h-64 rounded-xl overflow-hidden group hover-lift"><img src="sports.jpg" alt="Athletics" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div><div class="absolute bottom-0 left-0 p-6"><h3 class="text-white font-bold text-xl mb-1">Athletics</h3><p class="text-white/80 text-sm">Football, basketball, track & field</p></div></div>
+        <div class="relative h-64 rounded-xl overflow-hidden group hover-lift"><img src="cultural.jpg" alt="Tradition" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div><div class="absolute bottom-0 left-0 p-6"><h3 class="text-white font-bold text-xl mb-1">Bhutanese Tradition</h3><p class="text-white/80 text-sm">Culture, dzongkha, and values</p></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- PAGE: FACULTY -->
+<div id="faculty" class="page-section">
+  <header class="bg-primary text-white py-16 text-center hero-animated"><h1 class="text-4xl font-bold relative z-10">Our Faculty</h1></header>
+  <main class="max-w-7xl mx-auto px-4 py-16">
+    <!-- Faculty Search -->
+    <div class="max-w-md mx-auto mb-10">
+      <div class="relative"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i><input type="text" id="faculty-search" placeholder="Search faculty by name or subject…" class="w-full border rounded-full pl-10 pr-4 py-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:outline-none focus:border-primary" oninput="app.searchFaculty(this.value)"></div>
+    </div>
+    <div class="text-center mb-12"><p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Meet the dedicated educators who inspire and guide our students towards excellence.</p></div>
+
+    <!-- MANAGEMENT -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 max-w-3xl mx-auto">
+      <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift">
+        <div class="pt-8 pb-4 flex items-center justify-center bg-gray-50 dark:bg-gray-700/50">
+          <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white dark:border-gray-600 shadow-lg bg-gray-200 dark:bg-gray-600"><img src="dhan_bdr_tamang.jpg" alt="Dhan Bdr. Tamang" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.innerHTML='<div class='w-full h-full flex items-center justify-center'><i class='fas fa-user-tie text-3xl text-gray-400'></i></div>'"></div>
+        </div>
+        <div class="p-6 text-center"><h3 class="font-bold text-lg dark:text-white">Dhan Bdr. Tamang</h3><p class="text-accent text-sm font-bold uppercase mb-2">Principal</p><p class="text-gray-500 text-xs">M.Ed, MPM, PGDE, B.Ed | 28 Years</p></div>
+      </div>
+      <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift">
+        <div class="pt-8 pb-4 flex items-center justify-center bg-gray-50 dark:bg-gray-700/50">
+          <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white dark:border-gray-600 shadow-lg bg-gray-200 dark:bg-gray-600"><img src="tika_ram_acharja.jpg" alt="Tika Ram Acharja" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.innerHTML='<div class='w-full h-full flex items-center justify-center'><i class='fas fa-user text-3xl text-gray-400'></i></div>'"></div>
+        </div>
+        <div class="p-6 text-center"><h3 class="font-bold text-lg dark:text-white">Tika Ram Acharja</h3><p class="text-blue-500 text-sm font-bold uppercase mb-2">Vice Principal</p><p class="text-gray-500 text-xs">B.Sc., PGDE | Math & Physics | 12 Years</p></div>
+      </div>
+    </div>
+
+    <!-- ADMINISTRATION -->
+    <h2 class="text-2xl font-bold text-primary mb-8 border-l-4 border-purple-600 pl-4">Administration</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 max-w-3xl mx-auto">
+      <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift">
+        <div class="pt-8 pb-4 flex items-center justify-center bg-gray-50 dark:bg-gray-700/50">
+          <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white dark:border-gray-600 shadow-lg bg-gray-200 dark:bg-gray-600"><img src="prday.jpg" alt="Prday" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.innerHTML='<div class='w-full h-full flex items-center justify-center'><i class='fas fa-user text-3xl text-gray-400'></i></div>'"></div>
+        </div>
+        <div class="p-6 text-center"><h3 class="font-bold text-lg dark:text-white">Peday</h3><p class="text-purple-600 text-sm font-bold uppercase mb-2">Administration</p><p class="text-gray-500 text-xs">Administration Staff</p></div>
+      </div>
+      <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift">
+        <div class="pt-8 pb-4 flex items-center justify-center bg-gray-50 dark:bg-gray-700/50">
+          <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white dark:border-gray-600 shadow-lg bg-gray-200 dark:bg-gray-600"><img src="yangchen.jpg" alt="Yangchen" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.innerHTML='<div class='w-full h-full flex items-center justify-center'><i class='fas fa-user text-3xl text-gray-400'></i></div>'"></div>
+        </div>
+        <div class="p-6 text-center"><h3 class="font-bold text-lg dark:text-white">Yangchen</h3><p class="text-purple-600 text-sm font-bold uppercase mb-2">Administration</p><p class="text-gray-500 text-xs">Administration Staff</p></div>
+      </div>
+    </div>
+
+    <!-- STEM Department -->
+    <h2 class="text-2xl font-bold text-primary mb-8 border-l-4 border-green-600 pl-4">STEM Department</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16" id="stem-faculty"></div>
+
+    <!-- Language Department -->
+    <h2 class="text-2xl font-bold text-primary mb-8 border-l-4 border-blue-500 pl-4">Language Department</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16" id="lang-faculty"></div>
+
+    <!-- Humanities Department -->
+    <h2 class="text-2xl font-bold text-primary mb-8 border-l-4 border-orange-500 pl-4">Humanities Department</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16" id="hum-faculty"></div>
+    <div id="faculty-no-results" class="hidden text-center py-16"><i class="fas fa-search text-4xl text-gray-300 mb-4"></i><p class="text-gray-500">No faculty found matching your search.</p></div>
+  </main>
+</div>
+
+<!-- STREAM PAGES -->
+<div id="page-lower" class="page-section">
+  <header class="bg-blue-600 text-white py-16 text-center"><h1 class="text-3xl font-bold">Lower Secondary (VI-VIII)</h1></header>
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-8">
+      <h2 class="text-2xl font-bold text-primary mb-4">Curriculum Overview</h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-4">Foundation years focusing on literacy, numeracy, and scientific inquiry.</p>
+      <h3 class="font-bold text-lg mb-2 dark:text-white">Core Subjects:</h3>
+      <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
+        <li>Dzongkha</li><li>English</li><li>Mathematics</li><li>Science</li><li>History & Civics / Geography</li><li>ICT</li>
+      </ul>
+    </div>
+    <button onclick="app.navigate('programs')" class="text-blue-500 hover:underline">&larr; Back to Programs</button>
+  </div>
+</div>
+<div id="page-middle" class="page-section">
+  <header class="bg-purple-700 text-white py-16 text-center"><h1 class="text-3xl font-bold">Middle Secondary (IX-X)</h1></header>
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-8 border-t-4 border-purple-500">
+      <div class="flex justify-between items-start mb-6">
+        <h2 class="text-2xl font-bold text-primary dark:text-white">Class X - BCSE Focus</h2>
+        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold">Board Exam Year</span>
+      </div>
+      <p class="text-gray-600 dark:text-gray-300 mb-6">Intensively designed to prepare students for the BCSE examinations.</p>
+      <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+        <h4 class="font-bold text-purple-600 mb-2">Subject Combinations</h4>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Mandatory: Dzongkha, English, Math.<br>Electives: Economics/Science, IT/Agri/EVS.</p>
+      </div>
+    </div>
+    <button onclick="app.navigate('programs')" class="text-purple-500 hover:underline">&larr; Back to Programs</button>
+  </div>
+</div>
+<div id="page-science" class="page-section">
+  <header class="bg-green-700 text-white py-16 text-center"><h1 class="text-3xl font-bold">Science Stream (XI-XII)</h1></header>
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <div class="flex flex-col md:flex-row gap-8">
+      <div class="md:w-2/3">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-6">
+          <h2 class="text-2xl font-bold text-green-700 mb-4">Innovation & Discovery</h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">For careers in Medicine, Engineering, Technology, and Research.</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left border-collapse">
+              <thead class="bg-green-50 dark:bg-gray-700 uppercase"><tr><th class="p-3 dark:text-gray-300">Compulsory</th><th class="p-3 dark:text-gray-300">Electives (Choose 2)</th></tr></thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                <tr><td class="p-3">English</td><td class="p-3">Physics</td></tr>
+                <tr><td class="p-3">Dzongkha</td><td class="p-3">Chemistry</td></tr>
+                <tr><td class="p-3"></td><td class="p-3">Biology / Mathematics</td></tr>
+                <tr><td class="p-3"></td><td class="p-3">ICT / Agriculture</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="md:w-1/3">
+        <div class="bg-green-50 dark:bg-gray-800 p-6 rounded-xl border border-green-200 dark:border-green-900 sticky top-24">
+          <h3 class="font-bold text-green-800 dark:text-green-400 mb-4">Why Science at Tenzin?</h3>
+          <ul class="space-y-3 text-sm dark:text-gray-300">
+            <li class="flex gap-2"><i class="fas fa-microscope text-green-600 mt-1"></i>Top science faculty</li>
+            <li class="flex gap-2"><i class="fas fa-laptop-code text-green-600 mt-1"></i>Rigorous academic commitment</li>
+          </ul>
+          <button onclick="app.navigate('page-admissions')" class="w-full bg-green-600 text-white font-bold py-2 rounded mt-6 hover:bg-green-700">Apply Now</button>
+        </div>
+      </div>
+    </div>
+    <button onclick="app.navigate('programs')" class="text-green-600 hover:underline mt-8">&larr; Back to Programs</button>
+  </div>
+</div>
+<div id="page-commerce" class="page-section">
+  <header class="bg-blue-700 text-white py-16 text-center"><h1 class="text-3xl font-bold">Commerce Stream (XI-XII)</h1></header>
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-8 border-l-8 border-blue-600">
+      <h2 class="text-2xl font-bold text-blue-700 mb-4">Business & Economics</h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-6">Equips students with financial literacy, economic understanding, and business acumen.</p>
+      <ul class="space-y-2 text-gray-600 dark:text-gray-300">
+        <li><i class="fas fa-book text-blue-400 mr-2"></i>Accountancy</li>
+        <li><i class="fas fa-chart-pie text-blue-400 mr-2"></i>Economics</li>
+        <li><i class="fas fa-calculator text-blue-400 mr-2"></i>Business Mathematics</li>
+        <li><i class="fas fa-briefcase text-blue-400 mr-2"></i>Commerce</li>
+      </ul>
+    </div>
+    <button onclick="app.navigate('programs')" class="text-blue-600 hover:underline">&larr; Back to Programs</button>
+  </div>
+</div>
+<div id="page-arts" class="page-section">
+  <header class="bg-orange-600 text-white py-16 text-center"><h1 class="text-3xl font-bold">Arts & Humanities (XI-XII)</h1></header>
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <div class="flex flex-col md:flex-row gap-8">
+      <div class="md:w-2/3">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-orange-100 dark:bg-orange-900 rounded-bl-full -mr-8 -mt-8"></div>
+          <h2 class="text-2xl font-bold text-orange-600 mb-4 relative z-10">Culture, Society & Media</h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-6 relative z-10">Fostering critical thinking, creativity, and deep understanding of human society.</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
+            <div class="text-center p-4 border dark:border-gray-700 rounded-lg hover:bg-orange-50 dark:hover:bg-gray-700 transition"><i class="fas fa-globe-asia text-2xl text-orange-500 mb-2"></i><p class="font-bold text-sm dark:text-gray-200">Geography</p></div>
+            <div class="text-center p-4 border dark:border-gray-700 rounded-lg hover:bg-orange-50 dark:hover:bg-gray-700 transition"><i class="fas fa-landmark text-2xl text-orange-500 mb-2"></i><p class="font-bold text-sm dark:text-gray-200">History</p></div>
+            <div class="text-center p-4 border dark:border-gray-700 rounded-lg hover:bg-orange-50 dark:hover:bg-gray-700 transition"><i class="fas fa-scroll text-2xl text-orange-500 mb-2"></i><p class="font-bold text-sm dark:text-gray-200">Rigzhung</p></div>
+            <div class="text-center p-4 border dark:border-gray-700 rounded-lg hover:bg-orange-50 dark:hover:bg-gray-700 transition"><i class="fas fa-video text-2xl text-orange-500 mb-2"></i><p class="font-bold text-sm dark:text-gray-200">Media Studies</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="md:w-1/3">
+        <div class="bg-orange-50 dark:bg-gray-800 p-6 rounded-xl border border-orange-200 dark:border-orange-900 sticky top-24">
+          <h3 class="font-bold text-orange-800 dark:text-orange-400 mb-4">Why Arts at Tenzin?</h3>
+          <ul class="space-y-3 text-sm dark:text-gray-300">
+            <li class="flex gap-2"><i class="fas fa-gavel text-orange-600 mt-1"></i>Law & Policy Clubs</li>
+            <li class="flex gap-2"><i class="fas fa-microphone text-orange-600 mt-1"></i>Media Center Access</li>
+            <li class="flex gap-2"><i class="fas fa-book-reader text-orange-600 mt-1"></i>Cultural Immersion</li>
+          </ul>
+          <button onclick="app.navigate('page-admissions')" class="w-full bg-orange-600 text-white font-bold py-2 rounded mt-6 hover:bg-orange-700">Apply Now</button>
+        </div>
+      </div>
+    </div>
+    <button onclick="app.navigate('programs')" class="text-orange-600 hover:underline mt-8">&larr; Back to Programs</button>
+  </div>
+</div>
+
+<!-- PAGE: ABOUT -->
+<div id="about" class="page-section">
+  <header class="bg-primary text-white py-16 text-center hero-animated"><h1 class="text-4xl font-bold relative z-10">About Us</h1></header>
+  <main class="max-w-7xl mx-auto px-4 py-16 space-y-20">
+    <div class="flex flex-col md:flex-row gap-12 items-center reveal">
+      <div class="w-full md:w-1/2 glass-card p-8 md:p-12 hover-lift">
+        <h2 class="text-3xl font-bold text-primary mb-6 gradient-text">Our History</h2>
+        <p class="text-gray-700 dark:text-gray-300 text-justify mb-4 leading-relaxed">Tenzin Academy was reestablished in 2025 by management in Kichu, Paro. With a vision to blend modern education with traditional Bhutanese values, the academy has grown to accommodate over 600 students.</p>
+        <p class="text-gray-700 dark:text-gray-300 text-justify leading-relaxed">Named in honor of the spiritual legacy of Bhutan, Tenzin Academy stands as a beacon of learning in the Paro valley.</p>
+      </div>
+      <div class="w-full md:w-1/2 perspective-container">
+        <div class="perspective-img w-full h-[400px] bg-gray-200 dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden relative group">
+          <img src="schoolphoto.jpg" alt="School Group Photo" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center h-full text-gray-500\'><i class=\'fas fa-image text-4xl\'></i></div>'">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6"><span class="text-white font-bold text-lg">The Tenzin Family</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 md:p-12 shadow-inner reveal">
+      <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-10"><i class="fas fa-building mr-3 text-primary"></i>Infrastructure & Facilities</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6" id="facilities-grid"></div>
+    </div>
+    <div class="reveal">
+      <h2 class="text-2xl font-bold text-primary mb-6 border-l-4 border-accent pl-4">Games and Sports</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="sports-grid"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal">
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-accent hover-lift group">
+        <div class="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-eye text-accent text-xl"></i></div>
+        <h3 class="text-xl font-bold mb-4 dark:text-white group-hover:text-accent transition-colors">School Vision</h3>
+        <p class="text-gray-600 dark:text-gray-300 italic">"Prepare students to serve Tsa-Wa-Sum (King, Country, and People) with utmost loyalty and dedication."</p>
+      </div>
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-primary hover-lift group">
+        <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-bullseye text-primary text-xl"></i></div>
+        <h3 class="text-xl font-bold mb-4 dark:text-white group-hover:text-primary transition-colors">School Mission</h3>
+        <p class="text-gray-600 dark:text-gray-300">We recognize that each child is an individual; that all children are creative and all children need to succeed. At Tenzin Academy we respect the individual needs of children and foster a caring and creative environment.</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="glass-card p-8 md:p-12 relative overflow-hidden dark:bg-gray-800/50">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+        <div class="relative z-10">
+          <h2 class="text-3xl font-bold text-center text-primary mb-6 gradient-text">Educational Philosophy</h2>
+          <p class="text-center text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-10 text-lg">Tenzin Academy blends traditional Bhutanese values with modern learning techniques, creating a unique environment for growth.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="philosophy-grid"></div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-blue-50 dark:bg-gray-800 p-8 rounded-2xl reveal">
+      <h2 class="text-2xl font-bold text-center text-primary mb-8">Community Feedback</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="feedback-grid"></div>
+    </div>
+    <div id="academic-calendar" class="reveal">
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-t-4 border-primary">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-3xl font-bold text-primary"><i class="fas fa-calendar-alt mr-3"></i>Academic Calendar 2026</h2>
+          <button onclick="app.printCalendar()" class="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary hover:text-white transition text-sm font-bold"><i class="fas fa-print"></i>Print</button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div class="bg-blue-50 dark:bg-gray-700 p-6 rounded-xl border-l-4 border-blue-500">
+            <h3 class="font-bold text-xl text-blue-700 dark:text-blue-400 mb-4">First Term</h3>
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Reporting of Boarder Students</span><span class="font-bold dark:text-white">Feb 20, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Reporting of Day Scholar Students</span><span class="font-bold dark:text-white">Feb 25, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Classes Start</span><span class="font-bold dark:text-white">Feb 26, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Parent-Teacher Meeting / Break</span><span class="font-bold dark:text-white">Mar 28, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Block Test</span><span class="font-bold dark:text-white">Apr 17–25, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Mid-Term Examination</span><span class="font-bold dark:text-white">Jun 17–27, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Summer Vacation Begins</span><span class="font-bold dark:text-white">Jun 27, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Term 1 Result Declaration</span><span class="font-bold dark:text-white">Jul 20, 2026</span></div>
+            </div>
+          </div>
+          <div class="bg-green-50 dark:bg-gray-700 p-6 rounded-xl border-l-4 border-green-500">
+            <h3 class="font-bold text-xl text-green-700 dark:text-green-400 mb-4">Second Term</h3>
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Reporting (VIII, X & XII)</span><span class="font-bold dark:text-white">Jul 05, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Coaching Classes Begin</span><span class="font-bold dark:text-white">Jul 06, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Reporting (VII, IX & XI)</span><span class="font-bold dark:text-white">Jul 19, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Regular Classes Begin</span><span class="font-bold dark:text-white">Jul 20, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Block Test</span><span class="font-bold dark:text-white">Sep 07–15, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Trial Exam (VIII, X & XII)</span><span class="font-bold dark:text-white">Oct 06–16, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Annual Exam (VII, IX & XI)</span><span class="font-bold dark:text-white">Nov 02–13, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">BE, BCSE & BHSCE Exams Begin</span><span class="font-bold dark:text-white">Nov 17, 2026</span></div>
+            </div>
+          </div>
+          <div class="bg-accent/10 dark:bg-gray-700 p-6 rounded-xl border-l-4 border-accent">
+            <h3 class="font-bold text-xl text-yellow-700 dark:text-yellow-400 mb-4">Important Dates</h3>
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Losar (New Year)</span><span class="font-bold dark:text-white">Feb 18–19, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Birth Anniversary of HM the King</span><span class="font-bold dark:text-white">Feb 21–23, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Teachers' Day</span><span class="font-bold dark:text-white">May 02, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Annual School Rimdo</span><span class="font-bold dark:text-white">Mar 28, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Graduation Day (Class XII)</span><span class="font-bold dark:text-white">Oct 31, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Result Declaration</span><span class="font-bold dark:text-white">Dec 18, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Winter Vacation Begins</span><span class="font-bold dark:text-white">Dec 18, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">National Day</span><span class="font-bold dark:text-white">Dec 17, 2026</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 overflow-x-auto" id="calendar-print-table">
+          <table class="w-full text-sm border-collapse">
+            <thead><tr class="bg-primary text-white"><th class="p-3 text-left rounded-tl-lg">Month</th><th class="p-3 text-left">Date</th><th class="p-3 text-left">Event</th><th class="p-3 text-left rounded-tr-lg">Category</th></tr></thead>
+            <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">February</td><td class="p-3">18–19</td><td class="p-3">Losar Fire Male Horse Year (New Year)</td><td class="p-3"><span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">National</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">February</td><td class="p-3">20</td><td class="p-3">Reporting of Boarder Students</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">February</td><td class="p-3">21–23</td><td class="p-3">Birth Anniversary of His Majesty the King</td><td class="p-3"><span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">National</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">February</td><td class="p-3">25</td><td class="p-3">Reporting of Day Scholar Students / Orientation</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">February</td><td class="p-3">26</td><td class="p-3">Classes Start / Textbook Distribution</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">05</td><td class="p-3">Submission of Action Plans / Goal Settings</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">06</td><td class="p-3">Presentation of Manifesto by Prefect Candidates</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">07</td><td class="p-3">Election of Prefects / Welcome Show</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">14</td><td class="p-3">Inter House Volleyball Tournament / Freshmen Return Show</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Sports</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">16</td><td class="p-3">PD Program (All Department)</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">21</td><td class="p-3">Inter House Futsal (Boys) / Basketball (Girls)</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Sports</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">28</td><td class="p-3">Annual School Rimdo (Tentative) / PTM / Students Leave for Break</td><td class="p-3"><span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Event</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">29–31</td><td class="p-3">Paro Tshechu</td><td class="p-3"><span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">National</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">02</td><td class="p-3">Reporting of Students (Evening) / Classes Resume</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">03</td><td class="p-3">English Skit (XI/XII)</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">04</td><td class="p-3">Inter House Futsal (Girls) / Basketball (Boys)</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Sports</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">06</td><td class="p-3">Question Preparation for Block Test</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">09–10</td><td class="p-3">Moderation of Block Test Papers / Dzongkha Extempore</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">17–25</td><td class="p-3">Block Test</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">25</td><td class="p-3">Outing for Boarder Boys</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Activity</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">26</td><td class="p-3">Outing for Boarder Girls / Block Test Result Declaration</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Activity</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">May</td><td class="p-3">02</td><td class="p-3">Teachers' Day / Birth Anniversary of the Third Druk Gyelpo</td><td class="p-3"><span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Event</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">May</td><td class="p-3">09</td><td class="p-3">Choir Competition (VII, VIII, IX & X)</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">May</td><td class="p-3">16</td><td class="p-3">Inter House Dzongkha Debate</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">May</td><td class="p-3">23</td><td class="p-3">Inter House English Extempore Competition</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">May</td><td class="p-3">30</td><td class="p-3">Preparation of Mid-Term Exam Paper</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">02</td><td class="p-3">Celebration of Social Forestry Day</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Activity</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">04–05</td><td class="p-3">Moderation of Term 1 Exam Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">06</td><td class="p-3">Cleaning Campaign / Community Service</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Activity</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">15–16</td><td class="p-3">Self-Study for Students / Submission of Finalized Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">17–27</td><td class="p-3">Mid-Term Examination (Group Evaluation)</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">27</td><td class="p-3">Students Leave for Summer Vacation</td><td class="p-3"><span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Break</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">30</td><td class="p-3">Result Preparation and Submission to Office</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">July</td><td class="p-3">05</td><td class="p-3">Reporting of Boarder Students (VIII, X & XII)</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">July</td><td class="p-3">06</td><td class="p-3">Reporting of Day Scholar Students (VIII, X & XII) / Coaching Begins</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">July</td><td class="p-3">19</td><td class="p-3">Reporting of Boarder Students (VII, IX & XI)</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">July</td><td class="p-3">20</td><td class="p-3">Reporting of Day Scholar Students (VII, IX & XI) / Regular Classes Begin</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">July</td><td class="p-3">20</td><td class="p-3">Term 1 Result Declaration / Distribution of Answer Scripts</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">01</td><td class="p-3">Inter House Dzongkha Tshangmo / Lozey Competition</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">15</td><td class="p-3">PD Program (All Department)</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">22</td><td class="p-3">Inter House Quiz Competition</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">27</td><td class="p-3">Question Preparation for Block Test</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">29</td><td class="p-3">Inter House Baodra, Zhungdra & Rigsar Dance Competition</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">31</td><td class="p-3">SEASON ACADEMIA</td><td class="p-3"><span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Event</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">01–05</td><td class="p-3">Reading Week</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">02–03</td><td class="p-3">Moderation of Block Test Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">05</td><td class="p-3">Inter House Spelling Bee Competition</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">07–15</td><td class="p-3">Block Test</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">19</td><td class="p-3">Block Test Result Declaration</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">22</td><td class="p-3">Boarder Students Leave for Break (Evening)</td><td class="p-3"><span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Break</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">23</td><td class="p-3">Boarder Students Report (Evening) / Blessed Rainy Day</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">26</td><td class="p-3">Completion of Academic Syllabus</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">28</td><td class="p-3">Moderation of Trial Exam Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">01</td><td class="p-3">Submission of Finalized Moderated Exam Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">06–16</td><td class="p-3">Trial Exam for Class VIII, X & XII</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">13</td><td class="p-3">Royal Wedding Celebration</td><td class="p-3"><span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">National</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">16</td><td class="p-3">Boarder Students Leave for Break (Evening)</td><td class="p-3"><span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Break</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">18</td><td class="p-3">Boarder Students Report (Evening) / Distribution of Answer Scripts</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">20</td><td class="p-3">Trial Exam Result Declaration</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">22–23</td><td class="p-3">Moderation of Annual Exam Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">24</td><td class="p-3">Submission of Final Moderated Test Paper to Exam Committee</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">31</td><td class="p-3">Graduation Day for Class XII</td><td class="p-3"><span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Event</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">02–13</td><td class="p-3">Annual Exams for Class VII, IX & XI</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">13</td><td class="p-3">Students (VII, IX & XI) Leave for Winter Vacation</td><td class="p-3"><span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Break</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">15</td><td class="p-3">Excursion / Visiting Lhakhang for Class XII</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Activity</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">17–23</td><td class="p-3">BHSCE Practical Examination</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">19–20</td><td class="p-3">Mock Test for Class VIII, X & XII</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">21–23</td><td class="p-3">Self-Study for Students / Promotion Meeting</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">24</td><td class="p-3">BE, BCSE & BHSCE Examination Begins</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">25–28</td><td class="p-3">Trail Practical Exam for Class XII</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">December</td><td class="p-3">02</td><td class="p-3">School Policy / Calendar Review</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">December</td><td class="p-3">07</td><td class="p-3">School Activity / SPMS Review</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">December</td><td class="p-3">17</td><td class="p-3">National Day</td><td class="p-3"><span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">National</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">December</td><td class="p-3">18</td><td class="p-3">Result Declaration for Class VII, IX & XII / School Closes for Winter Vacation</td><td class="p-3"><span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Break</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- PAGE: CONTACT -->
+<div id="page-contact" class="page-section">
+  <header class="bg-primary text-white py-16 text-center hero-animated relative overflow-hidden">
+    <div class="relative z-10">
+      <h1 class="text-4xl font-bold">Contact Us</h1>
+      <p class="mt-2">Get in Touch with Tenzin Academy</p>
+    </div>
+  </header>
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div class="space-y-8">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-primary reveal">
+          <h2 class="text-2xl font-bold text-primary mb-6"><i class="fas fa-map-marker-alt mr-2"></i>Visit Us</h2>
+          <div class="space-y-4 text-gray-600 dark:text-gray-300">
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-school text-primary"></i></div><div><h4 class="font-bold dark:text-white">Tenzin Academy</h4><p class="text-sm">Kichu, Lamgong, Paro, Bhutan</p></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-phone-alt text-primary"></i></div><div><h4 class="font-bold dark:text-white">Phone</h4><p class="text-sm">+975-17578882 / +975-17805484</p></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-envelope text-primary"></i></div><div><h4 class="font-bold dark:text-white">Email</h4><p class="text-sm">tenzinacademy@education.gov.bt</p></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><i class="fas fa-clock text-primary"></i></div><div><h4 class="font-bold dark:text-white">Office Hours</h4><p class="text-sm">Monday - Friday: 8:00 AM - 4:30 PM</p><p class="text-sm">Saturday: 8:00 AM - 1:00 PM</p></div></div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-accent reveal delay-100">
+          <h2 class="text-2xl font-bold text-primary mb-6"><i class="fas fa-share-alt mr-2"></i>Follow Us</h2>
+          <div class="flex gap-4">
+            <a href="https://www.facebook.com/people/Tenzin-Academy/61569807146868/" target="_blank" class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition shadow-lg hover:scale-110"><i class="fab fa-facebook-f text-xl"></i></a>
+            <a href="https://www.tiktok.com/@tenzin.academy" target="_blank" class="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition shadow-lg hover:scale-110"><i class="fab fa-tiktok text-xl"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="reveal delay-200">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-t-4 border-primary">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Send us a Message</h2>
+          <form id="contact-form">
+            <div class="space-y-4">
+              <div class="grid grid-cols-2 gap-4">
+                <div><label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">First Name <span class="text-red-500">*</span></label><input type="text" name="firstName" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600"></div>
+                <div><label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Last Name <span class="text-red-500">*</span></label><input type="text" name="lastName" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600"></div>
+              </div>
+              <div><label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Email <span class="text-red-500">*</span></label><input type="email" name="email" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600"></div>
+              <div><label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Subject <span class="text-red-500">*</span></label>
+                <select name="subject" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                  <option value="">Select Subject</option><option>General Inquiry</option><option>Admission Query</option><option>Scholarship Information</option><option>Faculty & Staff</option><option>Complaint & Feedback</option>
+                </select>
+              </div>
+              <div><label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Message <span class="text-red-500">*</span></label><textarea name="message" rows="5" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="How can we help you?"></textarea></div>
+              <button type="submit" id="contact-submit-btn" class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-600 shadow-lg glow-btn">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="mt-12 reveal">
+      <div class="rounded-2xl overflow-hidden shadow-lg" style="height:400px;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d575.7629218676318!2d89.3810439965664!3d27.437225000717344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e17700191d4521%3A0x9148d9d8cfa30ab3!2sTenzing%20Academy!5e1!3m2!1sen!2sbt!4v1778256811090!5m2!1sen!2sbt" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white pt-16 pb-8 border-t-4 border-accent mt-auto">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 flex items-center justify-center"><img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-school text-primary text-xl\'></i>'"></div>
+          <span class="font-bold text-xl tracking-wider font-serif text-accent">TENZIN ACADEMY</span>
+        </div>
+        <p class="text-gray-400 text-sm mb-6">Nurturing minds, building futures, and preserving Bhutanese values for a better tomorrow.</p>
+        <div class="flex gap-4">
+          <a href="https://www.facebook.com/people/Tenzin-Academy/61569807146868/" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@tenzin.academy" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Quick Links</h3>
+        <ul class="space-y-3 text-sm text-gray-400">
+          <li><button onclick="app.navigate('home')" class="hover:text-accent transition text-left">Home</button></li>
+          <li><button onclick="app.navigate('about')" class="hover:text-accent transition text-left">About Us</button></li>
+          <li><button onclick="app.navigate('programs')" class="hover:text-accent transition text-left">Academic Programs</button></li>
+          <li><button onclick="app.navigate('page-admissions')" class="hover:text-accent transition text-left">Admissions</button></li>
+          <li><button onclick="app.navigate('page-gallery')" class="hover:text-accent transition text-left">Gallery</button></li>
+          <li><button onclick="app.navigate('faculty')" class="hover:text-accent transition text-left">Faculty & Staff</button></li>
+          <li><button onclick="app.navigate('page-contact')" class="hover:text-accent transition text-left">Contact Us</button></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Contact Us</h3>
+        <ul class="space-y-4 text-sm text-gray-400">
+          <li class="flex gap-3 items-start"><i class="fas fa-map-marker-alt mt-1 text-primary"></i><span>Kichu, Lamgong,<br>Paro, Bhutan</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-phone-alt text-primary"></i><span>+975-17578882/17805484</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-envelope text-primary"></i><span>tenzinacademy@education.gov.bt</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-clock text-primary"></i><span>Mon-Fri: 8:00 AM - 4:30 PM</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Newsletter</h3>
+        <p class="text-gray-400 text-sm mb-4">Subscribe to get updates on admissions and school events.</p>
+        <form onsubmit="event.preventDefault();app.toast('Subscribed successfully!','success');this.reset();">
+          <div class="flex gap-2">
+            <input type="email" placeholder="Your Email" required class="flex-1 bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm focus:outline-none focus:border-primary text-white">
+            <button type="submit" class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold transition"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+      <p>&copy; 2025 Tenzin Academy. All rights reserved.</p>
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <a href="#" class="hover:text-white">Privacy Policy</a>
+        <a href="#" class="hover:text-white">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxiRdYjhrHf3JDmflVNDZ-SUEKcYjMr0MeNsqRwIkdKUMUdow35EOTeza51pCViMg0/exec';
+
+const app = {
+  theme: 'light',
+  currentFormStep: 1,
+  lbIndex: 0,
+  lbImages: [],
+
+
+
+  galleryData: [
+    {src:'campuslife.jpg', cap:'Campus Life', cat:'campus'},
+    {src:'students.jpg', cap:'Student Activities', cat:'campus'},
+    {src:'sports.jpg', cap:'Sports Day', cat:'sports'},
+    {src:'classroom.jpg', cap:'Modern Classroom', cat:'academic'},
+    {src:'cultural.jpg', cap:'Cultural Celebration', cat:'cultural'},
+    {src:'schoolphoto.jpg', cap:'School Annual Photo', cat:'campus'},
+    {src:'sports.jpg', cap:'Basketball Tournament', cat:'sports'},
+    {src:'cultural.jpg', cap:'Dance Performance', cat:'cultural'},
+    {src:'classroom.jpg', cap:'Science Lab', cat:'academic'},
+    {src:'campuslife.jpg', cap:'School Grounds', cat:'campus'},
+    {src:'students.jpg', cap:'Award Ceremony', cat:'academic'},
+    {src:'sports.jpg', cap:'Football Match', cat:'sports'},
+  ],
+
+  facultyData: {
+    stem: [
+      {name:"K.N. Gajmer",photo:"kn_gajmer.jpg",role:"Chemistry",creds:"M.Sc., PGDE | 19 Years"},
+      {name:"Tika Ram Subba",photo:"tika_ram_subba.jpg",role:"Physics",creds:"M.Sc., PGDE | 19 Years"},
+      {name:"Jigme Tenzin",photo:"jigme_tenzin.jpg",role:"Biology & Chemistry",creds:"B.Ed. | 20 Years"},
+      {name:"Sushma Dahal",photo:"sushma_dahal.jpg",role:"Chemistry & Physics",creds:"20 Years"},
+      {name:"Yesel Zangmo",photo:"yesel_zangmo.jpg",role:"Chemistry & Biology",creds:"B.Ed. | 15 Years"},
+      {name:"Promila Acharya",photo:"promila_acharya.jpg",role:"Biology",creds:"B.Sc. | 12 Years"},
+      {name:"Pelden Phuntsho",photo:"pelden_phuntsho.jpg",role:"ICT",creds:"BCA | 15 Years"},
+      {name:"Devi Parsad Gurung",photo:"devi_parsad_gurung.jpg",role:"Physics & Maths",creds:"B.Ed | 10 Years"},
+      {name:"Chimi Yoezer",photo:"chimi_yoezer.jpg",role:"Mathematics & Physics",creds:"B.Sc. | 8 Years"},
+      {name:"Phurpa Wangdi",photo:"phurpa_wangdi.jpg",role:"Chemistry",creds:"B.Sc. | 2 Years"},
+      {name:"Ugyen Lhamo",photo:"ugyen_lhamo.jpg",role:"Mathematics",creds:"M.Ed | 18 Years"},
+      
+    ],
+    lang: [
+      {name:"Ugyen Tenzin",photo:"ugyen_tenzin.jpg",role:"English",creds:"PGDE, B.Ed, MPA | 24 Years"},
+      {name:"Shacha",photo:"shacha.jpg",role:"English & Geography",creds:"PGDE, B.Ed, MA, TEFL | 15 Years"},
+      {name:"Ganga Maya Ghimery",photo:"ganga_maya_ghimery.jpg",role:"English",creds:"B.A. | 12 Years"},
+      {name:"Rigzin Tshogay",photo:"rigzin_tshogay.jpg",role:"English",creds:"B.A.Honour | 2 Years"},
+      {name:"Kinzang Namgay",photo:"kinzang_namgay.jpg",role:"Dzongkha",creds:"PGDE | 12 Years"},
+      {name:"Namgay Nidup",photo:"namgay_nidup.jpg",role:"Dzongkha",creds:"PGDE | 11 Years"},
+      {name:"Dorji Laydra",photo:"dorji_laydra.jpg",role:"Dzongkha",creds:"M.A. | 7 Years"},
+      {name:"Passang Dorji",photo:"passang_dorji.jpg",role:"Dzongkha",creds:"M.A., PGDE | 11 Years"}
+    ],
+    hum: [
+      {name:"Rinchen Tshering",photo:"rinchen_tshering.jpg",role:"Mathematics & BMT",creds:"B.Ed | 16 Years"},
+      {name:"Aita Raj Rai",photo:"aita_raj_rai.jpg",role:"Economics",creds:"PGDE | 8 Years"},
+      {name:"Thinley Wangdi",photo:"thinley_wangdi.jpg",role:"Accountancy & BE",creds:"B.Com | 7 Years"},
+      {name:"Tandin",photo:"tandin.jpg",role:"History & Geography",creds:"B.Ed, MBS, MIT | 15 Years"},
+      {name:"Yogi Nidhi Gajmer",photo:"yogi_nidhi_gajmer.jpg",role:"Geography",creds:"B.A. | 11 Years"},
+      {name:"Sonam Wangmo",photo:"sonam_wangmo.jpg",role:"Geography",creds:"B.A. | 2 Years"},
+      {name:"Arpana Biswa",photo:"_arpanabiswa.jpg",role:"Accounting",creds:"Accountancy & BE  | 1 Year"}
+    ]
+  },
+
+  searchIndex: [
+    {title:'Home',page:'home',keywords:'home welcome tenzin academy bhutan'},
+    {title:'About Us',page:'about',keywords:'about history vision mission philosophy bhutan paro'},
+    {title:'Academic Programs',page:'programs',keywords:'programs academics classes curriculum lower middle higher secondary'},
+    {title:'Admissions 2026',page:'page-admissions',keywords:'admissions apply registration fee structure boarder day scholar'},
+    {title:'Faculty',page:'faculty',keywords:'faculty teachers staff principal vice principal'},
+    {title:'Science Stream',page:'page-science',keywords:'science physics chemistry biology math stream'},
+    {title:'Commerce Stream',page:'page-commerce',keywords:'commerce accounting economics business math stream'},
+    {title:'Arts & Humanities',page:'page-arts',keywords:'arts humanities history geography rigzhung media stream'},
+    {title:'Class X / Middle Secondary',page:'page-middle',keywords:'class x ten bcse board exam middle secondary'},
+    {title:'Lower Secondary',page:'page-lower',keywords:'class vi vii viii lower secondary'},
+    
+    {title:'Gallery',page:'page-gallery',keywords:'gallery photos campus sports cultural academic'},
+    {title:'Contact Us',page:'page-contact',keywords:'contact phone email address map location'},
+    {title:'Scholarship 2025',page:'page-admissions',keywords:'scholarship merit need sports cultural gnh financial'},
+  ],
+
+  init() {
+    this.renderFaculty();
+    this.renderAboutSections();
+    this.initScrollReveal();
+    this.initSlideshow();
+    this.initCountdown();
+    this.initBackToTop();
+    this.initCounters();
+    this.renderGallery('all');
+    this.initProgressBar();
+  },
+
+  initProgressBar() {
+    window.addEventListener('scroll', () => {
+      const el = document.documentElement;
+      const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+      document.getElementById('page-progress').style.width = pct + '%';
+    });
+  },
+
+  initBackToTop() {
+    const btn = document.getElementById('back-top');
+    window.addEventListener('scroll', () => {
+      btn.classList.toggle('visible', window.scrollY > 400);
+    });
+  },
+
+  initCounters() {
+    const counters = document.querySelectorAll('.counter');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const el = e.target, target = +el.dataset.target, sfx = el.dataset.suffix || '';
+          let cur = 0;
+          const step = Math.ceil(target / 60);
+          const t = setInterval(() => {
+            cur = Math.min(cur + step, target);
+            el.textContent = cur + sfx;
+            if (cur >= target) clearInterval(t);
+          }, 20);
+          obs.unobserve(el);
+        }
+      });
+    }, {threshold: 0.5});
+    counters.forEach(c => obs.observe(c));
+  },
+
+  initCountdown() {
+    const target = new Date('2026-07-20T08:00:00+06:00');
+    const tick = () => {
+      const now = new Date(), diff = target - now;
+      if (diff <= 0) {
+        ['cd-days','cd-hrs','cd-min','cd-sec'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent='0'; });
+        const lbl = document.getElementById('cd-label');
+        if (lbl) lbl.textContent = 'Second Term is now open!';
+        return;
+      }
+      const d = Math.floor(diff/86400000), h = Math.floor((diff%86400000)/3600000),
+            m = Math.floor((diff%3600000)/60000), s = Math.floor((diff%60000)/1000);
+      const set = (id, v) => { const el=document.getElementById(id); if(el) el.textContent=String(v).padStart(2,'0'); };
+      set('cd-days',d); set('cd-hrs',h); set('cd-min',m); set('cd-sec',s);
+    };
+    tick();
+    setInterval(tick, 1000);
+  },
+
+
+
+
+
+  renderGallery(filter) {
+    const grid = document.getElementById('gallery-grid');
+    const data = filter === 'all' ? this.galleryData : this.galleryData.filter(g => g.cat === filter);
+    this.lbImages = data;
+    grid.innerHTML = data.map((g, i) => `
+      <div class="relative h-48 rounded-xl overflow-hidden group cursor-pointer hover-lift" onclick="app.openLightbox(${i})">
+        <img src="${g.src}" alt="${g.cap}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center\'><i class=\'fas fa-image text-3xl text-gray-400\'></i></div>'">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+          <p class="text-white text-xs font-bold">${g.cap}</p>
+        </div>
+        <div class="absolute top-2 right-2 w-7 h-7 bg-white/80 rounded-full items-center justify-center hidden group-hover:flex transition"><i class="fas fa-expand text-xs text-gray-700"></i></div>
+      </div>`).join('');
+    document.querySelectorAll('.gallery-filter-btn').forEach(btn => {
+      const active = btn.dataset.filter === filter;
+      btn.className = active
+        ? 'gallery-filter-btn active px-4 py-2 rounded-full text-sm font-bold bg-primary text-white'
+        : 'gallery-filter-btn px-4 py-2 rounded-full text-sm font-bold bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300';
+    });
+  },
+
+  filterGallery(cat) { this.renderGallery(cat); },
+
+  openLightbox(i) {
+    this.lbIndex = i;
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    const cap = document.getElementById('lightbox-cap');
+    img.src = this.lbImages[i].src;
+    cap.textContent = this.lbImages[i].cap;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  },
+
+  closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  },
+
+  lbNav(dir) {
+    this.lbIndex = (this.lbIndex + dir + this.lbImages.length) % this.lbImages.length;
+    document.getElementById('lightbox-img').src = this.lbImages[this.lbIndex].src;
+    document.getElementById('lightbox-cap').textContent = this.lbImages[this.lbIndex].cap;
+  },
+
+  // Multi-step form
+  nextStep(step) {
+    const stepEl = document.getElementById(`form-step${step}`);
+    // Validate required fields in current step
+    const fields = stepEl.querySelectorAll('[required]');
+    let valid = true;
+    fields.forEach(f => {
+      if (!f.value || (f.type === 'radio' && !stepEl.querySelector(`[name="${f.name}"]:checked`))) {
+        valid = false;
+        this.showFieldError(f);
+      }
+    });
+    if (!valid) { this.toast('Please fill all required fields', 'error'); return; }
+    if (step === 2) { this.buildReview(); }
+    this.setStep(step + 1);
+  },
+
+  prevStep(step) { this.setStep(step - 1); },
+
+  setStep(step) {
+    [1,2,3].forEach(s => {
+      const el = document.getElementById(`form-step${s}`);
+      if (el) el.classList.toggle('hidden', s !== step);
+      const dot = document.getElementById(`step${s}-dot`);
+      if (dot) {
+        dot.className = s <= step
+          ? 'step-dot w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold'
+          : 'step-dot w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-400 flex items-center justify-center text-xs font-bold';
+      }
+    });
+    this.currentFormStep = step;
+  },
+
+  buildReview() {
+    const form = document.getElementById('admission-form');
+    const fd = new FormData(form);
+    const box = document.getElementById('review-box');
+    const fields = [
+      ['Full Name', fd.get('fullName')],
+      ['Class', fd.get('classApplying')],
+      ['Date of Birth', fd.get('dob')],
+      ['CID', fd.get('cid')],
+      ['Contact', fd.get('contact')],
+      ['Student Type', fd.get('studentType')],
+      ['Previous School', fd.get('previousSchool')],
+      ['Previous Class', fd.get('previousClass')],
+      ['Previous %', fd.get('previousPercentage') + '%'],
+    ];
+    box.innerHTML = '<p class="font-bold text-gray-700 dark:text-white mb-2 text-xs uppercase tracking-wider">Application Summary</p>' +
+      fields.filter(f => f[1]).map(f => `<div class="flex justify-between text-xs border-b dark:border-gray-600 pb-1"><span class="text-gray-500">${f[0]}</span><span class="font-bold dark:text-white">${f[1]}</span></div>`).join('');
+  },
+
+  validateField(el) {
+    const ok = el.value && el.checkValidity();
+    el.classList.toggle('field-error', !ok);
+    el.classList.toggle('field-ok', !!ok);
+    const errEl = el.nextElementSibling;
+    if (errEl && errEl.classList.contains('err-msg')) errEl.classList.toggle('hidden', !!ok);
+  },
+
+  showFieldError(el) {
+    el.classList.add('field-error');
+    const errEl = el.nextElementSibling;
+    if (errEl && errEl.classList.contains('err-msg')) errEl.classList.remove('hidden');
+  },
+
+  calcFee() {
+    const stream = document.getElementById('calc-stream').value;
+    const type = document.getElementById('calc-type').value;
+    const result = document.getElementById('calc-result');
+    const amount = document.getElementById('calc-amount');
+    const note = document.getElementById('calc-note');
+    if (!stream || !type) { result.classList.add('hidden'); return; }
+    const fees = { science: { boarder: 130000, day: 80000 }, general: { boarder: 110000, day: 60000 } };
+    const val = fees[stream][type];
+    result.classList.remove('hidden');
+    amount.textContent = 'Nu. ' + val.toLocaleString();
+    note.textContent = stream === 'science' ? 'Science Stream — Tuition + Hostel (Boarder) / Tuition only (Day)' : 'General Stream — Tuition + Hostel & Mess (Boarder) / Tuition only (Day)';
+  },
+
+  printCalendar() {
+    const table = document.getElementById('calendar-print-table');
+    const win = window.open('', '_blank');
+    win.document.write(`<html><head><title>Academic Calendar 2026 – Tenzin Academy</title><style>body{font-family:sans-serif;padding:20px}h1{color:#0080FF}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:10px;text-align:left}th{background:#0080FF;color:white}tr:nth-child(even){background:#f9f9f9}@media print{button{display:none}}</style></head><body><h1>Tenzin Academy – Academic Calendar 2026</h1><p>Kichu, Lamgong, Paro, Bhutan | +975-17578882</p>${table.innerHTML}<br><button onclick="window.print()">Print</button></body></html>`);
+    win.document.close();
+    win.focus();
+    setTimeout(() => win.print(), 400);
+  },
+
+  openSearch() {
+    document.getElementById('search-overlay').classList.add('open');
+    setTimeout(() => document.getElementById('search-input').focus(), 100);
+    document.getElementById('search-results').innerHTML = '<p class="text-xs text-gray-400 text-center py-4">Start typing to search…</p>';
+  },
+
+  closeSearch() {
+    document.getElementById('search-overlay').classList.remove('open');
+    document.getElementById('search-input').value = '';
+  },
+
+  doSearch(q) {
+    const res = document.getElementById('search-results');
+    if (!q.trim()) { res.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">Start typing to search…</p>'; return; }
+    const hits = this.searchIndex.filter(item => item.keywords.toLowerCase().includes(q.toLowerCase()) || item.title.toLowerCase().includes(q.toLowerCase()));
+    if (!hits.length) { res.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">No results found.</p>'; return; }
+    res.innerHTML = hits.map(h => `<div class="flex items-center gap-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg cursor-pointer" onclick="app.closeSearch();app.navigate('${h.page}')"><i class="fas fa-arrow-right text-primary text-xs"></i><span class="text-sm dark:text-white font-medium">${h.title}</span></div>`).join('');
+  },
+
+  searchFaculty(q) {
+    const all = document.querySelectorAll('#stem-faculty .bg-white, #lang-faculty .bg-white, #hum-faculty .bg-white, #stem-faculty .dark\\:bg-gray-800, #lang-faculty .dark\\:bg-gray-800, #hum-faculty .dark\\:bg-gray-800');
+    // simpler: search cards by text content
+    const cards = document.querySelectorAll('#stem-faculty > div, #lang-faculty > div, #hum-faculty > div');
+    let found = 0;
+    cards.forEach(card => {
+      const txt = card.textContent.toLowerCase();
+      const match = !q || txt.includes(q.toLowerCase());
+      card.style.display = match ? '' : 'none';
+      if (match) found++;
+    });
+    const noRes = document.getElementById('faculty-no-results');
+    if (noRes) noRes.classList.toggle('hidden', found > 0);
+  },
+
+  // Chatbot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  renderFaculty() {
+    const renderCard = f => `<div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift">
+      <div class="pt-8 pb-4 flex items-center justify-center bg-gray-50 dark:bg-gray-700/50">
+        <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white dark:border-gray-600 shadow-lg bg-gray-200 dark:bg-gray-600">
+          <img src="${f.photo}" alt="${f.name}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center\'><i class=\'fas fa-user text-3xl text-gray-400\'></i></div>'">
+        </div>
+      </div>
+      <div class="p-6 text-center"><h3 class="font-bold text-lg dark:text-white">${f.name}</h3>
+      <p class="text-green-600 text-sm font-bold uppercase mb-2">${f.role}</p><p class="text-gray-500 text-xs">${f.creds}</p></div></div>`;
+    document.getElementById('stem-faculty').innerHTML = this.facultyData.stem.map(renderCard).join('');
+    document.getElementById('lang-faculty').innerHTML = this.facultyData.lang.map(renderCard).join('');
+    document.getElementById('hum-faculty').innerHTML = this.facultyData.hum.map(renderCard).join('');
+  },
+
+  renderAboutSections() {
+    const facilities = [
+      {icon:"fa-city",color:"blue",title:"Buildings",desc:"Administrative Block, 4 Academic Blocks"},
+      {icon:"fa-utensils",color:"green",title:"Dining",desc:"MPH with shift system"},
+      {icon:"fa-flask",color:"purple",title:"Laboratories",desc:"Physics, Biology and Chemistry"},
+      {icon:"fa-desktop",color:"red",title:"ICT Lab",desc:"30 computers"},
+      {icon:"fa-wifi",color:"yellow",title:"Connectivity",desc:"24x7 campus-wide WiFi"},
+      {icon:"fa-heartbeat",color:"teal",title:"Wellbeing",desc:"Dedicated counselling center"},
+      {icon:"fa-tint",color:"blue",title:"Hygiene",desc:"Clean drinking water stations"}
+    ];
+    document.getElementById('facilities-grid').innerHTML = facilities.map(f => `
+      <div class="flex items-start gap-4">
+        <div class="w-10 h-10 bg-${f.color}-100 rounded-full flex-shrink-0 flex items-center justify-center text-${f.color}-600"><i class="fas ${f.icon}"></i></div>
+        <div><h4 class="font-bold text-gray-800 dark:text-white">${f.title}</h4><p class="text-sm text-gray-600 dark:text-gray-400">${f.desc}</p></div>
+      </div>`).join('');
+
+    const sports = [
+      {icon:"fa-futbol",color:"green-600",name:"Football Field"},
+      {icon:"fa-basketball-ball",color:"orange-600",name:"Basketball Court"},
+      {icon:"fa-volleyball-ball",color:"yellow-500",name:"Volleyball Court"},
+      {icon:"fa-running",color:"blue-500",name:"Track & Field"}
+    ];
+    document.getElementById('sports-grid').innerHTML = sports.map(s => `
+      <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+        <i class="fas ${s.icon} text-4xl text-${s.color} mb-2"></i><p class="font-bold dark:text-white">${s.name}</p>
+      </div>`).join('');
+
+    const philo = [
+      {icon:"fa-star",color:"yellow",title:"Holistic Development",desc:"Nurturing physical, mental, and spiritual growth."},
+      {icon:"fa-brain",color:"blue",title:"Mindfulness & EQ",desc:"Cultivating emotional intelligence and awareness."},
+      {icon:"fa-hands-helping",color:"green",title:"Community Service",desc:"Instilling civic responsibility and public service."},
+      {icon:"fa-praying-hands",color:"red",title:"Bhutanese Values",desc:"Deep integration of culture into the curriculum."}
+    ];
+    document.getElementById('philosophy-grid').innerHTML = philo.map(p => `
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border-l-4 border-${p.color}-400 flex items-center gap-4 hover-lift">
+        <div class="w-14 h-14 bg-${p.color}-100 rounded-full flex items-center justify-center text-${p.color}-600 flex-shrink-0 text-xl"><i class="fas ${p.icon}"></i></div>
+        <div><h4 class="font-bold text-lg dark:text-white">${p.title}</h4><p class="text-sm text-gray-500 dark:text-gray-400">${p.desc}</p></div>
+      </div>`).join('');
+
+    const feedback = [
+      {emoji:"👁️",title:"Individualized Attention",desc:"Personalized support for every student"},
+      {emoji:"🔥",title:"Passionate Faculty",desc:"Dedicated and experienced teachers"},
+      {emoji:"🤗",title:"Supportive Environment",desc:"Nurturing and caring atmosphere"}
+    ];
+    document.getElementById('feedback-grid').innerHTML = feedback.map(f => `
+      <div class="text-center p-4">
+        <div class="w-16 h-16 bg-white dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4 shadow text-2xl">${f.emoji}</div>
+        <h4 class="font-bold dark:text-white">${f.title}</h4><p class="text-sm text-gray-600 dark:text-gray-400">${f.desc}</p>
+      </div>`).join('');
+  },
+
+  initScrollReveal() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, {threshold: 0.1});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  },
+
+  navigate(pageId) {
+    document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+    const target = document.getElementById(pageId);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+      setTimeout(() => {
+        target.querySelectorAll('.reveal').forEach(el => {
+          el.classList.remove('active');
+          void el.offsetWidth;
+          el.classList.add('active');
+        });
+      }, 100);
+    }
+
+  },
+
+  scrollToSection(pageId, sectionId) {
+    this.navigate(pageId);
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }, 300);
+  },
+
+  toggleTheme() {
+    document.documentElement.classList.toggle('dark');
+    this.theme = this.theme === 'light' ? 'dark' : 'light';
+    const icon = document.getElementById('theme-icon');
+    if (icon) icon.className = this.theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  },
+
+  initSlideshow() {
+    const slideshow = document.getElementById('hero-slideshow');
+    if (!slideshow) return;
+    this.slideshowImages = slideshow.querySelectorAll('.slideshow-img');
+    this.slideshowDots = slideshow.querySelectorAll('.slideshow-dot');
+    this.slideshowCaption = document.getElementById('slideshow-caption');
+    this.currentSlide = 0;
+    this.captions = ['Campus Life @ Tenzin','Our Students','Sports & Athletics','Modern Classrooms','Cultural Heritage'];
+    this.slideInterval = setInterval(() => this.nextSlide(), 5000);
+    this.slideshowDots.forEach((dot, i) => {
+      dot.addEventListener('click', () => { this.goToSlide(i); this.resetSlideshowTimer(); });
+    });
+  },
+
+  nextSlide() { this.goToSlide((this.currentSlide + 1) % this.slideshowImages.length); },
+
+  goToSlide(i) {
+    this.slideshowImages[this.currentSlide].classList.replace('opacity-100','opacity-0');
+    this.slideshowDots[this.currentSlide].classList.replace('bg-white','bg-white/50');
+    this.slideshowImages[i].classList.replace('opacity-0','opacity-100');
+    this.slideshowDots[i].classList.replace('bg-white/50','bg-white');
+    if (this.slideshowCaption) this.slideshowCaption.textContent = this.captions[i];
+    this.currentSlide = i;
+  },
+
+  resetSlideshowTimer() {
+    clearInterval(this.slideInterval);
+    this.slideInterval = setInterval(() => this.nextSlide(), 5000);
+  },
+
+  fileStore: {},
+
+  handleFilePreview(event, type) {
+    const file = event.target.files?.[0] || event.dataTransfer?.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { this.toast('File too large (max 5MB)', 'error'); return; }
+    this.fileStore[type] = file;
+    const keyMap = { marksheet:'marksheet', scholarMarksheet:'scholar-marksheet', scholarCert:'scholar-cert' };
+    const prefix = keyMap[type] || type;
+    const icon = document.getElementById(prefix + '-icon');
+    const text = document.getElementById(prefix + '-text');
+    const fn = document.getElementById(prefix + '-filename');
+    if (icon) icon.className = 'fas fa-check-circle text-3xl text-green-500 mb-2';
+    if (text) text.innerText = file.name;
+    if (fn) { fn.innerText = '✓ ' + file.name + ' (' + (file.size > 1024*1024 ? (file.size/1024/1024).toFixed(1)+' MB' : (file.size/1024).toFixed(0)+' KB') + ')'; fn.classList.remove('hidden'); }
+    this.toast('File selected: ' + file.name, 'success');
+  },
+
+  fileToBase64(file) {
+    return new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => res(r.result.split(',')[1]);
+      r.onerror = rej;
+      r.readAsDataURL(file);
+    });
+  },
+
+  async submitAdmission(form) {
+    const btn = document.getElementById('submit-btn');
+    const orig = btn.innerText;
+    btn.disabled = true; btn.innerText = 'Submitting…';
+    const fd = new FormData(form);
+    const data = { formType:'admission', fullName:fd.get('fullName'), classApplying:fd.get('classApplying'), dob:fd.get('dob'), cid:fd.get('cid'), contact:fd.get('contact'), studentType:fd.get('studentType'), previousSchool:fd.get('previousSchool'), previousClass:fd.get('previousClass'), previousPercentage:fd.get('previousPercentage'), timestamp: new Date().toISOString() };
+    const files = [];
+    if (this.fileStore.marksheet) { const b = await this.fileToBase64(this.fileStore.marksheet); files.push({name:this.fileStore.marksheet.name, type:this.fileStore.marksheet.type, data:b}); }
+    if (files.length) data.files = files;
+    fetch(SCRIPT_URL, {method:'POST', body:JSON.stringify(data), headers:{'Content-Type':'text/plain;charset=utf-8'}})
+      .then(() => {
+        document.getElementById('admission-confirmation').classList.remove('hidden');
+        this.toast('Application submitted successfully!', 'success');
+        form.reset(); this.fileStore = {}; this.setStep(1);
+      })
+      .catch(() => this.toast('Submission failed. Please try again.', 'error'))
+      .finally(() => { btn.disabled = false; btn.innerText = orig; });
+  },
+
+  async submitScholarship(form) {
+    const btn = document.getElementById('scholar-submit-btn');
+    const orig = btn.innerText;
+    btn.disabled = true; btn.innerText = 'Submitting…';
+    const fd = new FormData(form);
+    const data = { formType:'scholarship', scholarName:fd.get('scholarName'), scholarClass:fd.get('scholarClass'), scholarCid:fd.get('scholarCid'), scholarContact:fd.get('scholarContact'), scholarCategory:fd.get('scholarCategory'), scholarReason:fd.get('scholarReason'), scholarPercentage:fd.get('scholarPercentage'), timestamp: new Date().toISOString() };
+    const files = [];
+    if (this.fileStore.scholarMarksheet) { const b = await this.fileToBase64(this.fileStore.scholarMarksheet); files.push({name:this.fileStore.scholarMarksheet.name, type:this.fileStore.scholarMarksheet.type, data:b}); }
+    if (this.fileStore.scholarCert) { const b = await this.fileToBase64(this.fileStore.scholarCert); files.push({name:this.fileStore.scholarCert.name, type:this.fileStore.scholarCert.type, data:b}); }
+    if (files.length) data.files = files;
+    fetch(SCRIPT_URL, {method:'POST', body:JSON.stringify(data), headers:{'Content-Type':'text/plain;charset=utf-8'}})
+      .then(() => {
+        document.getElementById('scholarship-confirmation').classList.remove('hidden');
+        this.toast('Scholarship application submitted!', 'success');
+        form.reset(); this.fileStore = {};
+      })
+      .catch(() => this.toast('Submission failed. Please try again.', 'error'))
+      .finally(() => { btn.disabled = false; btn.innerText = orig; });
+  },
+
+  toast(msg, type = 'info') {
+    const div = document.createElement('div');
+    div.className = `toast ${type}`;
+    const icon = type==='success'?'fa-check-circle':type==='error'?'fa-exclamation-circle':'fa-info-circle';
+    div.innerHTML = `<i class="fas ${icon}"></i> ${msg}`;
+    document.getElementById('toast-container').appendChild(div);
+    requestAnimationFrame(() => div.classList.add('show'));
+    setTimeout(() => { div.classList.remove('show'); setTimeout(() => div.remove(), 400); }, 3500);
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  app.init();
+
+  const admissionForm = document.getElementById('admission-form');
+  if (admissionForm) {
+    admissionForm.addEventListener('submit', e => { e.preventDefault(); app.submitAdmission(admissionForm); });
+  }
+
+  const scholarshipForm = document.getElementById('scholarship-form');
+  if (scholarshipForm) {
+    scholarshipForm.addEventListener('submit', e => { e.preventDefault(); app.submitScholarship(scholarshipForm); });
+  }
+
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('contact-submit-btn');
+      const orig = btn.innerText;
+      btn.disabled = true; btn.innerText = 'Sending…';
+      const fd = new FormData(this);
+      const data = { formType:'contact', firstName:fd.get('firstName'), lastName:fd.get('lastName'), email:fd.get('email'), subject:fd.get('subject'), message:fd.get('message'), timestamp: new Date().toISOString() };
+      fetch(SCRIPT_URL, {method:'POST', body:JSON.stringify(data), headers:{'Content-Type':'text/plain;charset=utf-8'}})
+        .then(() => { app.toast('Message sent successfully!', 'success'); contactForm.reset(); })
+        .catch(() => app.toast('Failed to send. Please try again.', 'error'))
+        .finally(() => { btn.disabled = false; btn.innerText = orig; });
+    });
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); app.openSearch(); }
+    if (e.key === 'Escape') { app.closeSearch(); app.closeLightbox(); }
+    if (document.getElementById('lightbox').classList.contains('open')) {
+      if (e.key === 'ArrowLeft') app.lbNav(-1);
+      if (e.key === 'ArrowRight') app.lbNav(1);
+    }
+  });
+});
+</script>
+</body>
+</html>
