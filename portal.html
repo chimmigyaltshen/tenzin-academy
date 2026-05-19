@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenzin Academy | Excellence in Education</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: { extend: { colors: { primary: '#0080FF', accent: '#e4e62d', darkbg: '#111827' } } }
+  }
+</script>
+<link rel="stylesheet" href="css/styles.css">
+<base target="_blank">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+<div id="page-progress"></div>
+<div id="toast-container"></div>
+
+<!-- Back to Top -->
+<div id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to Top"><i class="fas fa-chevron-up text-sm"></i></div>
+
+<!-- AI Chatbot FAB -->
+<div id="search-overlay" onclick="if(event.target===this) app.closeSearch()">
+  <div class="w-full max-w-xl px-4">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+      <div class="flex items-center gap-3 p-4 border-b dark:border-gray-700">
+        <i class="fas fa-search text-gray-400"></i>
+        <input id="search-input" type="text" placeholder="Search pages, programs, faculty…" class="flex-1 text-sm focus:outline-none dark:bg-gray-800 dark:text-white" oninput="app.doSearch(this.value)" onkeydown="if(event.key==='Escape') app.closeSearch()">
+        <button onclick="app.closeSearch()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="search-results" class="max-h-72 overflow-y-auto p-2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="bg-primary text-white shadow-lg sticky top-0 z-50 border-b-4 border-accent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20 items-center">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+        <div class="w-14 h-14 flex items-center justify-center hover:rotate-12 transition-transform duration-300">
+          <img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-school text-accent text-2xl\'></i>'">
+        </div>
+        <div class="leading-tight">
+          <span class="font-bold text-xl tracking-wider font-serif text-accent block">TENZIN ACADEMY</span>
+          <span class="text-[10px] uppercase tracking-widest opacity-90">Paro, Bhutan</span>
+        </div>
+      </div>
+      <div class="hidden lg:flex items-center space-x-6">
+        <button onclick="window.location.href='index.html'" class="font-bold hover:text-accent transition relative group text-sm">Home<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='about.html'" class="font-bold hover:text-accent transition relative group text-sm">About<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='programs.html'" class="font-bold hover:text-accent transition relative group text-sm">Academics<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='admissions.html'" class="font-bold hover:text-accent transition relative group text-sm">Admissions<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='faculty.html'" class="font-bold hover:text-accent transition relative group text-sm">Faculty<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='gallery.html'" class="font-bold hover:text-accent transition relative group text-sm">Gallery<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='contact.html'" class="font-bold hover:text-accent transition relative group text-sm">Contact<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='vacancy.html'" class="font-bold hover:text-accent transition relative group text-sm">Vacancy<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='login.html'" class="bg-accent text-blue-900 px-4 py-2 rounded-lg font-bold hover:scale-105 transition text-sm ml-4">Portal Login</button>
+        <button onclick="app.openSearch()" class="p-2 rounded-full hover:bg-white/10 transition" title="Search"><i class="fas fa-search"></i></button>
+        <button onclick="app.toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition" title="Toggle Dark Mode"><i class="fas fa-moon" id="theme-icon"></i></button>
+      </div>
+      <button class="lg:hidden text-2xl focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden lg:hidden bg-primary border-t border-blue-400 absolute w-full shadow-xl z-50">
+    <button onclick="window.location.href='index.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Home</button>
+    <button onclick="window.location.href='about.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">About</button>
+    <button onclick="window.location.href='programs.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Academics</button>
+    <button onclick="window.location.href='admissions.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Admissions</button>
+    <button onclick="window.location.href='faculty.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Faculty</button>
+    <button onclick="window.location.href='gallery.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Gallery</button>
+    <button onclick="window.location.href='contact.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Contact</button>
+    <button onclick="window.location.href='vacancy.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Vacancy</button>
+    <button onclick="window.location.href='login.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Portal Login</button>
+    <button onclick="app.openSearch();document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500"><i class="fas fa-search mr-2"></i>Search</button>
+  </div>
+</nav>
+<div id="portal-dashboard" class="page-section active bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white" id="portal-welcome">Welcome to the Portal</h1>
+        <p class="text-gray-500 dark:text-gray-400" id="portal-role-display">Accessing as Role</p>
+      </div>
+      <button onclick="handleLogout()" class="bg-red-500 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-600 transition shadow-md"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>
+    </div>
+
+    <!-- STUDENT DASHBOARD -->
+    <div id="student-view" class="hidden space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-primary">
+          <h2 class="text-xl font-bold text-primary mb-4"><i class="fas fa-calendar-check mr-2"></i>Attendance History</h2>
+          <div class="flex items-center justify-between p-4 bg-blue-50 dark:bg-gray-700 rounded-lg">
+            <span class="text-gray-600 dark:text-gray-300 font-medium">Overall Attendance</span>
+            <span class="text-2xl font-bold text-blue-600" id="student-attendance-val">0%</span>
+          </div>
+          <p class="mt-4 text-sm text-gray-500">Your attendance is updated weekly. Contact your class teacher for discrepancies.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-green-600">
+          <h2 class="text-xl font-bold text-green-600 mb-4"><i class="fas fa-graduation-cap mr-2"></i>Latest Grades</h2>
+          <div class="space-y-3" id="student-grades-list">
+            <!-- Grades will be loaded here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEACHER DASHBOARD -->
+    <div id="teacher-view" class="hidden space-y-8">
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
+        <h2 class="text-2xl font-bold text-primary mb-6">Manage Students</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left">
+            <thead class="bg-gray-100 dark:bg-gray-700 uppercase">
+              <tr>
+                <th class="p-4">Student ID</th>
+                <th class="p-4">Name</th>
+                <th class="p-4">Attendance</th>
+                <th class="p-4">Math Grade</th>
+                <th class="p-4">Action</th>
+              </tr>
+            </thead>
+            <tbody id="teacher-student-table" class="divide-y dark:divide-gray-700">
+              <!-- Student rows here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div id="admin-view" class="hidden space-y-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Student Management -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-t-4 border-purple-600">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold dark:text-white">Manage Students</h2>
+            <button onclick="showAddModal('student')" class="bg-purple-600 text-white px-3 py-1 rounded text-sm font-bold"><i class="fas fa-plus mr-1"></i>Add</button>
+          </div>
+          <div class="max-h-96 overflow-y-auto" id="admin-student-list"></div>
+        </div>
+        <!-- Teacher Management -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-t-4 border-blue-600">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold dark:text-white">Manage Teachers</h2>
+            <button onclick="showAddModal('teacher')" class="bg-blue-600 text-white px-3 py-1 rounded text-sm font-bold"><i class="fas fa-plus mr-1"></i>Add</button>
+          </div>
+          <div class="max-h-96 overflow-y-auto" id="admin-teacher-list"></div>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-accent">
+        <h2 class="text-xl font-bold dark:text-white mb-4">Override Operations (Grades & Attendance)</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left">
+            <thead class="bg-gray-100 dark:bg-gray-700 uppercase">
+              <tr>
+                <th class="p-4">Student ID</th>
+                <th class="p-4">Name</th>
+                <th class="p-4">Attendance</th>
+                <th class="p-4">Math Grade</th>
+                <th class="p-4">Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-teacher-student-table" class="divide-y dark:divide-gray-700">
+              <!-- Student rows here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="bg-gray-900 text-white pt-16 pb-8 border-t-4 border-accent mt-auto">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 flex items-center justify-center"><img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-school text-primary text-xl\'></i>'"></div>
+          <span class="font-bold text-xl tracking-wider font-serif text-accent">TENZIN ACADEMY</span>
+        </div>
+        <p class="text-gray-400 text-sm mb-6">Nurturing minds, building futures, and preserving Bhutanese values for a better tomorrow.</p>
+        <div class="flex gap-4">
+          <a href="https://www.facebook.com/people/Tenzin-Academy/61569807146868/" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@tenzin.academy" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Quick Links</h3>
+        <ul class="space-y-3 text-sm text-gray-400">
+          <li><a href="index.html" class="hover:text-accent transition text-left">Home</a></li>
+          <li><a href="about.html" class="hover:text-accent transition text-left">About Us</a></li>
+          <li><a href="programs.html" class="hover:text-accent transition text-left">Academic Programs</a></li>
+          <li><a href="admissions.html" class="hover:text-accent transition text-left">Admissions</a></li>
+          <li><a href="gallery.html" class="hover:text-accent transition text-left">Gallery</a></li>
+          <li><a href="faculty.html" class="hover:text-accent transition text-left">Faculty & Staff</a></li>
+          <li><a href="contact.html" class="hover:text-accent transition text-left">Contact Us</a></li>
+          <li><a href="vacancy.html" class="hover:text-accent transition text-left font-bold text-accent">Vacancy</a></li>
+          <li><a href="login.html" class="hover:text-accent transition text-left">Portal Login</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Contact Us</h3>
+        <ul class="space-y-4 text-sm text-gray-400">
+          <li class="flex gap-3 items-start"><i class="fas fa-map-marker-alt mt-1 text-primary"></i><span>Kichu, Lamgong,<br>Paro, Bhutan</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-phone-alt text-primary"></i><span>+975-17578882/17805484</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-envelope text-primary"></i><span>tenzinacademy@education.gov.bt</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-clock text-primary"></i><span>Mon-Fri: 8:00 AM - 4:30 PM</span></li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+      <p>&copy; 2025 Tenzin Academy. All rights reserved.</p>
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <a href="#" class="hover:text-white">Privacy Policy</a>
+        <a href="#" class="hover:text-white">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const role = localStorage.getItem('tenzin_role');
+  const user = localStorage.getItem('tenzin_user');
+
+  if (!role || !user) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  document.getElementById('portal-welcome').textContent = `Welcome, ${user.charAt(0).toUpperCase() + user.slice(1)}`;
+  document.getElementById('portal-role-display').textContent = `Accessing as ${role.toUpperCase()}`;
+
+  const view = document.getElementById(`${role}-view`);
+  if (view) view.classList.remove('hidden');
+
+  if (role === 'student') initStudentDashboard();
+  if (role === 'teacher') initTeacherDashboard();
+  if (role === 'admin') initAdminDashboard();
+});
+
+function handleLogout() {
+  localStorage.removeItem('tenzin_role');
+  localStorage.removeItem('tenzin_user');
+  window.location.href = 'login.html';
+}
+
+function initStudentDashboard() {
+  const students = JSON.parse(localStorage.getItem('tenzin_students') || '[]');
+  const me = students[0]; // For demo, pick first student
+  document.getElementById('student-attendance-val').textContent = me.attendance;
+  const list = document.getElementById('student-grades-list');
+  list.innerHTML = Object.entries(me.grades).map(([sub, grade]) => `
+    <div class="flex justify-between items-center p-3 border-b dark:border-gray-700">
+      <span class="text-gray-600 dark:text-gray-300 capitalize">${sub}</span>
+      <span class="font-bold text-gray-900 dark:text-white">${grade}</span>
+    </div>
+  `).join('');
+}
+
+function initTeacherDashboard(isAdmin = false) {
+  const students = JSON.parse(localStorage.getItem('tenzin_students') || '[]');
+  const table = document.getElementById('teacher-student-table');
+  const adminTable = document.getElementById('admin-teacher-student-table');
+  const targetTable = isAdmin ? adminTable : table;
+
+  if (!targetTable) return;
+
+  targetTable.innerHTML = students.map((s, i) => `
+    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+      <td class="p-4 font-mono">${s.id}</td>
+      <td class="p-4 font-bold">${s.name}</td>
+      <td class="p-4"><input type="text" value="${s.attendance}" class="border rounded p-1 w-16 dark:bg-gray-600" onchange="updateStudent(${i}, 'attendance', this.value)"></td>
+      <td class="p-4"><input type="text" value="${s.grades.math}" class="border rounded p-1 w-16 dark:bg-gray-600" onchange="updateGrade(${i}, 'math', this.value)"></td>
+      <td class="p-4"><button onclick="saveUpdate()" class="text-blue-500 font-bold">Save</button></td>
+    </tr>
+  `).join('');
+}
+
+function initAdminDashboard() {
+  loadAdminLists();
+  initTeacherDashboard(true);
+}
+
+function loadAdminLists() {
+  const students = JSON.parse(localStorage.getItem('tenzin_students') || '[]');
+  const teachers = JSON.parse(localStorage.getItem('tenzin_teachers') || '[]');
+
+  document.getElementById('admin-student-list').innerHTML = students.map((s, i) => `
+    <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+      <div><p class="font-bold">${s.name}</p><p class="text-xs text-gray-400">${s.id}</p></div>
+      <button onclick="removeItem('student', ${i})" class="text-red-500"><i class="fas fa-trash"></i></button>
+    </div>
+  `).join('');
+
+  document.getElementById('admin-teacher-list').innerHTML = teachers.map((t, i) => `
+    <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+      <div><p class="font-bold">${t.name}</p><p class="text-xs text-gray-400">${t.subject}</p></div>
+      <button onclick="removeItem('teacher', ${i})" class="text-red-500"><i class="fas fa-trash"></i></button>
+    </div>
+  `).join('');
+}
+
+function removeItem(type, index) {
+  const key = type === 'student' ? 'tenzin_students' : 'tenzin_teachers';
+  const items = JSON.parse(localStorage.getItem(key));
+  items.splice(index, 1);
+  localStorage.setItem(key, JSON.stringify(items));
+  loadAdminLists();
+  if (type === 'student') initTeacherDashboard(true);
+}
+
+function showAddModal(type) {
+  const name = prompt(`Enter new ${type} name:`);
+  if (!name) return;
+  const key = type === 'student' ? 'tenzin_students' : 'tenzin_teachers';
+  const items = JSON.parse(localStorage.getItem(key));
+  const newItem = type === 'student'
+    ? { id: 'S' + (100 + items.length + 1), name: name, grades: { math: 'N/A', english: 'N/A' }, attendance: '0%' }
+    : { id: 'T' + (200 + items.length + 1), name: name, subject: 'General' };
+  items.push(newItem);
+  localStorage.setItem(key, JSON.stringify(items));
+  loadAdminLists();
+  if (type === 'student') initTeacherDashboard(true);
+}
+
+function updateStudent(idx, field, val) {
+  const students = JSON.parse(localStorage.getItem('tenzin_students'));
+  students[idx][field] = val;
+  localStorage.setItem('tenzin_students', JSON.stringify(students));
+}
+
+function updateGrade(idx, sub, val) {
+  const students = JSON.parse(localStorage.getItem('tenzin_students'));
+  students[idx].grades[sub] = val;
+  localStorage.setItem('tenzin_students', JSON.stringify(students));
+}
+
+function saveUpdate() {
+  alert('Records updated successfully!');
+}
+</script>
+</body></html>

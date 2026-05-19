@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenzin Academy | Excellence in Education</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: { extend: { colors: { primary: '#0080FF', accent: '#e4e62d', darkbg: '#111827' } } }
+  }
+</script>
+<link rel="stylesheet" href="css/styles.css">
+<base target="_blank">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+<div id="page-progress"></div>
+<div id="toast-container"></div>
+
+<!-- Back to Top -->
+<div id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to Top"><i class="fas fa-chevron-up text-sm"></i></div>
+
+<!-- AI Chatbot FAB -->
+<div id="search-overlay" onclick="if(event.target===this) app.closeSearch()">
+  <div class="w-full max-w-xl px-4">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+      <div class="flex items-center gap-3 p-4 border-b dark:border-gray-700">
+        <i class="fas fa-search text-gray-400"></i>
+        <input id="search-input" type="text" placeholder="Search pages, programs, faculty…" class="flex-1 text-sm focus:outline-none dark:bg-gray-800 dark:text-white" oninput="app.doSearch(this.value)" onkeydown="if(event.key==='Escape') app.closeSearch()">
+        <button onclick="app.closeSearch()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="search-results" class="max-h-72 overflow-y-auto p-2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="bg-primary text-white shadow-lg sticky top-0 z-50 border-b-4 border-accent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20 items-center">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+        <div class="w-14 h-14 flex items-center justify-center hover:rotate-12 transition-transform duration-300">
+          <img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-school text-accent text-2xl\'></i>'">
+        </div>
+        <div class="leading-tight">
+          <span class="font-bold text-xl tracking-wider font-serif text-accent block">TENZIN ACADEMY</span>
+          <span class="text-[10px] uppercase tracking-widest opacity-90">Paro, Bhutan</span>
+        </div>
+      </div>
+      <div class="hidden lg:flex items-center space-x-6">
+        <button onclick="window.location.href='index.html'" class="font-bold hover:text-accent transition relative group text-sm">Home<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='about.html'" class="font-bold hover:text-accent transition relative group text-sm">About<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='programs.html'" class="font-bold hover:text-accent transition relative group text-sm">Academics<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='admissions.html'" class="font-bold hover:text-accent transition relative group text-sm">Admissions<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='faculty.html'" class="font-bold hover:text-accent transition relative group text-sm">Faculty<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='gallery.html'" class="font-bold hover:text-accent transition relative group text-sm">Gallery<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='contact.html'" class="font-bold hover:text-accent transition relative group text-sm">Contact<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button><button onclick="window.location.href='vacancy.html'" class="font-bold hover:text-accent transition relative group text-sm">Vacancy<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button><button onclick="window.location.href='login.html'" class="bg-accent text-blue-900 px-4 py-2 rounded-lg font-bold hover:scale-105 transition text-sm ml-4">Portal Login</button>
+        <button onclick="app.openSearch()" class="p-2 rounded-full hover:bg-white/10 transition" title="Search"><i class="fas fa-search"></i></button>
+        <button onclick="app.toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition" title="Toggle Dark Mode"><i class="fas fa-moon" id="theme-icon"></i></button>
+      </div>
+      <button class="lg:hidden text-2xl focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden lg:hidden bg-primary border-t border-blue-400 absolute w-full shadow-xl z-50">
+    <button onclick="window.location.href='index.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Home</button>
+    <button onclick="window.location.href='about.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">About</button>
+    <button onclick="window.location.href='programs.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Academics</button>
+    <button onclick="window.location.href='admissions.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Admissions</button>
+    <button onclick="window.location.href='faculty.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Faculty</button>
+    <button onclick="window.location.href='gallery.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Gallery</button>
+    <button onclick="window.location.href='contact.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Contact</button>
+    <button onclick="app.openSearch();document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500"><i class="fas fa-search mr-2"></i>Search</button>
+  </div>
+</nav>
+
+<!-- PAGE: HOME -->
+<div id="page-admissions" class="page-section">
+  <header class="bg-blue-800 text-white py-16 text-center hero-animated relative overflow-hidden">
+    <img src="campuslife.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-20">
+    <div class="relative z-10">
+      <h1 class="text-4xl font-bold">Admissions 2026</h1>
+      <p class="mt-2">Join the Tenzin Academy Family</p>
+    </div>
+  </header>
+  <div class="max-w-7xl mx-auto px-4 py-12">
+
+    <!-- Fee Calculator -->
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-t-4 border-accent mb-10 reveal">
+      <h2 class="text-xl font-bold text-primary mb-4"><i class="fas fa-calculator mr-2"></i>Fee Calculator 2026</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+        <div>
+          <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Stream / Class</label>
+          <select id="calc-stream" onchange="app.calcFee()" class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+            <option value="">Select stream</option>
+            <option value="science">Science (XI & XII)</option>
+            <option value="general">General (VII–X, Arts & Commerce)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Student Type</label>
+          <select id="calc-type" onchange="app.calcFee()" class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+            <option value="">Select type</option>
+            <option value="boarder">Boarder</option>
+            <option value="day">Day Scholar</option>
+          </select>
+        </div>
+        <div id="calc-result" class="fee-result p-4 rounded-lg bg-blue-50 dark:bg-gray-700 hidden">
+          <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">Estimated Annual Fee</p>
+          <p class="text-3xl font-bold text-primary" id="calc-amount">Nu. 0</p>
+          <p class="text-xs text-gray-400" id="calc-note"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-t-4 border-accent reveal">
+          <h2 class="text-2xl font-bold text-primary mb-6"><i class="fas fa-money-bill-wave mr-2"></i>Fee Structure 2026</h2>
+
+          <!-- Science Stream -->
+          <div class="mb-6">
+            <h3 class="font-bold text-lg text-green-600 border-b dark:border-gray-700 pb-2 mb-2">Science Stream (XI & XII)</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border-collapse">
+                <thead class="bg-green-50 dark:bg-gray-700">
+                  <tr><th class="p-2 text-left dark:text-gray-300">Fee Type</th><th class="p-2 text-right dark:text-gray-300">Term-I</th><th class="p-2 text-right dark:text-gray-300">Term-II</th></tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                  <tr><td class="p-2">Tuition Fee</td><td class="p-2 text-right">Nu. 45,000</td><td class="p-2 text-right">Nu. 35,000</td></tr>
+                  <tr><td class="p-2">Hostel Fee</td><td class="p-2 text-right">Nu. 25,000</td><td class="p-2 text-right">Nu. 25,000</td></tr>
+                  <tr class="font-bold bg-green-50 dark:bg-gray-700"><td class="p-2">Total Fee</td><td class="p-2 text-right">Nu. 70,000</td><td class="p-2 text-right">Nu. 60,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-3 p-3 bg-green-100 dark:bg-green-900/30 rounded-lg text-center">
+              <span class="text-xs text-green-700 dark:text-green-400 uppercase tracking-wider">Annual Fee</span>
+              <p class="text-2xl font-bold text-green-700 dark:text-green-400">Nu. 130,000</p>
+            </div>
+          </div>
+
+          <!-- Science Day Scholars -->
+          <div class="mb-6">
+            <h3 class="font-bold text-lg text-blue-600 border-b dark:border-gray-700 pb-2 mb-2">Science Day Scholars (XI & XII)</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border-collapse">
+                <thead class="bg-blue-50 dark:bg-gray-700">
+                  <tr><th class="p-2 text-left dark:text-gray-300">Fee Type</th><th class="p-2 text-right dark:text-gray-300">Term-I</th><th class="p-2 text-right dark:text-gray-300">Term-II</th></tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                  <tr><td class="p-2">Tuition Fee</td><td class="p-2 text-right">Nu. 45,000</td><td class="p-2 text-right">Nu. 35,000</td></tr>
+                  <tr class="font-bold bg-blue-50 dark:bg-gray-700"><td class="p-2">Total Fee</td><td class="p-2 text-right">Nu. 45,000</td><td class="p-2 text-right">Nu. 35,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-3 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-center">
+              <span class="text-xs text-blue-700 dark:text-blue-400 uppercase tracking-wider">Annual Fee</span>
+              <p class="text-2xl font-bold text-blue-700 dark:text-blue-400">Nu. 80,000</p>
+            </div>
+          </div>
+
+          <!-- General Boarders -->
+          <div class="mb-6">
+            <h3 class="font-bold text-lg text-purple-600 border-b dark:border-gray-700 pb-2 mb-2">General Boarders (VII–X, Arts & Commerce)</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border-collapse">
+                <thead class="bg-purple-50 dark:bg-gray-700">
+                  <tr><th class="p-2 text-left dark:text-gray-300">Fee Type</th><th class="p-2 text-right dark:text-gray-300">Term-I</th><th class="p-2 text-right dark:text-gray-300">Term-II</th></tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                  <tr><td class="p-2">Tuition Fee</td><td class="p-2 text-right">Nu. 30,000</td><td class="p-2 text-right">Nu. 30,000</td></tr>
+                  <tr><td class="p-2">Hostel & Mess</td><td class="p-2 text-right">Nu. 25,000</td><td class="p-2 text-right">Nu. 25,000</td></tr>
+                  <tr class="font-bold bg-purple-50 dark:bg-gray-700"><td class="p-2">Total Fee</td><td class="p-2 text-right">Nu. 55,000</td><td class="p-2 text-right">Nu. 55,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-3 p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg text-center">
+              <span class="text-xs text-purple-700 dark:text-purple-400 uppercase tracking-wider">Annual Fee</span>
+              <p class="text-2xl font-bold text-purple-700 dark:text-purple-400">Nu. 110,000</p>
+            </div>
+          </div>
+
+          <!-- General Day Scholars -->
+          <div class="mb-6">
+            <h3 class="font-bold text-lg text-orange-600 border-b dark:border-gray-700 pb-2 mb-2">General Day Scholars (VII–X, Arts & Commerce)</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border-collapse">
+                <thead class="bg-orange-50 dark:bg-gray-700">
+                  <tr><th class="p-2 text-left dark:text-gray-300">Fee Type</th><th class="p-2 text-right dark:text-gray-300">Term-I</th><th class="p-2 text-right dark:text-gray-300">Term-II</th></tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                  <tr><td class="p-2">Tuition Fee</td><td class="p-2 text-right">Nu. 30,000</td><td class="p-2 text-right">Nu. 30,000</td></tr>
+                  <tr class="font-bold bg-orange-50 dark:bg-gray-700"><td class="p-2">Total Fee</td><td class="p-2 text-right">Nu. 30,000</td><td class="p-2 text-right">Nu. 30,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-3 p-3 bg-orange-100 dark:bg-orange-900/30 rounded-lg text-center">
+              <span class="text-xs text-orange-700 dark:text-orange-400 uppercase tracking-wider">Annual Fee</span>
+              <p class="text-2xl font-bold text-orange-700 dark:text-orange-400">Nu. 60,000</p>
+            </div>
+          </div>
+
+          <!-- Other Contributions -->
+          <div class="mb-6">
+            <h3 class="font-bold text-lg text-red-600 border-b dark:border-gray-700 pb-2 mb-2"><i class="fas fa-plus-circle mr-2"></i>Other Contributions (One-Time)</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border-collapse">
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                  <tr><td class="p-2">Uniform</td><td class="p-2 text-right">Nu. 2,000</td></tr>
+                  <tr><td class="p-2">Tracksuit</td><td class="p-2 text-right">Nu. 2,000</td></tr>
+                  <tr><td class="p-2">Security Deposit</td><td class="p-2 text-right">Nu. 2,000</td></tr>
+                  <tr><td class="p-2">Admission Fee</td><td class="p-2 text-right">Nu. 1,000</td></tr>
+                  <tr><td class="p-2">Bedsheet</td><td class="p-2 text-right">Nu. 500</td></tr>
+                  <tr><td class="p-2">Annual Rrimdo</td><td class="p-2 text-right">Nu. 500</td></tr>
+                  <tr><td class="p-2">Plate, Cup & Spoon</td><td class="p-2 text-right">Nu. 400</td></tr>
+                  <tr><td class="p-2">Badge</td><td class="p-2 text-right">Nu. 100</td></tr>
+                  <tr><td class="p-2">T-shirt</td><td class="p-2 text-right">Nu. 500</td></tr>
+                  <tr><td class="p-2">Dish Washing Soap</td><td class="p-2 text-right">Nu. 500</td></tr>
+                  <tr><td class="p-2">School Diary</td><td class="p-2 text-right">Nu. 100</td></tr>
+                  <tr><td class="p-2">Advance Semso</td><td class="p-2 text-right">Nu. 500</td></tr>
+                  <tr class="font-bold bg-red-50 dark:bg-gray-700"><td class="p-2">Total Other Contributions</td><td class="p-2 text-right">Nu. 10,100</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boarder Necessities -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg reveal delay-100">
+          <h2 class="text-xl font-bold text-primary mb-4"><i class="fas fa-clipboard-list mr-2"></i>Boarder Necessities</h2>
+          <p class="text-xs text-gray-500 mb-4">As per Ministry of Education Notification Ref.No.ED/NTA/Notification/(5.1)/2026-27/</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border-collapse">
+              <thead class="bg-gray-100 dark:bg-gray-700">
+                <tr><th class="p-2 text-left dark:text-gray-300 w-8">#</th><th class="p-2 text-left dark:text-gray-300">Item</th><th class="p-2 text-left dark:text-gray-300">Qty</th><th class="p-2 text-left dark:text-gray-300">Remarks</th></tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                <tr><td class="p-2">1</td><td class="p-2">School uniform</td><td class="p-2">1 set or more</td><td class="p-2 text-xs text-gray-500">To be purchased from school</td></tr>
+                <tr><td class="p-2">2</td><td class="p-2">Track suit</td><td class="p-2">1 set or more</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">3</td><td class="p-2">Bed sheet</td><td class="p-2">1 or more</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">4</td><td class="p-2">Plate, cup and spoons</td><td class="p-2">1 set</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">5</td><td class="p-2">Stationery</td><td class="p-2">Whole set</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">6</td><td class="p-2">Mattress</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">School facilitates</td></tr>
+                <tr><td class="p-2">7</td><td class="p-2">Black shoes with lace (Boys)</td><td class="p-2">1 pair</td><td class="p-2 text-xs text-gray-500">Students to purchase on your own as per specification</td></tr>
+                <tr><td class="p-2">8</td><td class="p-2">Black shoes with lace or buckles (Girls)</td><td class="p-2">1 pair</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">9</td><td class="p-2">Sneakers</td><td class="p-2">1 pair</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">10</td><td class="p-2">Black stockings (Boys)</td><td class="p-2">2 pairs</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">11</td><td class="p-2">Black socks (Girls)</td><td class="p-2">2 pairs</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">12</td><td class="p-2">Lagays (Boys)</td><td class="p-2">2 pairs</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">13</td><td class="p-2">White hair bands (Girls)</td><td class="p-2">3 nos</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">14</td><td class="p-2">Kabney & Rachu</td><td class="p-2">1 each</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">15</td><td class="p-2">Pillow with covers</td><td class="p-2">2 nos</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">16</td><td class="p-2">Bucket & jug</td><td class="p-2">1 each</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">17</td><td class="p-2">Hard brooms</td><td class="p-2">1 each</td><td class="p-2 text-xs text-gray-500">Boys</td></tr>
+                <tr><td class="p-2">18</td><td class="p-2">Soft brooms</td><td class="p-2">1 each</td><td class="p-2 text-xs text-gray-500">Girls</td></tr>
+                <tr><td class="p-2">19</td><td class="p-2">Washing soaps (Dettol/Lifebuoy)</td><td class="p-2">5 each</td><td class="p-2 text-xs text-gray-500">Both boys & girls</td></tr>
+                <tr><td class="p-2">20</td><td class="p-2">Clothes drying clips</td><td class="p-2">10 each</td><td class="p-2 text-xs text-gray-500">Both boys & girls</td></tr>
+                <tr><td class="p-2">21</td><td class="p-2">Sportswear and equipment</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">Depends on interest</td></tr>
+                <tr><td class="p-2">22</td><td class="p-2">Medical documents (if chronic illness)</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">To be produced at admission</td></tr>
+                <tr><td class="p-2">23</td><td class="p-2">Certificates and recommendations (if owned)</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">24</td><td class="p-2">School leaving certificate, marksheet, character certificate</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">25</td><td class="p-2">CID copies of student, parents (if possessed)</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">26</td><td class="p-2">Flat file</td><td class="p-2">1 no</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">27</td><td class="p-2">Half photo</td><td class="p-2">2 nos</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">28</td><td class="p-2">Legal stamp</td><td class="p-2">2 nos</td><td class="p-2 text-xs text-gray-500">Do</td></tr>
+                <tr><td class="p-2">29</td><td class="p-2">Mobile phone</td><td class="p-2">1 only</td><td class="p-2 text-xs text-gray-500">—</td></tr>
+                <tr><td class="p-2">30</td><td class="p-2">School fee for Term-I</td><td class="p-2">—</td><td class="p-2 text-xs text-gray-500">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+            <h4 class="font-bold text-yellow-800 dark:text-yellow-400 text-sm mb-2"><i class="fas fa-exclamation-triangle mr-1"></i>Important Notes:</h4>
+            <ol class="text-xs text-yellow-700 dark:text-yellow-300 space-y-1 list-decimal list-inside">
+              <li>Bring casual dresses (both for winter and summer) & warm blankets.</li>
+              <li>Not allowed to bring electronic gadgets, jewelries, water boiler.</li>
+              <li>Strictly prohibited to bring sharp objects or weapons, nuts, tobacco, drug related items & junk food.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal delay-200">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-t-4 border-blue-600 sticky top-24">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Online Registration</h2>
+          <!-- Progress steps -->
+          <div class="flex items-center mb-6">
+            <div class="step-dot w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold" id="step1-dot">1</div>
+            <div class="flex-1 h-1 bg-gray-200 dark:bg-gray-700" id="step-line"></div>
+            <div class="step-dot w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-400 flex items-center justify-center text-xs font-bold" id="step2-dot">2</div>
+            <div class="flex-1 h-1 bg-gray-200 dark:bg-gray-700" id="step-line2"></div>
+            <div class="step-dot w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-400 flex items-center justify-center text-xs font-bold" id="step3-dot">3</div>
+          </div>
+          <form id="admission-form" novalidate>
+            <!-- Step 1 -->
+            <div id="form-step1">
+              <p class="text-xs text-gray-400 uppercase tracking-wider mb-4 font-bold">Step 1 — Personal Details</p>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Full Name <span class="text-red-500">*</span></label>
+                  <input type="text" name="fullName" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" oninput="app.validateField(this)">
+                  <div class="err-msg hidden">Please enter full name</div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Class Applying <span class="text-red-500">*</span></label>
+                    <select name="classApplying" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" onchange="app.validateField(this)">
+                      <option value="">Select Class</option>
+                      <option>Class VII</option><option>Class VIII</option><option>Class IX</option><option>Class X</option>
+                      <option>XI - Science</option><option>XI - Commerce</option><option>XI - Arts</option>
+                      <option>XII - Science</option><option>XII - Commerce</option><option>XII - Arts</option>
+                    </select>
+                    <div class="err-msg hidden">Please select a class</div>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Date of Birth <span class="text-red-500">*</span></label>
+                    <input type="date" name="dob" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" onchange="app.validateField(this)">
+                    <div class="err-msg hidden">Please enter date of birth</div>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">CID Number <span class="text-red-500">*</span></label>
+                  <input type="text" name="cid" required pattern="\d{11}" class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="e.g. 1060XXXXXXX" oninput="app.validateField(this)">
+                  <div class="err-msg hidden">Enter valid 11-digit CID</div>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Parent Contact <span class="text-red-500">*</span></label>
+                  <input type="tel" name="contact" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="+975-XXXXXXXX" oninput="app.validateField(this)">
+                  <div class="err-msg hidden">Please enter contact number</div>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Student Type <span class="text-red-500">*</span></label>
+                  <div class="grid grid-cols-2 gap-4">
+                    <label class="flex items-center gap-3 p-3 border dark:border-gray-600 rounded-lg cursor-pointer hover:bg-blue-50 dark:hover:bg-gray-700 transition">
+                      <input type="radio" name="studentType" value="Boarder" required class="text-primary w-4 h-4">
+                      <div><span class="font-bold text-sm dark:text-white">Boarder</span><p class="text-xs text-gray-500 dark:text-gray-400">Residential student</p></div>
+                      <i class="fas fa-bed text-primary ml-auto"></i>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 border dark:border-gray-600 rounded-lg cursor-pointer hover:bg-blue-50 dark:hover:bg-gray-700 transition">
+                      <input type="radio" name="studentType" value="Day Scholar" required class="text-primary w-4 h-4">
+                      <div><span class="font-bold text-sm dark:text-white">Day Scholar</span><p class="text-xs text-gray-500 dark:text-gray-400">Non-residential</p></div>
+                      <i class="fas fa-home text-primary ml-auto"></i>
+                    </label>
+                  </div>
+                </div>
+                <button type="button" onclick="app.nextStep(1)" class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-600 shadow-lg transition mt-2">Next — School Info &rarr;</button>
+              </div>
+            </div>
+            <!-- Step 2 -->
+            <div id="form-step2" class="hidden">
+              <p class="text-xs text-gray-400 uppercase tracking-wider mb-4 font-bold">Step 2 — Previous School</p>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Previous School Name <span class="text-red-500">*</span></label>
+                  <input type="text" name="previousSchool" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="Name of previous school">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Previous Class <span class="text-red-500">*</span></label>
+                    <select name="previousClass" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                      <option value="">Select</option>
+                      <option>Class VI</option><option>Class VII</option><option>Class VIII</option><option>Class IX</option><option>Class X</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Percentage <span class="text-red-500">*</span></label>
+                    <input type="number" name="previousPercentage" min="0" max="100" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="e.g. 78.5">
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Upload Marksheet <span class="text-red-500">*</span></label>
+                  <div class="upload-zone rounded-xl p-6 text-center" id="marksheet-zone" onclick="document.getElementById('marksheet-input').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="event.preventDefault();this.classList.remove('dragover');app.handleFilePreview(event,'marksheet')">
+                    <input type="file" id="marksheet-input" name="marksheet" accept=".pdf,.jpg,.jpeg,.png" required class="hidden" onchange="app.handleFilePreview(event,'marksheet')">
+                    <i class="fas fa-file-upload text-3xl text-blue-400 mb-2" id="marksheet-icon"></i>
+                    <p class="text-gray-600 dark:text-gray-300 font-bold" id="marksheet-text">Click or drag marksheet here</p>
+                    <p class="text-xs text-gray-400">PDF, JPG, PNG (max 5MB)</p>
+                    <p class="text-xs text-green-600 mt-1 hidden" id="marksheet-filename"></p>
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <button type="button" onclick="app.prevStep(2)" class="flex-1 border-2 border-primary text-primary font-bold py-3 rounded-lg hover:bg-blue-50 transition">&larr; Back</button>
+                  <button type="button" onclick="app.nextStep(2)" class="flex-1 bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-600 transition">Next &rarr;</button>
+                </div>
+              </div>
+            </div>
+            <!-- Step 3 -->
+            <div id="form-step3" class="hidden">
+              <p class="text-xs text-gray-400 uppercase tracking-wider mb-4 font-bold">Step 3 — Review & Submit</p>
+              <div id="review-box" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-sm mb-4 space-y-1 dark:text-gray-200"></div>
+              <div class="flex gap-3">
+                <button type="button" onclick="app.prevStep(3)" class="flex-1 border-2 border-primary text-primary font-bold py-3 rounded-lg hover:bg-blue-50 transition">&larr; Back</button>
+                <button type="submit" id="submit-btn" class="flex-1 bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-600 shadow-lg glow-btn transition">Submit Application</button>
+              </div>
+            </div>
+          </form>
+          <div id="admission-confirmation" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+            <p class="text-green-700 dark:text-green-400 text-sm font-bold"><i class="fas fa-check-circle mr-2"></i>Application submitted successfully!</p>
+            <p class="text-xs text-gray-500 mt-1">We will contact you within 3 business days.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scholarship Section -->
+  <div id="admissions-scholarship" class="max-w-7xl mx-auto px-4 mt-4 pb-16 pt-4 border-t dark:border-gray-700 reveal">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-primary mb-2"><i class="fas fa-award mr-2"></i>Scholarship Application 2025</h2>
+      <p class="text-gray-600 dark:text-gray-300">Financial Support for Deserving Students</p>
+    </div>
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-t-4 border-accent mb-8">
+        <h3 class="text-xl font-bold text-primary mb-4">Apply for Scholarship</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">Tenzin Academy offers scholarships to meritorious and deserving students.</p>
+        <form id="scholarship-form">
+          <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Full Name <span class="text-red-500">*</span></label>
+                <input type="text" name="scholarName" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Current Class <span class="text-red-500">*</span></label>
+                <select name="scholarClass" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                  <option value="">Select Class</option>
+                  <option>Class VII</option><option>Class VIII</option><option>Class IX</option><option>Class X</option><option>Class XI</option><option>Class XII</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">CID Number <span class="text-red-500">*</span></label>
+                <input type="text" name="scholarCid" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="e.g. 1060XXXXXXX">
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Parent Contact <span class="text-red-500">*</span></label>
+                <input type="tel" name="scholarContact" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="+975-XXXXXXXX">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Scholarship Category <span class="text-red-500">*</span></label>
+              <select name="scholarCategory" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                <option value="">Select Category</option>
+                <option>Merit-Based (Academic Excellence)</option>
+                <option>Need-Based (Financial Assistance)</option>
+                <option>Sports Excellence</option>
+                <option>Cultural Talent</option>
+                <option>GNH Values & Community Service</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Why do you deserve this scholarship? (100 words max) <span class="text-red-500">*</span></label>
+              <textarea name="scholarReason" rows="4" maxlength="500" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="Describe your achievements, circumstances, or talents…"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Previous Academic Percentage <span class="text-red-500">*</span></label>
+              <input type="number" name="scholarPercentage" min="0" max="100" step="0.01" required class="w-full border rounded p-2 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="e.g. 85.5">
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Upload Latest Marksheet <span class="text-red-500">*</span></label>
+              <div class="upload-zone rounded-xl p-6 text-center" id="scholar-marksheet-zone" onclick="document.getElementById('scholar-marksheet-input').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="event.preventDefault();this.classList.remove('dragover');app.handleFilePreview(event,'scholarMarksheet')">
+                <input type="file" id="scholar-marksheet-input" name="scholarMarksheet" accept=".pdf,.jpg,.jpeg,.png" required class="hidden" onchange="app.handleFilePreview(event,'scholarMarksheet')">
+                <i class="fas fa-file-upload text-3xl text-blue-400 mb-2" id="scholar-marksheet-icon"></i>
+                <p class="text-gray-600 dark:text-gray-300 font-bold" id="scholar-marksheet-text">Click or drag marksheet here</p>
+                <p class="text-xs text-gray-400">PDF, JPG, PNG (max 5MB)</p>
+                <p class="text-xs text-green-600 mt-1 hidden" id="scholar-marksheet-filename"></p>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Upload Supporting Certificate (if any)</label>
+              <div class="upload-zone rounded-xl p-6 text-center" id="scholar-cert-zone" onclick="document.getElementById('scholar-cert-input').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="event.preventDefault();this.classList.remove('dragover');app.handleFilePreview(event,'scholarCert')">
+                <input type="file" id="scholar-cert-input" name="scholarCert" accept=".pdf,.jpg,.jpeg,.png" class="hidden" onchange="app.handleFilePreview(event,'scholarCert')">
+                <i class="fas fa-certificate text-3xl text-accent mb-2" id="scholar-cert-icon"></i>
+                <p class="text-gray-600 dark:text-gray-300 font-bold" id="scholar-cert-text">Click or drag certificate here</p>
+                <p class="text-xs text-gray-400">Sports, Cultural, or other achievement certificates</p>
+                <p class="text-xs text-green-600 mt-1 hidden" id="scholar-cert-filename"></p>
+              </div>
+            </div>
+            <button type="submit" id="scholar-submit-btn" class="w-full bg-accent text-blue-900 font-bold py-3 rounded-lg hover:bg-yellow-400 shadow-lg glow-btn mt-4">Apply for Scholarship</button>
+          </div>
+        </form>
+        <div id="scholarship-confirmation" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+          <p class="text-green-700 dark:text-green-400 text-sm font-bold"><i class="fas fa-check-circle mr-2"></i>Scholarship application submitted successfully!</p>
+          <p class="text-xs text-gray-500 mt-1">We will review your application and contact you within 7 business days.</p>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+        <h3 class="text-xl font-bold text-primary mb-4">Scholarship Categories</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="flex items-start gap-3 p-3 bg-yellow-50 dark:bg-gray-700 rounded-lg"><i class="fas fa-medal text-yellow-600 text-xl mt-1"></i><div><h4 class="font-bold dark:text-white">Merit-Based</h4><p class="text-xs text-gray-600 dark:text-gray-400">For students with 80%+ academic performance</p></div></div>
+          <div class="flex items-start gap-3 p-3 bg-green-50 dark:bg-gray-700 rounded-lg"><i class="fas fa-hand-holding-heart text-green-600 text-xl mt-1"></i><div><h4 class="font-bold dark:text-white">Need-Based</h4><p class="text-xs text-gray-600 dark:text-gray-400">For families demonstrating financial need</p></div></div>
+          <div class="flex items-start gap-3 p-3 bg-blue-50 dark:bg-gray-700 rounded-lg"><i class="fas fa-running text-blue-600 text-xl mt-1"></i><div><h4 class="font-bold dark:text-white">Sports Excellence</h4><p class="text-xs text-gray-600 dark:text-gray-400">For outstanding athletes at district/national level</p></div></div>
+          <div class="flex items-start gap-3 p-3 bg-purple-50 dark:bg-gray-700 rounded-lg"><i class="fas fa-palette text-purple-600 text-xl mt-1"></i><div><h4 class="font-bold dark:text-white">Cultural Talent</h4><p class="text-xs text-gray-600 dark:text-gray-400">For excellence in traditional arts, music, dance</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: PROGRAMS -->
+<footer class="bg-gray-900 text-white pt-16 pb-8 border-t-4 border-accent mt-auto">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 flex items-center justify-center"><img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-school text-primary text-xl\'></i>'"></div>
+          <span class="font-bold text-xl tracking-wider font-serif text-accent">TENZIN ACADEMY</span>
+        </div>
+        <p class="text-gray-400 text-sm mb-6">Nurturing minds, building futures, and preserving Bhutanese values for a better tomorrow.</p>
+        <div class="flex gap-4">
+          <a href="https://www.facebook.com/people/Tenzin-Academy/61569807146868/" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@tenzin.academy" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Quick Links</h3>
+        <ul class="space-y-3 text-sm text-gray-400">
+          <li><a href="index.html" class="hover:text-accent transition text-left">Home</a></li>
+          <li><a href="about.html" class="hover:text-accent transition text-left">About Us</a></li>
+          <li><a href="programs.html" class="hover:text-accent transition text-left">Academic Programs</a></li>
+          <li><a href="admissions.html" class="hover:text-accent transition text-left">Admissions</a></li>
+          <li><a href="gallery.html" class="hover:text-accent transition text-left">Gallery</a></li>
+          <li><a href="faculty.html" class="hover:text-accent transition text-left">Faculty & Staff</a></li>
+          <li><a href="contact.html" class="hover:text-accent transition text-left">Contact Us</a></li>
+          <li><a href="vacancy.html" class="hover:text-accent transition text-left font-bold text-accent">Vacancy</a></li>
+          <li><a href="login.html" class="hover:text-accent transition text-left">Portal Login</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Contact Us</h3>
+        <ul class="space-y-4 text-sm text-gray-400">
+          <li class="flex gap-3 items-start"><i class="fas fa-map-marker-alt mt-1 text-primary"></i><span>Kichu, Lamgong,<br>Paro, Bhutan</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-phone-alt text-primary"></i><span>+975-17578882/17805484</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-envelope text-primary"></i><span>tenzinacademy@education.gov.bt</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-clock text-primary"></i><span>Mon-Fri: 8:00 AM - 4:30 PM</span></li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+      <p>&copy; 2025 Tenzin Academy. All rights reserved.</p>
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <a href="#" class="hover:text-white">Privacy Policy</a>
+        <a href="#" class="hover:text-white">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

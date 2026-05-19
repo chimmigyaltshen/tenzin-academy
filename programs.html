@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenzin Academy | Excellence in Education</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: { extend: { colors: { primary: '#0080FF', accent: '#e4e62d', darkbg: '#111827' } } }
+  }
+</script>
+<link rel="stylesheet" href="css/styles.css">
+<base target="_blank">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+<div id="page-progress"></div>
+<div id="toast-container"></div>
+
+<!-- Back to Top -->
+<div id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to Top"><i class="fas fa-chevron-up text-sm"></i></div>
+
+<!-- AI Chatbot FAB -->
+<div id="search-overlay" onclick="if(event.target===this) app.closeSearch()">
+  <div class="w-full max-w-xl px-4">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+      <div class="flex items-center gap-3 p-4 border-b dark:border-gray-700">
+        <i class="fas fa-search text-gray-400"></i>
+        <input id="search-input" type="text" placeholder="Search pages, programs, faculty…" class="flex-1 text-sm focus:outline-none dark:bg-gray-800 dark:text-white" oninput="app.doSearch(this.value)" onkeydown="if(event.key==='Escape') app.closeSearch()">
+        <button onclick="app.closeSearch()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="search-results" class="max-h-72 overflow-y-auto p-2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="bg-primary text-white shadow-lg sticky top-0 z-50 border-b-4 border-accent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20 items-center">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+        <div class="w-14 h-14 flex items-center justify-center hover:rotate-12 transition-transform duration-300">
+          <img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-school text-accent text-2xl\'></i>'">
+        </div>
+        <div class="leading-tight">
+          <span class="font-bold text-xl tracking-wider font-serif text-accent block">TENZIN ACADEMY</span>
+          <span class="text-[10px] uppercase tracking-widest opacity-90">Paro, Bhutan</span>
+        </div>
+      </div>
+      <div class="hidden lg:flex items-center space-x-6">
+        <button onclick="window.location.href='index.html'" class="font-bold hover:text-accent transition relative group text-sm">Home<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='about.html'" class="font-bold hover:text-accent transition relative group text-sm">About<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='programs.html'" class="font-bold hover:text-accent transition relative group text-sm">Academics<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='admissions.html'" class="font-bold hover:text-accent transition relative group text-sm">Admissions<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='faculty.html'" class="font-bold hover:text-accent transition relative group text-sm">Faculty<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='gallery.html'" class="font-bold hover:text-accent transition relative group text-sm">Gallery<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='contact.html'" class="font-bold hover:text-accent transition relative group text-sm">Contact<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button><button onclick="window.location.href='vacancy.html'" class="font-bold hover:text-accent transition relative group text-sm">Vacancy<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button><button onclick="window.location.href='login.html'" class="bg-accent text-blue-900 px-4 py-2 rounded-lg font-bold hover:scale-105 transition text-sm ml-4">Portal Login</button>
+        <button onclick="app.openSearch()" class="p-2 rounded-full hover:bg-white/10 transition" title="Search"><i class="fas fa-search"></i></button>
+        <button onclick="app.toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition" title="Toggle Dark Mode"><i class="fas fa-moon" id="theme-icon"></i></button>
+      </div>
+      <button class="lg:hidden text-2xl focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden lg:hidden bg-primary border-t border-blue-400 absolute w-full shadow-xl z-50">
+    <button onclick="window.location.href='index.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Home</button>
+    <button onclick="window.location.href='about.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">About</button>
+    <button onclick="window.location.href='programs.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Academics</button>
+    <button onclick="window.location.href='admissions.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Admissions</button>
+    <button onclick="window.location.href='faculty.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Faculty</button>
+    <button onclick="window.location.href='gallery.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Gallery</button>
+    <button onclick="window.location.href='contact.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Contact</button>
+    <button onclick="app.openSearch();document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500"><i class="fas fa-search mr-2"></i>Search</button>
+  </div>
+</nav>
+
+<!-- PAGE: HOME -->
+<div id="programs" class="page-section">
+  <header class="bg-gray-900 text-white py-20 text-center hero-animated"><h1 class="text-4xl font-bold relative z-10">Academic Programs</h1></header>
+  <main class="max-w-6xl mx-auto px-4 py-16 space-y-20">
+    <section id="sec-lower" class="flex flex-col md:flex-row gap-12 items-center reveal">
+      <div class="md:w-1/3 text-center text-6xl text-blue-500 perspective-container"><div class="perspective-img bg-blue-50 p-10 rounded-xl"><i class="fas fa-book-reader"></i></div></div>
+      <div class="md:w-2/3">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 border-l-4 border-primary pl-4">Lower Secondary (VI-VIII)</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Foundation years focusing on literacy and numeracy. Our curriculum emphasizes holistic development through GNH values.</p>
+        <button onclick="window.location.href='programs.html#page-lower'" class="bg-primary text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-blue-600">View Details</button>
+      </div>
+    </section>
+    <section id="sec-middle" class="flex flex-col md:flex-row-reverse gap-12 items-center reveal">
+      <div class="md:w-1/3 text-center text-6xl text-purple-600 perspective-container"><div class="perspective-img bg-purple-50 p-10 rounded-xl"><i class="fas fa-graduation-cap"></i></div></div>
+      <div class="md:w-2/3 text-right">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 border-r-4 border-purple-600 pr-4">Middle Secondary (IX-X)</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Rigorous preparation for BCSE Board Examinations with extensive support and mock exams.</p>
+        <button onclick="window.location.href='programs.html#page-middle'" class="bg-purple-600 text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-purple-700">View Curriculum</button>
+      </div>
+    </section>
+    <section id="sec-higher" class="reveal">
+      <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-10">Higher Secondary (XI-XII)</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div onclick="window.location.href='programs.html#page-science'" class="bg-white dark:bg-gray-800 p-6 rounded-xl border-t-4 border-green-600 shadow hover-lift cursor-pointer"><h3 class="font-bold mb-2 dark:text-white">Science</h3><p class="text-sm text-gray-600 dark:text-gray-400">Physics, Chemistry, Biology/Math</p></div>
+        <div onclick="window.location.href='programs.html#page-commerce'" class="bg-white dark:bg-gray-800 p-6 rounded-xl border-t-4 border-blue-600 shadow hover-lift cursor-pointer"><h3 class="font-bold mb-2 dark:text-white">Commerce</h3><p class="text-sm text-gray-600 dark:text-gray-400">Accounting, Econ, B.Math</p></div>
+        <div onclick="window.location.href='programs.html#page-arts'" class="bg-white dark:bg-gray-800 p-6 rounded-xl border-t-4 border-orange-600 shadow hover-lift cursor-pointer"><h3 class="font-bold mb-2 dark:text-white">Arts</h3><p class="text-sm text-gray-600 dark:text-gray-400">History, Geo, Rigzhung</p></div>
+      </div>
+    </section>
+    <section class="reveal">
+      <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-10">Life at Tenzin</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="relative h-64 rounded-xl overflow-hidden group hover-lift"><img src="students.jpg" alt="Student Activities" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div><div class="absolute bottom-0 left-0 p-6"><h3 class="text-white font-bold text-xl mb-1">Student Activities</h3><p class="text-white/80 text-sm">Clubs, societies, and leadership</p></div></div>
+        <div class="relative h-64 rounded-xl overflow-hidden group hover-lift"><img src="sports.jpg" alt="Athletics" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div><div class="absolute bottom-0 left-0 p-6"><h3 class="text-white font-bold text-xl mb-1">Athletics</h3><p class="text-white/80 text-sm">Football, basketball, track & field</p></div></div>
+        <div class="relative h-64 rounded-xl overflow-hidden group hover-lift"><img src="cultural.jpg" alt="Tradition" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div><div class="absolute bottom-0 left-0 p-6"><h3 class="text-white font-bold text-xl mb-1">Bhutanese Tradition</h3><p class="text-white/80 text-sm">Culture, dzongkha, and values</p></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- PAGE: FACULTY -->
+<div id="page-lower" class="page-section">
+  <header class="bg-blue-600 text-white py-16 text-center"><h1 class="text-3xl font-bold">Lower Secondary (VI-VIII)</h1></header>
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-8">
+      <h2 class="text-2xl font-bold text-primary mb-4">Curriculum Overview</h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-4">Foundation years focusing on literacy, numeracy, and scientific inquiry.</p>
+      <h3 class="font-bold text-lg mb-2 dark:text-white">Core Subjects:</h3>
+      <ul class="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
+        <li>Dzongkha</li><li>English</li><li>Mathematics</li><li>Science</li><li>History & Civics / Geography</li><li>ICT</li>
+      </ul>
+    </div>
+    <button onclick="window.location.href='programs.html'" class="text-blue-500 hover:underline">&larr; Back to Programs</button>
+  </div>
+</div>
+<div id="page-middle" class="page-section">
+  <header class="bg-purple-700 text-white py-16 text-center"><h1 class="text-3xl font-bold">Middle Secondary (IX-X)</h1></header>
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-8 border-t-4 border-purple-500">
+      <div class="flex justify-between items-start mb-6">
+        <h2 class="text-2xl font-bold text-primary dark:text-white">Class X - BCSE Focus</h2>
+        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold">Board Exam Year</span>
+      </div>
+      <p class="text-gray-600 dark:text-gray-300 mb-6">Intensively designed to prepare students for the BCSE examinations.</p>
+      <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+        <h4 class="font-bold text-purple-600 mb-2">Subject Combinations</h4>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Mandatory: Dzongkha, English, Math.<br>Electives: Economics/Science, IT/Agri/EVS.</p>
+      </div>
+    </div>
+    <button onclick="window.location.href='programs.html'" class="text-purple-500 hover:underline">&larr; Back to Programs</button>
+  </div>
+</div>
+<div id="page-science" class="page-section">
+  <header class="bg-green-700 text-white py-16 text-center"><h1 class="text-3xl font-bold">Science Stream (XI-XII)</h1></header>
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <div class="flex flex-col md:flex-row gap-8">
+      <div class="md:w-2/3">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-6">
+          <h2 class="text-2xl font-bold text-green-700 mb-4">Innovation & Discovery</h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">For careers in Medicine, Engineering, Technology, and Research.</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left border-collapse">
+              <thead class="bg-green-50 dark:bg-gray-700 uppercase"><tr><th class="p-3 dark:text-gray-300">Compulsory</th><th class="p-3 dark:text-gray-300">Electives (Choose 2)</th></tr></thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+                <tr><td class="p-3">English</td><td class="p-3">Physics</td></tr>
+                <tr><td class="p-3">Dzongkha</td><td class="p-3">Chemistry</td></tr>
+                <tr><td class="p-3"></td><td class="p-3">Biology / Mathematics</td></tr>
+                <tr><td class="p-3"></td><td class="p-3">ICT / Agriculture</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="md:w-1/3">
+        <div class="bg-green-50 dark:bg-gray-800 p-6 rounded-xl border border-green-200 dark:border-green-900 sticky top-24">
+          <h3 class="font-bold text-green-800 dark:text-green-400 mb-4">Why Science at Tenzin?</h3>
+          <ul class="space-y-3 text-sm dark:text-gray-300">
+            <li class="flex gap-2"><i class="fas fa-microscope text-green-600 mt-1"></i>Top science faculty</li>
+            <li class="flex gap-2"><i class="fas fa-laptop-code text-green-600 mt-1"></i>Rigorous academic commitment</li>
+          </ul>
+          <button onclick="window.location.href='admissions.html'" class="w-full bg-green-600 text-white font-bold py-2 rounded mt-6 hover:bg-green-700">Apply Now</button>
+        </div>
+      </div>
+    </div>
+    <button onclick="window.location.href='programs.html'" class="text-green-600 hover:underline mt-8">&larr; Back to Programs</button>
+  </div>
+</div>
+<div id="page-commerce" class="page-section">
+  <header class="bg-blue-700 text-white py-16 text-center"><h1 class="text-3xl font-bold">Commerce Stream (XI-XII)</h1></header>
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-8 border-l-8 border-blue-600">
+      <h2 class="text-2xl font-bold text-blue-700 mb-4">Business & Economics</h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-6">Equips students with financial literacy, economic understanding, and business acumen.</p>
+      <ul class="space-y-2 text-gray-600 dark:text-gray-300">
+        <li><i class="fas fa-book text-blue-400 mr-2"></i>Accountancy</li>
+        <li><i class="fas fa-chart-pie text-blue-400 mr-2"></i>Economics</li>
+        <li><i class="fas fa-calculator text-blue-400 mr-2"></i>Business Mathematics</li>
+        <li><i class="fas fa-briefcase text-blue-400 mr-2"></i>Commerce</li>
+      </ul>
+    </div>
+    <button onclick="window.location.href='programs.html'" class="text-blue-600 hover:underline">&larr; Back to Programs</button>
+  </div>
+</div>
+<div id="page-arts" class="page-section">
+  <header class="bg-orange-600 text-white py-16 text-center"><h1 class="text-3xl font-bold">Arts & Humanities (XI-XII)</h1></header>
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <div class="flex flex-col md:flex-row gap-8">
+      <div class="md:w-2/3">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-orange-100 dark:bg-orange-900 rounded-bl-full -mr-8 -mt-8"></div>
+          <h2 class="text-2xl font-bold text-orange-600 mb-4 relative z-10">Culture, Society & Media</h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-6 relative z-10">Fostering critical thinking, creativity, and deep understanding of human society.</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
+            <div class="text-center p-4 border dark:border-gray-700 rounded-lg hover:bg-orange-50 dark:hover:bg-gray-700 transition"><i class="fas fa-globe-asia text-2xl text-orange-500 mb-2"></i><p class="font-bold text-sm dark:text-gray-200">Geography</p></div>
+            <div class="text-center p-4 border dark:border-gray-700 rounded-lg hover:bg-orange-50 dark:hover:bg-gray-700 transition"><i class="fas fa-landmark text-2xl text-orange-500 mb-2"></i><p class="font-bold text-sm dark:text-gray-200">History</p></div>
+            <div class="text-center p-4 border dark:border-gray-700 rounded-lg hover:bg-orange-50 dark:hover:bg-gray-700 transition"><i class="fas fa-scroll text-2xl text-orange-500 mb-2"></i><p class="font-bold text-sm dark:text-gray-200">Rigzhung</p></div>
+            <div class="text-center p-4 border dark:border-gray-700 rounded-lg hover:bg-orange-50 dark:hover:bg-gray-700 transition"><i class="fas fa-video text-2xl text-orange-500 mb-2"></i><p class="font-bold text-sm dark:text-gray-200">Media Studies</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="md:w-1/3">
+        <div class="bg-orange-50 dark:bg-gray-800 p-6 rounded-xl border border-orange-200 dark:border-orange-900 sticky top-24">
+          <h3 class="font-bold text-orange-800 dark:text-orange-400 mb-4">Why Arts at Tenzin?</h3>
+          <ul class="space-y-3 text-sm dark:text-gray-300">
+            <li class="flex gap-2"><i class="fas fa-gavel text-orange-600 mt-1"></i>Law & Policy Clubs</li>
+            <li class="flex gap-2"><i class="fas fa-microphone text-orange-600 mt-1"></i>Media Center Access</li>
+            <li class="flex gap-2"><i class="fas fa-book-reader text-orange-600 mt-1"></i>Cultural Immersion</li>
+          </ul>
+          <button onclick="window.location.href='admissions.html'" class="w-full bg-orange-600 text-white font-bold py-2 rounded mt-6 hover:bg-orange-700">Apply Now</button>
+        </div>
+      </div>
+    </div>
+    <button onclick="window.location.href='programs.html'" class="text-orange-600 hover:underline mt-8">&larr; Back to Programs</button>
+  </div>
+</div>
+
+<!-- PAGE: ABOUT -->
+<footer class="bg-gray-900 text-white pt-16 pb-8 border-t-4 border-accent mt-auto">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 flex items-center justify-center"><img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-school text-primary text-xl\'></i>'"></div>
+          <span class="font-bold text-xl tracking-wider font-serif text-accent">TENZIN ACADEMY</span>
+        </div>
+        <p class="text-gray-400 text-sm mb-6">Nurturing minds, building futures, and preserving Bhutanese values for a better tomorrow.</p>
+        <div class="flex gap-4">
+          <a href="https://www.facebook.com/people/Tenzin-Academy/61569807146868/" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@tenzin.academy" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Quick Links</h3>
+        <ul class="space-y-3 text-sm text-gray-400">
+          <li><a href="index.html" class="hover:text-accent transition text-left">Home</a></li>
+          <li><a href="about.html" class="hover:text-accent transition text-left">About Us</a></li>
+          <li><a href="programs.html" class="hover:text-accent transition text-left">Academic Programs</a></li>
+          <li><a href="admissions.html" class="hover:text-accent transition text-left">Admissions</a></li>
+          <li><a href="gallery.html" class="hover:text-accent transition text-left">Gallery</a></li>
+          <li><a href="faculty.html" class="hover:text-accent transition text-left">Faculty & Staff</a></li>
+          <li><a href="contact.html" class="hover:text-accent transition text-left">Contact Us</a></li>
+          <li><a href="vacancy.html" class="hover:text-accent transition text-left font-bold text-accent">Vacancy</a></li>
+          <li><a href="login.html" class="hover:text-accent transition text-left">Portal Login</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Contact Us</h3>
+        <ul class="space-y-4 text-sm text-gray-400">
+          <li class="flex gap-3 items-start"><i class="fas fa-map-marker-alt mt-1 text-primary"></i><span>Kichu, Lamgong,<br>Paro, Bhutan</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-phone-alt text-primary"></i><span>+975-17578882/17805484</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-envelope text-primary"></i><span>tenzinacademy@education.gov.bt</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-clock text-primary"></i><span>Mon-Fri: 8:00 AM - 4:30 PM</span></li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+      <p>&copy; 2025 Tenzin Academy. All rights reserved.</p>
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <a href="#" class="hover:text-white">Privacy Policy</a>
+        <a href="#" class="hover:text-white">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

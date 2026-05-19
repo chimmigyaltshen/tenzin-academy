@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenzin Academy | Excellence in Education</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: { extend: { colors: { primary: '#0080FF', accent: '#e4e62d', darkbg: '#111827' } } }
+  }
+</script>
+<link rel="stylesheet" href="css/styles.css">
+<base target="_blank">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+<div id="page-progress"></div>
+<div id="toast-container"></div>
+
+<!-- Back to Top -->
+<div id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to Top"><i class="fas fa-chevron-up text-sm"></i></div>
+
+<!-- AI Chatbot FAB -->
+<div id="search-overlay" onclick="if(event.target===this) app.closeSearch()">
+  <div class="w-full max-w-xl px-4">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+      <div class="flex items-center gap-3 p-4 border-b dark:border-gray-700">
+        <i class="fas fa-search text-gray-400"></i>
+        <input id="search-input" type="text" placeholder="Search pages, programs, faculty…" class="flex-1 text-sm focus:outline-none dark:bg-gray-800 dark:text-white" oninput="app.doSearch(this.value)" onkeydown="if(event.key==='Escape') app.closeSearch()">
+        <button onclick="app.closeSearch()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="search-results" class="max-h-72 overflow-y-auto p-2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="bg-primary text-white shadow-lg sticky top-0 z-50 border-b-4 border-accent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20 items-center">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+        <div class="w-14 h-14 flex items-center justify-center hover:rotate-12 transition-transform duration-300">
+          <img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-school text-accent text-2xl\'></i>'">
+        </div>
+        <div class="leading-tight">
+          <span class="font-bold text-xl tracking-wider font-serif text-accent block">TENZIN ACADEMY</span>
+          <span class="text-[10px] uppercase tracking-widest opacity-90">Paro, Bhutan</span>
+        </div>
+      </div>
+      <div class="hidden lg:flex items-center space-x-6">
+        <button onclick="window.location.href='index.html'" class="font-bold hover:text-accent transition relative group text-sm">Home<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='about.html'" class="font-bold hover:text-accent transition relative group text-sm">About<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='programs.html'" class="font-bold hover:text-accent transition relative group text-sm">Academics<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='admissions.html'" class="font-bold hover:text-accent transition relative group text-sm">Admissions<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='faculty.html'" class="font-bold hover:text-accent transition relative group text-sm">Faculty<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='gallery.html'" class="font-bold hover:text-accent transition relative group text-sm">Gallery<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
+        <button onclick="window.location.href='contact.html'" class="font-bold hover:text-accent transition relative group text-sm">Contact<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button><button onclick="window.location.href='vacancy.html'" class="font-bold hover:text-accent transition relative group text-sm">Vacancy<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button><button onclick="window.location.href='login.html'" class="bg-accent text-blue-900 px-4 py-2 rounded-lg font-bold hover:scale-105 transition text-sm ml-4">Portal Login</button>
+        <button onclick="app.openSearch()" class="p-2 rounded-full hover:bg-white/10 transition" title="Search"><i class="fas fa-search"></i></button>
+        <button onclick="app.toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition" title="Toggle Dark Mode"><i class="fas fa-moon" id="theme-icon"></i></button>
+      </div>
+      <button class="lg:hidden text-2xl focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden lg:hidden bg-primary border-t border-blue-400 absolute w-full shadow-xl z-50">
+    <button onclick="window.location.href='index.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Home</button>
+    <button onclick="window.location.href='about.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">About</button>
+    <button onclick="window.location.href='programs.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Academics</button>
+    <button onclick="window.location.href='admissions.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Admissions</button>
+    <button onclick="window.location.href='faculty.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Faculty</button>
+    <button onclick="window.location.href='gallery.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Gallery</button>
+    <button onclick="window.location.href='contact.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Contact</button>
+    <button onclick="app.openSearch();document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500"><i class="fas fa-search mr-2"></i>Search</button>
+  </div>
+</nav>
+
+<!-- PAGE: HOME -->
+<div id="about" class="page-section">
+  <header class="bg-primary text-white py-16 text-center hero-animated"><h1 class="text-4xl font-bold relative z-10">About Us</h1></header>
+  <main class="max-w-7xl mx-auto px-4 py-16 space-y-20">
+    <div class="flex flex-col md:flex-row gap-12 items-center reveal">
+      <div class="w-full md:w-1/2 glass-card p-8 md:p-12 hover-lift">
+        <h2 class="text-3xl font-bold text-primary mb-6 gradient-text">Our History</h2>
+        <p class="text-gray-700 dark:text-gray-300 text-justify mb-4 leading-relaxed">Tenzin Academy was reestablished in 2025 by management in Kichu, Paro. With a vision to blend modern education with traditional Bhutanese values, the academy has grown to accommodate over 600 students.</p>
+        <p class="text-gray-700 dark:text-gray-300 text-justify leading-relaxed">Named in honor of the spiritual legacy of Bhutan, Tenzin Academy stands as a beacon of learning in the Paro valley.</p>
+      </div>
+      <div class="w-full md:w-1/2 perspective-container">
+        <div class="perspective-img w-full h-[400px] bg-gray-200 dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden relative group">
+          <img src="schoolphoto.jpg" alt="School Group Photo" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center h-full text-gray-500\'><i class=\'fas fa-image text-4xl\'></i></div>'">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6"><span class="text-white font-bold text-lg">The Tenzin Family</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 md:p-12 shadow-inner reveal">
+      <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-10"><i class="fas fa-building mr-3 text-primary"></i>Infrastructure & Facilities</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6" id="facilities-grid"></div>
+    </div>
+    <div class="reveal">
+      <h2 class="text-2xl font-bold text-primary mb-6 border-l-4 border-accent pl-4">Games and Sports</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="sports-grid"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal">
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-accent hover-lift group">
+        <div class="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-eye text-accent text-xl"></i></div>
+        <h3 class="text-xl font-bold mb-4 dark:text-white group-hover:text-accent transition-colors">School Vision</h3>
+        <p class="text-gray-600 dark:text-gray-300 italic">"Prepare students to serve Tsa-Wa-Sum (King, Country, and People) with utmost loyalty and dedication."</p>
+      </div>
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-l-4 border-primary hover-lift group">
+        <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><i class="fas fa-bullseye text-primary text-xl"></i></div>
+        <h3 class="text-xl font-bold mb-4 dark:text-white group-hover:text-primary transition-colors">School Mission</h3>
+        <p class="text-gray-600 dark:text-gray-300">We recognize that each child is an individual; that all children are creative and all children need to succeed. At Tenzin Academy we respect the individual needs of children and foster a caring and creative environment.</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="glass-card p-8 md:p-12 relative overflow-hidden dark:bg-gray-800/50">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+        <div class="relative z-10">
+          <h2 class="text-3xl font-bold text-center text-primary mb-6 gradient-text">Educational Philosophy</h2>
+          <p class="text-center text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-10 text-lg">Tenzin Academy blends traditional Bhutanese values with modern learning techniques, creating a unique environment for growth.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="philosophy-grid"></div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-blue-50 dark:bg-gray-800 p-8 rounded-2xl reveal">
+      <h2 class="text-2xl font-bold text-center text-primary mb-8">Community Feedback</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="feedback-grid"></div>
+    </div>
+    <div id="academic-calendar" class="reveal">
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border-t-4 border-primary">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-3xl font-bold text-primary"><i class="fas fa-calendar-alt mr-3"></i>Academic Calendar 2026</h2>
+          <button onclick="app.printCalendar()" class="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary hover:text-white transition text-sm font-bold"><i class="fas fa-print"></i>Print</button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div class="bg-blue-50 dark:bg-gray-700 p-6 rounded-xl border-l-4 border-blue-500">
+            <h3 class="font-bold text-xl text-blue-700 dark:text-blue-400 mb-4">First Term</h3>
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Reporting of Boarder Students</span><span class="font-bold dark:text-white">Feb 20, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Reporting of Day Scholar Students</span><span class="font-bold dark:text-white">Feb 25, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Classes Start</span><span class="font-bold dark:text-white">Feb 26, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Parent-Teacher Meeting / Break</span><span class="font-bold dark:text-white">Mar 28, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Block Test</span><span class="font-bold dark:text-white">Apr 17–25, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Mid-Term Examination</span><span class="font-bold dark:text-white">Jun 17–27, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Summer Vacation Begins</span><span class="font-bold dark:text-white">Jun 27, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Term 1 Result Declaration</span><span class="font-bold dark:text-white">Jul 20, 2026</span></div>
+            </div>
+          </div>
+          <div class="bg-green-50 dark:bg-gray-700 p-6 rounded-xl border-l-4 border-green-500">
+            <h3 class="font-bold text-xl text-green-700 dark:text-green-400 mb-4">Second Term</h3>
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Reporting (VIII, X & XII)</span><span class="font-bold dark:text-white">Jul 05, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Coaching Classes Begin</span><span class="font-bold dark:text-white">Jul 06, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Reporting (VII, IX & XI)</span><span class="font-bold dark:text-white">Jul 19, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Regular Classes Begin</span><span class="font-bold dark:text-white">Jul 20, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Block Test</span><span class="font-bold dark:text-white">Sep 07–15, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Trial Exam (VIII, X & XII)</span><span class="font-bold dark:text-white">Oct 06–16, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Annual Exam (VII, IX & XI)</span><span class="font-bold dark:text-white">Nov 02–13, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">BE, BCSE & BHSCE Exams Begin</span><span class="font-bold dark:text-white">Nov 17, 2026</span></div>
+            </div>
+          </div>
+          <div class="bg-accent/10 dark:bg-gray-700 p-6 rounded-xl border-l-4 border-accent">
+            <h3 class="font-bold text-xl text-yellow-700 dark:text-yellow-400 mb-4">Important Dates</h3>
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Losar (New Year)</span><span class="font-bold dark:text-white">Feb 18–19, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Birth Anniversary of HM the King</span><span class="font-bold dark:text-white">Feb 21–23, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Teachers' Day</span><span class="font-bold dark:text-white">May 02, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Annual School Rimdo</span><span class="font-bold dark:text-white">Mar 28, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Graduation Day (Class XII)</span><span class="font-bold dark:text-white">Oct 31, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Result Declaration</span><span class="font-bold dark:text-white">Dec 18, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Winter Vacation Begins</span><span class="font-bold dark:text-white">Dec 18, 2026</span></div>
+              <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">National Day</span><span class="font-bold dark:text-white">Dec 17, 2026</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 overflow-x-auto" id="calendar-print-table">
+          <table class="w-full text-sm border-collapse">
+            <thead><tr class="bg-primary text-white"><th class="p-3 text-left rounded-tl-lg">Month</th><th class="p-3 text-left">Date</th><th class="p-3 text-left">Event</th><th class="p-3 text-left rounded-tr-lg">Category</th></tr></thead>
+            <tbody class="divide-y divide-gray-100 dark:divide-gray-700 dark:text-gray-200">
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">February</td><td class="p-3">18–19</td><td class="p-3">Losar Fire Male Horse Year (New Year)</td><td class="p-3"><span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">National</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">February</td><td class="p-3">20</td><td class="p-3">Reporting of Boarder Students</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">February</td><td class="p-3">21–23</td><td class="p-3">Birth Anniversary of His Majesty the King</td><td class="p-3"><span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">National</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">February</td><td class="p-3">25</td><td class="p-3">Reporting of Day Scholar Students / Orientation</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">February</td><td class="p-3">26</td><td class="p-3">Classes Start / Textbook Distribution</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">05</td><td class="p-3">Submission of Action Plans / Goal Settings</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">06</td><td class="p-3">Presentation of Manifesto by Prefect Candidates</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">07</td><td class="p-3">Election of Prefects / Welcome Show</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">14</td><td class="p-3">Inter House Volleyball Tournament / Freshmen Return Show</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Sports</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">16</td><td class="p-3">PD Program (All Department)</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">21</td><td class="p-3">Inter House Futsal (Boys) / Basketball (Girls)</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Sports</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">28</td><td class="p-3">Annual School Rimdo (Tentative) / PTM / Students Leave for Break</td><td class="p-3"><span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Event</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">March</td><td class="p-3">29–31</td><td class="p-3">Paro Tshechu</td><td class="p-3"><span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">National</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">02</td><td class="p-3">Reporting of Students (Evening) / Classes Resume</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">03</td><td class="p-3">English Skit (XI/XII)</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">04</td><td class="p-3">Inter House Futsal (Girls) / Basketball (Boys)</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Sports</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">06</td><td class="p-3">Question Preparation for Block Test</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">09–10</td><td class="p-3">Moderation of Block Test Papers / Dzongkha Extempore</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">17–25</td><td class="p-3">Block Test</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">25</td><td class="p-3">Outing for Boarder Boys</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Activity</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">April</td><td class="p-3">26</td><td class="p-3">Outing for Boarder Girls / Block Test Result Declaration</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Activity</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">May</td><td class="p-3">02</td><td class="p-3">Teachers' Day / Birth Anniversary of the Third Druk Gyelpo</td><td class="p-3"><span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Event</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">May</td><td class="p-3">09</td><td class="p-3">Choir Competition (VII, VIII, IX & X)</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">May</td><td class="p-3">16</td><td class="p-3">Inter House Dzongkha Debate</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">May</td><td class="p-3">23</td><td class="p-3">Inter House English Extempore Competition</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">May</td><td class="p-3">30</td><td class="p-3">Preparation of Mid-Term Exam Paper</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">02</td><td class="p-3">Celebration of Social Forestry Day</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Activity</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">04–05</td><td class="p-3">Moderation of Term 1 Exam Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">06</td><td class="p-3">Cleaning Campaign / Community Service</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Activity</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">15–16</td><td class="p-3">Self-Study for Students / Submission of Finalized Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">17–27</td><td class="p-3">Mid-Term Examination (Group Evaluation)</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">27</td><td class="p-3">Students Leave for Summer Vacation</td><td class="p-3"><span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Break</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">June</td><td class="p-3">30</td><td class="p-3">Result Preparation and Submission to Office</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">July</td><td class="p-3">05</td><td class="p-3">Reporting of Boarder Students (VIII, X & XII)</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">July</td><td class="p-3">06</td><td class="p-3">Reporting of Day Scholar Students (VIII, X & XII) / Coaching Begins</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">July</td><td class="p-3">19</td><td class="p-3">Reporting of Boarder Students (VII, IX & XI)</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">July</td><td class="p-3">20</td><td class="p-3">Reporting of Day Scholar Students (VII, IX & XI) / Regular Classes Begin</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">July</td><td class="p-3">20</td><td class="p-3">Term 1 Result Declaration / Distribution of Answer Scripts</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">01</td><td class="p-3">Inter House Dzongkha Tshangmo / Lozey Competition</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">15</td><td class="p-3">PD Program (All Department)</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">22</td><td class="p-3">Inter House Quiz Competition</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">27</td><td class="p-3">Question Preparation for Block Test</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">29</td><td class="p-3">Inter House Baodra, Zhungdra & Rigsar Dance Competition</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">August</td><td class="p-3">31</td><td class="p-3">SEASON ACADEMIA</td><td class="p-3"><span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Event</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">01–05</td><td class="p-3">Reading Week</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">02–03</td><td class="p-3">Moderation of Block Test Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">05</td><td class="p-3">Inter House Spelling Bee Competition</td><td class="p-3"><span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">Cultural</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">07–15</td><td class="p-3">Block Test</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">19</td><td class="p-3">Block Test Result Declaration</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">22</td><td class="p-3">Boarder Students Leave for Break (Evening)</td><td class="p-3"><span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Break</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">23</td><td class="p-3">Boarder Students Report (Evening) / Blessed Rainy Day</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">26</td><td class="p-3">Completion of Academic Syllabus</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">September</td><td class="p-3">28</td><td class="p-3">Moderation of Trial Exam Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">01</td><td class="p-3">Submission of Finalized Moderated Exam Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">06–16</td><td class="p-3">Trial Exam for Class VIII, X & XII</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">13</td><td class="p-3">Royal Wedding Celebration</td><td class="p-3"><span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">National</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">16</td><td class="p-3">Boarder Students Leave for Break (Evening)</td><td class="p-3"><span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Break</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">18</td><td class="p-3">Boarder Students Report (Evening) / Distribution of Answer Scripts</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">20</td><td class="p-3">Trial Exam Result Declaration</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">22–23</td><td class="p-3">Moderation of Annual Exam Papers</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">24</td><td class="p-3">Submission of Final Moderated Test Paper to Exam Committee</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">October</td><td class="p-3">31</td><td class="p-3">Graduation Day for Class XII</td><td class="p-3"><span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Event</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">02–13</td><td class="p-3">Annual Exams for Class VII, IX & XI</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">13</td><td class="p-3">Students (VII, IX & XI) Leave for Winter Vacation</td><td class="p-3"><span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Break</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">15</td><td class="p-3">Excursion / Visiting Lhakhang for Class XII</td><td class="p-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Activity</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">17–23</td><td class="p-3">BHSCE Practical Examination</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">19–20</td><td class="p-3">Mock Test for Class VIII, X & XII</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">21–23</td><td class="p-3">Self-Study for Students / Promotion Meeting</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Academic</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">24</td><td class="p-3">BE, BCSE & BHSCE Examination Begins</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">November</td><td class="p-3">25–28</td><td class="p-3">Trail Practical Exam for Class XII</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Exam</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">December</td><td class="p-3">02</td><td class="p-3">School Policy / Calendar Review</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">December</td><td class="p-3">07</td><td class="p-3">School Activity / SPMS Review</td><td class="p-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">School</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">December</td><td class="p-3">17</td><td class="p-3">National Day</td><td class="p-3"><span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">National</span></td></tr>
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition"><td class="p-3 font-bold">December</td><td class="p-3">18</td><td class="p-3">Result Declaration for Class VII, IX & XII / School Closes for Winter Vacation</td><td class="p-3"><span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Break</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- PAGE: CONTACT -->
+<footer class="bg-gray-900 text-white pt-16 pb-8 border-t-4 border-accent mt-auto">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 flex items-center justify-center"><img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-school text-primary text-xl\'></i>'"></div>
+          <span class="font-bold text-xl tracking-wider font-serif text-accent">TENZIN ACADEMY</span>
+        </div>
+        <p class="text-gray-400 text-sm mb-6">Nurturing minds, building futures, and preserving Bhutanese values for a better tomorrow.</p>
+        <div class="flex gap-4">
+          <a href="https://www.facebook.com/people/Tenzin-Academy/61569807146868/" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@tenzin.academy" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Quick Links</h3>
+        <ul class="space-y-3 text-sm text-gray-400">
+          <li><a href="index.html" class="hover:text-accent transition text-left">Home</a></li>
+          <li><a href="about.html" class="hover:text-accent transition text-left">About Us</a></li>
+          <li><a href="programs.html" class="hover:text-accent transition text-left">Academic Programs</a></li>
+          <li><a href="admissions.html" class="hover:text-accent transition text-left">Admissions</a></li>
+          <li><a href="gallery.html" class="hover:text-accent transition text-left">Gallery</a></li>
+          <li><a href="faculty.html" class="hover:text-accent transition text-left">Faculty & Staff</a></li>
+          <li><a href="contact.html" class="hover:text-accent transition text-left">Contact Us</a></li>
+          <li><a href="vacancy.html" class="hover:text-accent transition text-left font-bold text-accent">Vacancy</a></li>
+          <li><a href="login.html" class="hover:text-accent transition text-left">Portal Login</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Contact Us</h3>
+        <ul class="space-y-4 text-sm text-gray-400">
+          <li class="flex gap-3 items-start"><i class="fas fa-map-marker-alt mt-1 text-primary"></i><span>Kichu, Lamgong,<br>Paro, Bhutan</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-phone-alt text-primary"></i><span>+975-17578882/17805484</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-envelope text-primary"></i><span>tenzinacademy@education.gov.bt</span></li>
+          <li class="flex gap-3 items-center"><i class="fas fa-clock text-primary"></i><span>Mon-Fri: 8:00 AM - 4:30 PM</span></li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+      <p>&copy; 2025 Tenzin Academy. All rights reserved.</p>
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <a href="#" class="hover:text-white">Privacy Policy</a>
+        <a href="#" class="hover:text-white">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
