@@ -6,8 +6,8 @@ html { scroll-behavior: smooth; }
 .text-primary{color:var(--primary)}.bg-primary{background-color:var(--primary)}.text-accent{color:var(--accent)}.bg-accent{background-color:var(--accent)}
 .dark .bg-white{background-color:#1f2937;color:#e5e7eb}.dark .bg-gray-50{background-color:#111827}.dark .text-gray-900{color:#f9fafb}.dark .text-gray-600{color:#9ca3af}
 .dark input,.dark select,.dark textarea{background-color:#374151;color:white;border-color:#4b5563}
-.page-section{display:none;opacity:0;transition:opacity 0.4s ease}
-.page-section.active{display:block;animation:fadeIn 0.4s ease forwards}
+/* page-section display handled per-page */
+.page-section{display:block;opacity:1}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .hero-animated{background:linear-gradient(135deg,#0080FF 0%,#004a99 100%);position:relative;overflow:hidden}
 .hero-animated::before{content:'';position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>');background-size:300px;animation:float 20s infinite linear;pointer-events:none}
