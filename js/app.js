@@ -52,7 +52,7 @@ const app = {
       {name:"Tandin",photo:"tandin.jpg",role:"History & Geography",creds:"B.Ed, MBS, MIT | 15 Years"},
       {name:"Yogi Nidhi Gajmer",photo:"yogi_nidhi_gajmer.jpg",role:"Geography",creds:"B.A. | 11 Years"},
       {name:"Sonam Wangmo",photo:"sonam_wangmo.jpg",role:"Geography",creds:"B.A. | 2 Years"},
-      {name:"Arpana Biswa",photo:"arpana_biswa.jpg",role:"Accounting",creds:"B.Ed | Accounting"}
+      {name:"Arpana Biswa",photo:"arpana_biswa.jpg",role:"Business and Entrepreneurship",creds:"B.Ed | BE "}
     ]
   },
 
