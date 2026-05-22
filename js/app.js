@@ -33,7 +33,7 @@ const app = {
       {name:"Devi Parsad Gurung",photo:"devi_parsad_gurung.jpg",role:"Physics & Maths",creds:"B.Ed | 10 Years"},
       {name:"Chimi Yoezer",photo:"chimi_yoezer.jpg",role:"Mathematics & Physics",creds:"B.Sc. | 8 Years"},
       {name:"Phurpa Wangdi",photo:"phurpa_wangdi.jpg",role:"Chemistry",creds:"B.Sc. | 2 Years"},
-      {name:"Ugyen Lhamo",photo:"ugyen_lhamo.jpg",role:"Mathematics",creds:"M.Ed | 18 Years"},
+      {name:"Ugyen Lhamo",photo:"ugyen_lhamo.jpg",role:"Physics",creds:"M.Ed | 18 Years"},
     ],
     lang: [
       {name:"Ugyen Tenzin",photo:"ugyen_tenzin.jpg",role:"English",creds:"PGDE, B.Ed, MPA | 24 Years"},
