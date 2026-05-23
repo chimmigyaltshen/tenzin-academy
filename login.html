@@ -145,8 +145,8 @@ function handleLogin() {
       (user === 'teacher' && pass === 'teacher' && role === 'teacher') ||
       (user === 'admin' && pass === 'admin' && role === 'admin')) {
 
-    localStorage.setItem('tenzin_role', role);
-    localStorage.setItem('tenzin_user', user);
+    sessionStorage.setItem('tenzin_role', role);
+    sessionStorage.setItem('tenzin_user', user);
 
     // Initialize data if not exists
     if (!localStorage.getItem('tenzin_students')) {

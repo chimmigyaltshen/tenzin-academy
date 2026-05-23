@@ -72,6 +72,17 @@ const app = {
     {title:'Scholarship 2025',page:'admissions',keywords:'scholarship merit need sports cultural gnh financial'},
   ],
 
+  escapeHTML(str) {
+    if (typeof str !== 'string') return str;
+    return str.replace(/[&<>"']/g, m => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[m]);
+  },
+
   init() {
     if (document.getElementById('stem-faculty')) this.renderFaculty();
     if (document.getElementById('facilities-grid')) this.renderAboutSections();
@@ -233,7 +244,7 @@ const app = {
       ['Previous %', fd.get('previousPercentage') + '%'],
     ];
     box.innerHTML = '<p class="font-bold text-gray-700 dark:text-white mb-2 text-xs uppercase tracking-wider">Application Summary</p>' +
-      fields.filter(f => f[1]).map(f => `<div class="flex justify-between text-xs border-b dark:border-gray-600 pb-1"><span class="text-gray-500">${f[0]}</span><span class="font-bold dark:text-white">${f[1]}</span></div>`).join('');
+      fields.filter(f => f[1]).map(f => `<div class="flex justify-between text-xs border-b dark:border-gray-600 pb-1"><span class="text-gray-500">${f[0]}</span><span class="font-bold dark:text-white">${this.escapeHTML(f[1])}</span></div>`).join('');
   },
 
   validateField(el) {

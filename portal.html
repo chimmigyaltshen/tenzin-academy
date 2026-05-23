@@ -446,8 +446,8 @@ function initStudentDashboard(user) {
     const list = document.getElementById('student-grades-list');
     list.innerHTML = Object.entries(me.grades).map(([sub, grade]) => `
       <div class="flex justify-between items-center p-3 border-b dark:border-gray-700">
-        <span class="text-gray-600 dark:text-gray-300 capitalize">${sub}</span>
-        <span class="font-bold text-gray-900 dark:text-white">${grade}</span>
+        <span class="text-gray-600 dark:text-gray-300 capitalize">${app.escapeHTML(sub)}</span>
+        <span class="font-bold text-gray-900 dark:text-white">${app.escapeHTML(grade)}</span>
       </div>
     `).join('');
   });
@@ -495,8 +495,8 @@ async function initTeacherDashboard(isAdmin = false) {
       return `
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
           <td class="p-4">
-              <div class="font-bold dark:text-white">${s.name}</div>
-              <div class="text-[10px] text-gray-400 uppercase">${s.id}</div>
+              <div class="font-bold dark:text-white">${app.escapeHTML(s.name)}</div>
+              <div class="text-[10px] text-gray-400 uppercase">${app.escapeHTML(s.id)}</div>
           </td>
           ${dayRec.map((p, pIdx) => `
             <td class="p-2 text-center">
@@ -504,8 +504,8 @@ async function initTeacherDashboard(isAdmin = false) {
             </td>
           `).join('')}
           <td class="p-2">
-            <div class="text-[10px] text-gray-400 font-bold uppercase mb-1">${teacherSubject}</div>
-            <input type="text" value="${studentGrade}" class="border rounded p-1 w-12 dark:bg-gray-600 dark:text-white text-xs" id="${isAdmin?'adm-':''}grade-${studentIdx}">
+            <div class="text-[10px] text-gray-400 font-bold uppercase mb-1">${app.escapeHTML(teacherSubject)}</div>
+            <input type="text" value="${app.escapeHTML(studentGrade)}" class="border rounded p-1 w-12 dark:bg-gray-600 dark:text-white text-xs" id="${isAdmin?'adm-':''}grade-${studentIdx}">
           </td>
           <td class="p-4"><button onclick="saveAttendance(${studentIdx}, ${isAdmin}, '${teacherSubject}')" class="text-blue-500 font-bold hover:underline">Save</button></td>
         </tr>
@@ -571,7 +571,7 @@ function loadAdminClassList(data) {
     const classes = data || [];
     document.getElementById('admin-class-list').innerHTML = classes.map((c, i) => `
         <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex justify-between items-center border dark:border-gray-600">
-            <div><p class="font-bold dark:text-white">${c.name}</p><p class="text-[10px] text-gray-400 uppercase tracking-tighter">${c.id}</p></div>
+            <div><p class="font-bold dark:text-white">${app.escapeHTML(c.name)}</p><p class="text-[10px] text-gray-400 uppercase tracking-tighter">${app.escapeHTML(c.id)}</p></div>
             <button onclick="removeItem('classes', ${i})" class="text-red-400 hover:text-red-600"><i class="fas fa-times"></i></button>
         </div>
     `).join('');
@@ -589,7 +589,7 @@ async function loadAdminStudentList(data) {
         const myClass = classes.find(c => c.id === s.classId);
         return `
         <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
-        <div><p class="font-bold dark:text-white">${s.name}</p><p class="text-xs text-gray-400">${s.id} • ${myClass ? myClass.name : 'No Class'}</p></div>
+        <div><p class="font-bold dark:text-white">${app.escapeHTML(s.name)}</p><p class="text-xs text-gray-400">${app.escapeHTML(s.id)} • ${myClass ? app.escapeHTML(myClass.name) : 'No Class'}</p></div>
         <div class="flex gap-2">
             <button onclick="openEditClassModal('students', ${i})" class="text-blue-500 text-xs hover:underline"><i class="fas fa-edit mr-1"></i>Class</button>
             <button onclick="removeItem('students', ${i})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
@@ -605,7 +605,7 @@ async function loadAdminTeacherList(data) {
         const myClass = classes.find(c => c.id === t.classId);
         return `
         <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
-        <div><p class="font-bold dark:text-white">${t.name}</p><p class="text-xs text-gray-400">${t.id} • ${t.subject} • ${myClass ? myClass.name : 'No Class'}</p></div>
+        <div><p class="font-bold dark:text-white">${app.escapeHTML(t.name)}</p><p class="text-xs text-gray-400">${app.escapeHTML(t.id)} • ${app.escapeHTML(t.subject)} • ${myClass ? app.escapeHTML(myClass.name) : 'No Class'}</p></div>
         <div class="flex gap-2">
             <button onclick="openEditClassModal('teachers', ${i})" class="text-blue-500 text-xs hover:underline"><i class="fas fa-edit mr-1"></i>Class</button>
             <button onclick="removeItem('teachers', ${i})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
@@ -651,8 +651,8 @@ function loadAccountList(data) {
   if (!table) return;
   table.innerHTML = accounts.map((a, i) => `
     <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-      <td class="p-4 font-mono dark:text-white">${a.user}</td>
-      <td class="p-4 uppercase text-xs font-bold dark:text-gray-300">${a.role}</td>
+      <td class="p-4 font-mono dark:text-white">${app.escapeHTML(a.user)}</td>
+      <td class="p-4 uppercase text-xs font-bold dark:text-gray-300">${app.escapeHTML(a.role)}</td>
       <td class="p-4 text-gray-400">${'*'.repeat(8)}</td>
       <td class="p-4">
         ${a.user !== 'admin' ? `<button onclick="deleteAccount(${i})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>` : '<span class="text-xs italic text-gray-400">System Account</span>'}
