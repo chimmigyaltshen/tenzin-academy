@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tenzin Academy | Excellence in Education</title>
+<title>Portal | Tenzin Academy</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <script>
@@ -13,660 +13,342 @@
   }
 </script>
 <link rel="stylesheet" href="css/styles.css">
-<base target="_self">
+<base target="_blank">
 </head>
-<body class="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-<div id="page-progress"></div>
-<div id="toast-container"></div>
-<div id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to Top"><i class="fas fa-chevron-up text-sm"></i></div>
-<div id="search-overlay" onclick="if(event.target===this) app.closeSearch()">
-  <div class="w-full max-w-xl px-4">
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
-      <div class="flex items-center gap-3 p-4 border-b dark:border-gray-700">
-        <i class="fas fa-search text-gray-400"></i>
-        <input id="search-input" type="text" placeholder="Search pages, programs, faculty…" class="flex-1 text-sm focus:outline-none dark:bg-gray-800 dark:text-white" oninput="app.doSearch(this.value)" onkeydown="if(event.key==='Escape') app.closeSearch()">
-        <button onclick="app.closeSearch()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
-      </div>
-      <div id="search-results" class="max-h-72 overflow-y-auto p-2"></div>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+<nav class="bg-primary text-white p-4 shadow-lg sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+      <img src="tenzin academy logo.png" alt="Logo" class="w-10 h-10 object-contain" onerror="this.onerror=null;this.style.display='none';">
+      <span class="font-bold text-lg tracking-tight">TENZIN ACADEMY PORTAL</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <span id="user-display-name" class="hidden md:inline font-medium"></span>
+      <button onclick="handleLogout()" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-bold transition">Logout</button>
     </div>
   </div>
-</div>
-<nav class="bg-primary text-white shadow-lg sticky top-0 z-50 border-b-4 border-accent">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-20 items-center">
-      <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
-        <div class="w-14 h-14 flex items-center justify-center hover:rotate-12 transition-transform duration-300">
-          <img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.onerror=null;this.style.display='none';this.parentElement.innerHTML='<i class=&quot;fas fa-school text-accent text-2xl&quot;></i>'">
-        </div>
-        <div class="leading-tight">
-          <span class="font-bold text-xl tracking-wider font-serif text-accent block">TENZIN ACADEMY</span>
-          <span class="text-[10px] uppercase tracking-widest opacity-90">Paro, Bhutan</span>
-        </div>
-      </div>
-      <div class="hidden lg:flex items-center space-x-6">
-        <button onclick="window.location.href='index.html'" class="font-bold hover:text-accent transition relative group text-sm">Home<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='about.html'" class="font-bold hover:text-accent transition relative group text-sm">About<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='programs.html'" class="font-bold hover:text-accent transition relative group text-sm">Academics<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='admissions.html'" class="font-bold hover:text-accent transition relative group text-sm">Admissions<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='faculty.html'" class="font-bold hover:text-accent transition relative group text-sm">Faculty<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='gallery.html'" class="font-bold hover:text-accent transition relative group text-sm">Gallery<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='contact.html'" class="font-bold hover:text-accent transition relative group text-sm">Contact<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='vacancy.html'" class="font-bold hover:text-accent transition relative group text-sm">Vacancy<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='login.html'" class="bg-accent text-blue-900 px-4 py-2 rounded-lg font-bold hover:scale-105 transition text-sm ml-4">Portal Login</button>
-        <button onclick="app.openSearch()" class="p-2 rounded-full hover:bg-white/10 transition" title="Search"><i class="fas fa-search"></i></button>
-        <button onclick="app.toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition" title="Toggle Dark Mode"><i class="fas fa-moon" id="theme-icon"></i></button>
-      </div>
-      <button class="lg:hidden text-2xl focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars"></i></button>
-    </div>
-  </div>
-  <div id="mobile-menu" class="hidden lg:hidden bg-primary border-t border-blue-400 absolute w-full shadow-xl z-50">
-    <button onclick="window.location.href='index.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Home</button>
-    <button onclick="window.location.href='about.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">About</button>
-    <button onclick="window.location.href='programs.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Academics</button>
-    <button onclick="window.location.href='admissions.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Admissions</button>
-    <button onclick="window.location.href='faculty.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Faculty</button>
-    <button onclick="window.location.href='gallery.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Gallery</button>
-    <button onclick="window.location.href='contact.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Contact</button>
-    <button onclick="window.location.href='vacancy.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Vacancy</button>
-    <button onclick="window.location.href='login.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Portal Login</button>
-    <button onclick="app.openSearch();document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500"><i class="fas fa-search mr-2"></i>Search</button>
-  </div>
-</nav>
+</nav> 
 
-<div id="portal-dashboard" class="page-section active bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-800 dark:text-white" id="portal-welcome">Welcome to the Portal</h1>
-        <div class="flex items-center gap-4 mt-1">
-            <p class="text-gray-500 dark:text-gray-400" id="portal-role-display">Accessing as Role</p>
-            <span id="store-indicator" class="text-[10px] px-2 py-0.5 rounded-full font-bold">Checking...</span>
-        </div>
-      </div>
-      <button onclick="handleLogout()" class="bg-red-500 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-600 transition shadow-md"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold dark:text-white" id="portal-welcome">Welcome</h1>
+        <p class="text-gray-500" id="portal-role-display"></p>
     </div>
 
-    <!-- STUDENT DASHBOARD -->
-    <div id="student-view" class="hidden space-y-8">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-primary">
-          <h2 class="text-xl font-bold text-primary mb-6"><i class="fas fa-calendar-check mr-2"></i>Today's Attendance (7 Periods)</h2>
-          <div class="grid grid-cols-7 gap-2" id="student-attendance-grid"></div>
-          <div class="mt-8 p-4 bg-blue-50 dark:bg-gray-700 rounded-lg flex items-center justify-between">
-            <span class="text-sm font-bold text-gray-500 uppercase">Overall Attendance</span>
-            <span class="text-2xl font-bold text-primary" id="student-attendance-val">0%</span>
-          </div>
-        </div>
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-green-600">
-          <h2 class="text-xl font-bold text-green-600 mb-4"><i class="fas fa-graduation-cap mr-2"></i>Latest Grades</h2>
-          <div class="space-y-3" id="student-grades-list"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TEACHER DASHBOARD -->
-    <div id="teacher-view" class="hidden space-y-8">
-      <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-primary">Attendance & Grades</h2>
-            <div class="flex items-center gap-3">
-                <input type="date" id="attendance-date" class="border rounded p-2 dark:bg-gray-700 dark:text-white" onchange="initTeacherDashboard()">
-                <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold" id="teacher-class-label">Loading Class...</span>
-            </div>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm text-left">
-            <thead class="bg-gray-100 dark:bg-gray-700 uppercase">
-              <tr>
-                <th class="p-4">Student</th>
-                <th class="p-4 text-center">P1</th>
-                <th class="p-4 text-center">P2</th>
-                <th class="p-4 text-center">P3</th>
-                <th class="p-4 text-center">P4</th>
-                <th class="p-4 text-center">P5</th>
-                <th class="p-4 text-center">P6</th>
-                <th class="p-4 text-center">P7</th>
-                <th class="p-4">Grade</th>
-                <th class="p-4">Action</th>
-              </tr>
-            </thead>
-            <tbody id="teacher-student-table" class="divide-y dark:divide-gray-700"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ADMIN DASHBOARD -->
+    <!-- ADMIN VIEW -->
     <div id="admin-view" class="hidden space-y-8">
-      <!-- Class Management -->
-      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-t-4 border-yellow-500 mb-8">
-          <div class="flex justify-between items-center mb-6">
-              <h2 class="text-xl font-bold dark:text-white">Manage Classes</h2>
-              <button onclick="openModal('add-class-modal')" class="bg-yellow-500 text-white px-3 py-1 rounded text-sm font-bold"><i class="fas fa-plus mr-1"></i>New Class</button>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="admin-class-list"></div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <!-- Student Management -->
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-t-4 border-purple-600">
-          <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-bold dark:text-white">Manage Students</h2>
-            <button onclick="openModal('add-student-modal')" class="bg-purple-600 text-white px-3 py-1 rounded text-sm font-bold"><i class="fas fa-plus mr-1"></i>Add</button>
-          </div>
-          <div class="max-h-96 overflow-y-auto" id="admin-student-list"></div>
-        </div>
-        <!-- Teacher Management -->
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-t-4 border-blue-600">
-          <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-bold dark:text-white">Manage Teachers</h2>
-            <button onclick="openModal('add-teacher-modal')" class="bg-blue-600 text-white px-3 py-1 rounded text-sm font-bold"><i class="fas fa-plus mr-1"></i>Add</button>
-          </div>
-          <div class="max-h-96 overflow-y-auto" id="admin-teacher-list"></div>
-        </div>
-      </div>
-
-      <!-- Override Operations -->
-      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-l-4 border-accent">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-bold dark:text-white">Override Operations (Attendance & Grades)</h2>
-            <div class="flex items-center gap-2">
-                <label class="text-xs font-bold text-gray-400 uppercase">Subject:</label>
-                <select id="admin-override-subject" class="border rounded p-1 text-sm dark:bg-gray-700 dark:text-white" onchange="initTeacherDashboard(true)">
-                    <option value="math">Mathematics</option>
-                    <option value="english">English</option>
-                    <option value="physics">Physics</option>
-                    <option value="chemistry">Chemistry</option>
-                    <option value="biology">Biology</option>
-                    <option value="dzongkha">Dzongkha</option>
-                </select>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border-b-4 border-blue-500">
+                <h3 class="text-xs font-bold text-gray-400 uppercase">Students</h3>
+                <p class="text-3xl font-bold dark:text-white" id="admin-stat-students">0</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border-b-4 border-green-500">
+                <h3 class="text-xs font-bold text-gray-400 uppercase">Teachers</h3>
+                <p class="text-3xl font-bold dark:text-white" id="admin-stat-teachers">0</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border-b-4 border-yellow-500">
+                <h3 class="text-xs font-bold text-gray-400 uppercase">Classes</h3>
+                <p class="text-3xl font-bold dark:text-white" id="admin-stat-classes">0</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border-b-4 border-red-500">
+                <h3 class="text-xs font-bold text-gray-400 uppercase">Notices</h3>
+                <p class="text-3xl font-bold dark:text-white" id="admin-stat-notices">0</p>
             </div>
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm text-left">
-            <thead class="bg-gray-100 dark:bg-gray-700 uppercase">
-              <tr>
-                <th class="p-4">Student</th>
-                <th class="p-4 text-center">P1</th>
-                <th class="p-4 text-center">P2</th>
-                <th class="p-4 text-center">P3</th>
-                <th class="p-4 text-center">P4</th>
-                <th class="p-4 text-center">P5</th>
-                <th class="p-4 text-center">P6</th>
-                <th class="p-4 text-center">P7</th>
-                <th class="p-4">Grade</th>
-                <th class="p-4">Action</th>
-              </tr>
-            </thead>
-            <tbody id="admin-teacher-student-table" class="divide-y dark:divide-gray-700"></tbody>
-          </table>
-        </div>
-      </div>
 
-      <!-- ACCOUNT MANAGEMENT (ADMIN ONLY) -->
-      <div id="admin-accounts-view" class="space-y-8 mt-12">
-        <h2 class="text-2xl font-bold text-primary">User Account Management</h2>
-        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
-          <div class="flex justify-between items-center mb-6">
-            <h3 class="text-xl font-bold dark:text-white">Active Accounts</h3>
-            <button onclick="openModal('add-account-modal')" class="bg-primary text-white px-4 py-2 rounded font-bold"><i class="fas fa-user-plus mr-2"></i>Create Account</button>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left">
-              <thead class="bg-gray-100 dark:bg-gray-700 uppercase">
-                <tr>
-                  <th class="p-4">Username</th>
-                  <th class="p-4">Role</th>
-                  <th class="p-4">Password</th>
-                  <th class="p-4">Action</th>
-                </tr>
-              </thead>
-              <tbody id="admin-accounts-table" class="divide-y dark:divide-gray-700">
-                <!-- Account rows here -->
-              </tbody>
-            </table>
-          </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold dark:text-white">User Management</h2>
+                <div class="flex gap-2">
+                    <button onclick="openModal('add-user-modal')" class="bg-primary text-white px-4 py-2 rounded font-bold text-sm">Add User</button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-gray-50 dark:bg-gray-700 text-gray-400 uppercase text-[10px] font-bold">
+                        <tr>
+                            <th class="p-3">Name/User</th>
+                            <th class="p-3">Role</th>
+                            <th class="p-3">Class/Subject</th>
+                            <th class="p-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-user-list" class="divide-y dark:divide-gray-700"></tbody>
+                </table>
+            </div>
         </div>
-      </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold dark:text-white">Notice Board Management</h2>
+                <button onclick="openModal('add-notice-modal')" class="bg-red-500 text-white px-4 py-2 rounded font-bold">New Notice</button>
+            </div>
+            <div id="admin-notices-list" class="space-y-2"></div>
+        </div>
     </div>
-  </div>
+
+    <!-- TEACHER VIEW -->
+    <div id="teacher-view" class="hidden space-y-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border-b-4 border-purple-500">
+                <h3 class="text-sm font-bold text-gray-400 uppercase">Resources</h3>
+                <p class="text-3xl font-bold dark:text-white" id="teacher-stat-res">0</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold dark:text-white">Study Materials</h2>
+                    <button onclick="openModal('add-resource-modal')" class="bg-purple-600 text-white px-4 py-2 rounded font-bold">Upload</button>
+                </div>
+                <div id="teacher-resources-list" class="space-y-2"></div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <h2 class="text-xl font-bold dark:text-white mb-4">Class Leave Requests</h2>
+                <div id="teacher-leave-requests" class="space-y-4"></div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-blue-600">Assignments</h2>
+                    <button onclick="openModal('add-assignment-modal')" class="bg-blue-600 text-white px-4 py-2 rounded font-bold text-sm">Create</button>
+                </div>
+                <div id="teacher-assignments-list" class="space-y-2"></div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <h2 class="text-xl font-bold text-green-600 mb-4">Class Management</h2>
+                <div class="space-y-4">
+                    <button onclick="openModal('mark-attendance-modal')" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2"><i class="fas fa-check-square"></i> Mark Attendance</button>
+                    <button onclick="openModal('entry-grades-modal')" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2"><i class="fas fa-pen-nib"></i> Entry Grades</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- STUDENT VIEW -->
+    <div id="student-view" class="hidden space-y-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow border-b-4 border-primary text-center">
+                <p class="text-[10px] font-bold text-gray-400 uppercase">Attendance</p>
+                <p class="text-2xl font-bold text-primary" id="student-stat-att">0%</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold text-orange-500">My Leaves</h2>
+                        <button onclick="openModal('apply-leave-modal')" class="bg-orange-500 text-white px-4 py-2 rounded font-bold">Apply</button>
+                    </div>
+                    <div id="student-leave-list" class="space-y-2"></div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                    <h2 class="text-xl font-bold text-purple-600 mb-4">Resources</h2>
+                    <div id="student-resources-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                    <h2 class="text-xl font-bold text-blue-600 mb-4">Active Assignments</h2>
+                    <div id="student-assignments-list" class="space-y-3"></div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                    <h2 class="text-xl font-bold text-green-600 mb-4">My Grades</h2>
+                    <div id="student-grades-list" class="space-y-2"></div>
+                </div>
+
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                <h2 class="text-xl font-bold text-red-500 mb-4">Notices</h2>
+                <div id="student-notices-list" class="space-y-4"></div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border-t-4 border-green-500">
+                <h2 class="text-xl font-bold text-green-600 mb-6">Academic Progress</h2>
+                <div class="space-y-4">
+                    <div><div class="flex justify-between text-xs mb-1 dark:text-gray-300"><span>Overall Rank</span><span>12th / 60</span></div><div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden"><div class="bg-green-500 h-full" style="width: 80%"></div></div></div>
+                    <div><div class="flex justify-between text-xs mb-1 dark:text-gray-300"><span>Attendance</span><span>94%</span></div><div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden"><div class="bg-blue-500 h-full" style="width: 94%"></div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- MODALS -->
 <div id="modal-overlay" class="fixed inset-0 bg-black/60 z-[100] hidden items-center justify-center p-4 backdrop-blur-sm" onclick="if(event.target===this) closeModal()">
-    <!-- Add Class Modal -->
-    <div id="add-class-modal" class="modal-content bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 hidden">
-        <h3 class="text-2xl font-bold text-yellow-600 mb-6">Create New Class</h3>
-        <form onsubmit="event.preventDefault(); submitAddClass();">
-            <div class="space-y-4">
-                <div><label class="block text-xs font-bold text-gray-400 uppercase mb-1">Class Name</label><input type="text" id="new-class-name" required class="w-full border rounded p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="e.g. Class 10-B"></div>
-                <div class="flex justify-end gap-3 mt-8">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-500 font-bold">Cancel</button>
-                    <button type="submit" class="bg-yellow-500 text-white px-6 py-2 rounded font-bold shadow-lg">Create Class</button>
-                </div>
+    <div id="add-user-modal" class="modal-content bg-white dark:bg-gray-800 p-8 rounded-xl hidden max-w-lg w-full" onclick="event.stopPropagation()">
+        <h3 class="text-xl font-bold mb-4 dark:text-white">Add New User</h3>
+        <div class="space-y-3">
+            <input type="text" id="new-user-name" placeholder="Full Name" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white">
+            <input type="text" id="new-user-id" placeholder="Username/ID" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white">
+            <input type="password" id="new-user-pass" placeholder="Set Password" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white">
+            <select id="new-user-role" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white" onchange="toggleClassField()">
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+            </select>
+            <div id="class-assignment-wrapper" class="space-y-2">
+                <label class="text-xs font-bold text-gray-400 uppercase">Assign to Class</label>
+                <select id="new-user-class" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white">
+                    <option value="">Select Class</option>
+                    <option value="PP">PP</option>
+                    <option value="Class I">Class I</option>
+                    <option value="Class II">Class II</option>
+                    <option value="Class III">Class III</option>
+                    <option value="Class IV">Class IV</option>
+                    <option value="Class V">Class V</option>
+                    <option value="Class VI">Class VI</option>
+                    <option value="Class VII">Class VII</option>
+                    <option value="Class VIII">Class VIII</option>
+                    <option value="Class IX">Class IX</option>
+                    <option value="Class X">Class X</option>
+                    <option value="Class XI">Class XI</option>
+                    <option value="Class XII">Class XII</option>
+                </select>
             </div>
-        </form>
+            <button onclick="submitAddUser()" class="w-full bg-primary text-white py-2 rounded font-bold">Add User</button>
+        </div>
     </div>
 
-    <!-- Add Student Modal -->
-    <div id="add-student-modal" class="modal-content bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 hidden">
-        <h3 class="text-2xl font-bold text-primary mb-6">Add New Student</h3>
-        <form onsubmit="event.preventDefault(); submitAddStudent();">
-            <div class="space-y-4">
-                <div><label class="block text-xs font-bold text-gray-400 uppercase mb-1">Full Name</label><input type="text" id="new-student-name" required class="w-full border rounded p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"></div>
-                <div><label class="block text-xs font-bold text-gray-400 uppercase mb-1">Initial Password</label><input type="password" id="new-student-pass" required class="w-full border rounded p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"></div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Assign Class</label>
-                    <select id="new-student-class" required class="w-full border rounded p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"></select>
-                </div>
-                <div class="flex justify-end gap-3 mt-8">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-500 font-bold">Cancel</button>
-                    <button type="submit" class="bg-primary text-white px-6 py-2 rounded font-bold shadow-lg">Save Student</button>
-                </div>
-            </div>
-        </form>
+    <div id="mark-attendance-modal" class="modal-content bg-white dark:bg-gray-800 p-8 rounded-xl hidden max-w-2xl w-full" onclick="event.stopPropagation()">
+        <h3 class="text-xl font-bold mb-4 dark:text-white">Mark Attendance - <span id="current-date-display"></span></h3>
+        <div id="attendance-student-list" class="space-y-2 max-h-96 overflow-y-auto mb-4"></div>
+        <button onclick="submitAttendance()" class="w-full bg-green-600 text-white py-2 rounded font-bold">Save Attendance</button>
     </div>
 
-    <!-- Add Teacher Modal -->
-    <div id="add-teacher-modal" class="modal-content bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 hidden">
-        <h3 class="text-2xl font-bold text-primary mb-6">Add New Teacher</h3>
-        <form onsubmit="event.preventDefault(); submitAddTeacher();">
-            <div class="space-y-4">
-                <div><label class="block text-xs font-bold text-gray-400 uppercase mb-1">Full Name</label><input type="text" id="new-teacher-name" required class="w-full border rounded p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"></div>
-                <div><label class="block text-xs font-bold text-gray-400 uppercase mb-1">Subject</label><input type="text" id="new-teacher-subject" required class="w-full border rounded p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder="e.g. Mathematics"></div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Assigned Class</label>
-                    <select id="new-teacher-class" required class="w-full border rounded p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"></select>
-                </div>
-                <div class="flex justify-end gap-3 mt-8">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-500 font-bold">Cancel</button>
-                    <button type="submit" class="bg-primary text-white px-6 py-2 rounded font-bold shadow-lg">Save Teacher</button>
-                </div>
-            </div>
-        </form>
+    <div id="entry-grades-modal" class="modal-content bg-white dark:bg-gray-800 p-8 rounded-xl hidden max-w-2xl w-full" onclick="event.stopPropagation()">
+        <h3 class="text-xl font-bold mb-4 dark:text-white">Entry Grades</h3>
+        <div id="grading-student-list" class="space-y-4 max-h-96 overflow-y-auto mb-4"></div>
+        <button onclick="submitGrades()" class="w-full bg-blue-600 text-white py-2 rounded font-bold">Save All Grades</button>
+    </div>
+    
+    <div id="add-notice-modal" class="modal-content bg-white dark:bg-gray-800 p-8 rounded-xl hidden max-w-md w-full" onclick="event.stopPropagation()">
+        <h3 class="text-xl font-bold mb-4 dark:text-white">Post Notice</h3>
+        <input type="text" id="notice-title" placeholder="Title" class="w-full p-2 border rounded mb-4 dark:bg-gray-700 dark:text-white">
+        <textarea id="notice-content" placeholder="Content" class="w-full p-2 border rounded mb-4 dark:bg-gray-700 dark:text-white"></textarea>
+        <button onclick="submitAddNotice()" class="w-full bg-red-500 text-white py-2 rounded font-bold">Post</button>
     </div>
 
-    <!-- Add Account Modal -->
-    <div id="add-account-modal" class="modal-content bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 hidden">
-        <h3 class="text-2xl font-bold text-primary mb-6">Create User Account</h3>
-        <form onsubmit="event.preventDefault(); submitAddAccount();">
-            <div class="space-y-4">
-                <div><label class="block text-xs font-bold text-gray-400 uppercase mb-1">Username</label><input type="text" id="new-acc-user" required class="w-full border rounded p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"></div>
-                <div><label class="block text-xs font-bold text-gray-400 uppercase mb-1">Password</label><input type="password" id="new-acc-pass" required class="w-full border rounded p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"></div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Role</label>
-                    <select id="new-acc-role" required class="w-full border rounded p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                        <option value="student">Student</option>
-                        <option value="teacher">Teacher</option>
-                        <option value="admin">Administrator</option>
-                    </select>
-                </div>
-                <div class="flex justify-end gap-3 mt-8">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 text-gray-500 font-bold">Cancel</button>
-                    <button type="submit" class="bg-primary text-white px-6 py-2 rounded font-bold shadow-lg">Create Account</button>
-                </div>
-            </div>
-        </form>
+    <div id="add-resource-modal" class="modal-content bg-white dark:bg-gray-800 p-8 rounded-xl hidden max-w-md w-full" onclick="event.stopPropagation()">
+        <h3 class="text-xl font-bold mb-4 dark:text-white">Upload Resource</h3>
+        <input type="text" id="res-title" placeholder="Title" class="w-full p-2 border rounded mb-2 dark:bg-gray-700 dark:text-white">
+        <input type="text" id="res-subject" placeholder="Subject" class="w-full p-2 border rounded mb-2 dark:bg-gray-700 dark:text-white">
+        <input type="url" id="res-link" placeholder="Link (Google Drive/PDF)" class="w-full p-2 border rounded mb-4 dark:bg-gray-700 dark:text-white">
+        <button onclick="submitAddResource()" class="w-full bg-purple-600 text-white py-2 rounded font-bold">Upload</button>
+    </div>
+
+    <div id="add-assignment-modal" class="modal-content bg-white dark:bg-gray-800 p-8 rounded-xl hidden max-w-md w-full" onclick="event.stopPropagation()">
+        <h3 class="text-xl font-bold mb-4 dark:text-white">Create Assignment</h3>
+        <input type="text" id="assign-title" placeholder="Title" class="w-full p-2 border rounded mb-2 dark:bg-gray-700 dark:text-white">
+        <input type="date" id="assign-deadline" class="w-full p-2 border rounded mb-4 dark:bg-gray-700 dark:text-white">
+        <button onclick="submitAddAssignment()" class="w-full bg-blue-600 text-white py-2 rounded font-bold">Create</button>
+    </div>
+
+    <div id="apply-leave-modal" class="modal-content bg-white dark:bg-gray-800 p-8 rounded-xl hidden max-w-md w-full" onclick="event.stopPropagation()">
+        <h3 class="text-xl font-bold mb-4 dark:text-white">Apply for Leave</h3>
+        <input type="date" id="leave-date" class="w-full p-2 border rounded mb-2 dark:bg-gray-700 dark:text-white">
+        <textarea id="leave-reason" placeholder="Reason" class="w-full p-2 border rounded mb-4 dark:bg-gray-700 dark:text-white"></textarea>
+        <button onclick="submitLeaveRequest()" class="w-full bg-orange-500 text-white py-2 rounded font-bold">Submit</button>
     </div>
 </div>
 
-<footer class="bg-gray-900 text-white pt-16 pb-8 border-t-4 border-accent mt-auto">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-      <div>
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-12 h-12 flex items-center justify-center">
-            <img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.onerror=null;this.style.display='none';this.parentElement.innerHTML='<i class=&quot;fas fa-school text-primary text-xl&quot;></i>'">
-          </div>
-          <span class="font-bold text-xl tracking-wider font-serif text-accent">TENZIN ACADEMY</span>
-        </div>
-        <p class="text-gray-400 text-sm mb-6">Nurturing minds, building futures, and preserving Bhutanese values for a better tomorrow.</p>
-        <div class="flex gap-4">
-          <a href="https://www.facebook.com/people/Tenzin-Academy/61569807146868/" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.tiktok.com/@tenzin.academy" class="w-8 h-8 rounded bg-gray-800 flex items-center justify-center hover:bg-primary transition"><i class="fab fa-tiktok"></i></a>
-        </div>
-      </div>
-      <div>
-        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Quick Links</h3>
-        <ul class="space-y-3 text-sm text-gray-400">
-          <li><a href="index.html" class="hover:text-accent transition text-left">Home</a></li>
-          <li><a href="about.html" class="hover:text-accent transition text-left">About Us</a></li>
-          <li><a href="programs.html" class="hover:text-accent transition text-left">Academic Programs</a></li>
-          <li><a href="admissions.html" class="hover:text-accent transition text-left">Admissions</a></li>
-          <li><a href="gallery.html" class="hover:text-accent transition text-left">Gallery</a></li>
-          <li><a href="faculty.html" class="hover:text-accent transition text-left">Faculty & Staff</a></li>
-          <li><a href="contact.html" class="hover:text-accent transition text-left">Contact Us</a></li>
-          <li><a href="vacancy.html" class="hover:text-accent transition font-bold text-accent">Vacancy</a></li>
-          <li><a href="login.html" class="hover:text-accent transition text-left">Portal Login</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="font-bold text-lg mb-6 border-l-4 border-primary pl-3">Contact Us</h3>
-        <ul class="space-y-4 text-sm text-gray-400">
-          <li class="flex gap-3 items-start"><i class="fas fa-map-marker-alt mt-1 text-primary"></i><span>Kichu, Lamgong,<br>Paro, Bhutan</span></li>
-          <li class="flex gap-3 items-center"><i class="fas fa-phone-alt text-primary"></i><span>+975-17578882/17805484</span></li>
-          <li class="flex gap-3 items-center"><i class="fas fa-envelope text-primary"></i><span>tenzinacademy@education.gov.bt</span></li>
-          <li class="flex gap-3 items-center"><i class="fas fa-clock text-primary"></i><span>Mon-Fri: 8:00 AM - 4:30 PM</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-      <p>&copy; 2025 Tenzin Academy. All rights reserved.</p>
-      <div class="flex gap-6 mt-4 md:mt-0">
-        <a href="#" class="hover:text-white">Privacy Policy</a>
-        <a href="#" class="hover:text-white">Terms of Use</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 <script src="js/firebase-config.js"></script>
-<script src="js/app.js"></script>
-
 <script>
+const role = sessionStorage.getItem('tenzin_role');
+const user = sessionStorage.getItem('tenzin_user');
+
 document.addEventListener('DOMContentLoaded', async () => {
-  const role = sessionStorage.getItem('tenzin_role');
-  const user = sessionStorage.getItem('tenzin_user');
-  if (!role || !user) {
-    window.location.href = 'login.html';
-    return;
-  }
-
-  // Strengthen Role Verification against DataStore
-  const accounts = await dataStore.get('accounts') || [];
-  const validAccount = accounts.find(a => a.user === user && a.role === role);
-  if (!validAccount) {
-      console.error("Unauthorized role access detected.");
-      handleLogout();
-      return;
-  }
-  
-  // Status indicator
-  const indicator = document.getElementById('store-indicator');
-  if (useCloud) {
-    indicator.textContent = 'CLOUD SYNC';
-    indicator.className += ' bg-green-100 text-green-700';
-  } else {
-    indicator.textContent = 'LOCAL MODE';
-    indicator.className += ' bg-blue-100 text-blue-700';
-  }
-
-  document.getElementById('portal-welcome').textContent = `Welcome, ${user.charAt(0).toUpperCase() + user.slice(1)}`;
-  document.getElementById('portal-role-display').textContent = `Accessing as ${role.toUpperCase()}`;
-  const view = document.getElementById(`${role}-view`);
-  if (view) view.classList.remove('hidden');
-  
-  if (role === 'student') initStudentDashboard(user);
-  if (role === 'teacher') {
-      document.getElementById('attendance-date').valueAsDate = new Date();
-      initTeacherDashboard();
-  }
-  if (role === 'admin') {
-      document.getElementById('attendance-date').valueAsDate = new Date();
-      initAdminDashboard();
-  }
+    if (!role) { window.location.href = 'login.html'; return; }
+    document.getElementById('portal-welcome').textContent = 'Welcome, ' + user;
+    document.getElementById('portal-role-display').textContent = 'Role: ' + role.toUpperCase();
+    document.getElementById(role + '-view').classList.remove('hidden');
+    initPortal();
+    
+    if (role === 'teacher') {
+        renderAttendanceList();
+        renderGradingList();
+    }
+    updateStats();
 });
 
-function handleLogout() {
-  sessionStorage.removeItem('tenzin_role');
-  sessionStorage.removeItem('tenzin_user');
-  window.location.href = 'login.html';
-}
-
-function initStudentDashboard(user) {
-  dataStore.onValue('students', data => {
-    const students = data || [];
-    const me = students.find(s => s.id === user) || students[0];
-    if (!me) return;
-    
-    // Attendance
-    const today = new Date().toISOString().split('T')[0];
-    const records = me.attendanceRecords || {};
-    const todayRec = records[today] || Array(7).fill(false);
-    
-    document.getElementById('student-attendance-grid').innerHTML = todayRec.map((present, i) => `
-        <div class="text-center">
-            <p class="text-[10px] text-gray-400 font-bold mb-1">P${i+1}</p>
-            <div class="w-full aspect-square rounded flex items-center justify-center ${present ? 'bg-green-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-300'}">
-                <i class="fas ${present ? 'fa-check' : 'fa-times'} text-xs"></i>
-            </div>
-        </div>
-    `).join('');
-
-    // Calc Overall Attendance %
-    const totalPeriods = Object.values(records).flat().length;
-    const presentPeriods = Object.values(records).flat().filter(v => v === true).length;
-    const pct = totalPeriods > 0 ? Math.round((presentPeriods / totalPeriods) * 100) : 0;
-    document.getElementById('student-attendance-val').textContent = pct + '%';
-
-    // Grades
-    const list = document.getElementById('student-grades-list');
-    list.innerHTML = Object.entries(me.grades).map(([sub, grade]) => `
-      <div class="flex justify-between items-center p-3 border-b dark:border-gray-700">
-        <span class="text-gray-600 dark:text-gray-300 capitalize">${sub}</span>
-        <span class="font-bold text-gray-900 dark:text-white">${grade}</span>
-      </div>
-    `).join('');
-  });
-}
-
-async function initTeacherDashboard(isAdmin = false) {
-  const date = document.getElementById('attendance-date').value;
-  const user = sessionStorage.getItem('tenzin_user');
-  
-  let targetClassId = null;
-  let teacherSubject = isAdmin ? document.getElementById('admin-override-subject').value : 'math';
-
-  if (!isAdmin) {
-      const teachers = await dataStore.get('teachers') || [];
-      const me = teachers.find(t => t.id === user);
-      if (me) {
-          targetClassId = me.classId;
-          teacherSubject = (me.subject || 'math').toLowerCase();
-          const classes = await dataStore.get('classes') || [];
-          const myClass = classes.find(c => c.id === targetClassId);
-          document.getElementById('teacher-class-label').textContent = `${myClass ? (myClass.name || myClass.id) : 'Unknown'} • ${teacherSubject.toUpperCase()}`;
-      }
-  }
-
-  const allData = await Promise.all([
-      dataStore.get('students'),
-      dataStore.get('classes')
-  ]);
-
-  dataStore.onValue('students', async (data) => {
-    const students = data || [];
-    const classes = await dataStore.get('classes') || [];
-    const filteredStudents = isAdmin ? students : students.filter(s => s.classId === targetClassId);
-    
-    const tableId = isAdmin ? 'admin-teacher-student-table' : 'teacher-student-table';
-    const table = document.getElementById(tableId);
-    if (!table) return;
-
-    table.innerHTML = filteredStudents.map((s, i) => {
-      const records = s.attendanceRecords || {};
-      const dayRec = records[date] || Array(7).fill(false);
-      const studentIdx = students.indexOf(s); // Original index for saving
-      const studentGrade = s.grades[teacherSubject] || 'N/A';
-
-      return `
-        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-          <td class="p-4">
-              <div class="font-bold dark:text-white">${s.name}</div>
-              <div class="text-[10px] text-gray-400 uppercase">${s.id}</div>
-          </td>
-          ${dayRec.map((p, pIdx) => `
-            <td class="p-2 text-center">
-                <input type="checkbox" ${p ? 'checked' : ''} class="w-4 h-4 rounded text-primary" id="${isAdmin?'adm-':''}att-${studentIdx}-${pIdx}">
-            </td>
-          `).join('')}
-          <td class="p-2">
-            <div class="text-[10px] text-gray-400 font-bold uppercase mb-1">${teacherSubject}</div>
-            <input type="text" value="${studentGrade}" class="border rounded p-1 w-12 dark:bg-gray-600 dark:text-white text-xs" id="${isAdmin?'adm-':''}grade-${studentIdx}">
-          </td>
-          <td class="p-4"><button onclick="saveAttendance(${studentIdx}, ${isAdmin}, '${teacherSubject}')" class="text-blue-500 font-bold hover:underline">Save</button></td>
-        </tr>
-      `;
-    }).join('');
-  });
-}
-
-async function saveAttendance(idx, isAdmin, subject) {
-  const date = document.getElementById('attendance-date').value;
-  const prefix = isAdmin ? 'adm-' : '';
-  
-  const periods = [];
-  for (let i = 0; i < 7; i++) {
-      periods.push(document.getElementById(`${prefix}att-${idx}-${i}`).checked);
-  }
-  const grade = document.getElementById(`${prefix}grade-${idx}`).value;
-  
-  const students = await dataStore.get('students');
-  const student = students[idx];
-  if (!student.attendanceRecords) student.attendanceRecords = {};
-  if (!student.grades) student.grades = {};
-  
-  student.attendanceRecords[date] = periods;
-  student.grades[subject] = grade;
-  
-  await dataStore.set('students', students);
-
-  // Sync to Google Sheets
-  if (typeof syncToAppsScript === 'function') {
-      // Attendance Sync
-      syncToAppsScript({
-          formType: 'attendance 2026',
-          studentId: student.id,
-          studentName: student.name,
-          date: date,
-          periods: periods,
-          updatedBy: sessionStorage.getItem('tenzin_user')
-      });
-      // Grade Sync
-      syncToAppsScript({
-          formType: 'grade 2026',
-          studentId: student.id,
-          studentName: student.name,
-          subject: subject,
-          grade: grade,
-          updatedBy: sessionStorage.getItem('tenzin_user')
-      });
-  }
-
-  if (window.app) window.app.toast('Saved student records!', 'success');
-}
-
-function initAdminDashboard() {
-  dataStore.onValue('classes', loadAdminClassList);
-  dataStore.onValue('students', loadAdminStudentList);
-  dataStore.onValue('teachers', loadAdminTeacherList);
-  dataStore.onValue('accounts', loadAccountList);
-  initTeacherDashboard(true);
-}
-
-function loadAdminClassList(data) {
-    const classes = data || [];
-    document.getElementById('admin-class-list').innerHTML = classes.map((c, i) => `
-        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex justify-between items-center border dark:border-gray-600">
-            <div><p class="font-bold dark:text-white">${c.name}</p><p class="text-[10px] text-gray-400 uppercase tracking-tighter">${c.id}</p></div>
-            <button onclick="removeItem('classes', ${i})" class="text-red-400 hover:text-red-600"><i class="fas fa-times"></i></button>
-        </div>
-    `).join('');
-    
-    // Update class dropdowns in modals
-    const options = classes.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-    document.getElementById('new-student-class').innerHTML = options;
-    document.getElementById('new-teacher-class').innerHTML = options;
-}
-
-async function loadAdminStudentList(data) {
-    const students = data || [];
-    const classes = await dataStore.get('classes') || [];
-    document.getElementById('admin-student-list').innerHTML = students.map((s, i) => {
-        const myClass = classes.find(c => c.id === s.classId);
-        return `
-        <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
-        <div><p class="font-bold dark:text-white">${s.name}</p><p class="text-xs text-gray-400">${s.id} • ${myClass ? myClass.name : 'No Class'}</p></div>
-        <div class="flex gap-2">
-            <button onclick="openEditClassModal('students', ${i})" class="text-blue-500 text-xs hover:underline"><i class="fas fa-edit mr-1"></i>Class</button>
-            <button onclick="removeItem('students', ${i})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
-        </div>
-        </div>
-    `}).join('');
-}
-
-async function loadAdminTeacherList(data) {
-    const teachers = data || [];
-    const classes = await dataStore.get('classes') || [];
-    document.getElementById('admin-teacher-list').innerHTML = teachers.map((t, i) => {
-        const myClass = classes.find(c => c.id === t.classId);
-        return `
-        <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
-        <div><p class="font-bold dark:text-white">${t.name}</p><p class="text-xs text-gray-400">${t.id} • ${t.subject} • ${myClass ? myClass.name : 'No Class'}</p></div>
-        <div class="flex gap-2">
-            <button onclick="openEditClassModal('teachers', ${i})" class="text-blue-500 text-xs hover:underline"><i class="fas fa-edit mr-1"></i>Class</button>
-            <button onclick="removeItem('teachers', ${i})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
-        </div>
-        </div>
-    `}).join('');
-}
-
-async function openEditClassModal(node, index) {
-    const items = await dataStore.get(node);
-    const item = items[index];
-    const classes = await dataStore.get('classes') || [];
-    
-    const newClassId = prompt(`Assign new class for ${item.name}:`, item.classId);
-    if (newClassId !== null) {
-        const targetClass = classes.find(c => c.id === newClassId || c.name === newClassId);
-        if (targetClass) {
-            item.classId = targetClass.id;
-            await dataStore.set(node, items);
-            
-            // Sync to Google Sheets
-            if (typeof syncToAppsScript === 'function') {
-                syncToAppsScript({
-                    formType: 'class_assignment_update',
-                    type: node === 'students' ? 'student' : 'teacher',
-                    id: item.id,
-                    name: item.name,
-                    newClass: targetClass.name,
-                    updatedBy: sessionStorage.getItem('tenzin_user')
-                });
-            }
-
-            if (window.app) window.app.toast('Class updated!', 'success');
-        } else {
-            alert("Class not found. Please use Class ID (e.g. cls101) or exact Name.");
+function initPortal() {
+    dataStore.onValue('accounts', data => {
+        if (role === 'admin') {
+            const accs = data || [];
+            document.getElementById('admin-user-list').innerHTML = accs.map((a, i) => `
+                <tr class="dark:text-white">
+                    <td class="p-3"><div class="font-bold">${a.user}</div><div class="text-[10px] text-gray-500">ID: ${a.user}</div></td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${a.role==='admin'?'bg-red-100 text-red-600':a.role==='teacher'?'bg-green-100 text-green-600':'bg-blue-100 text-blue-600'}">${a.role.toUpperCase()}</span></td>
+                    <td class="p-3"><span class="text-xs text-gray-500">${a.class || '-'}</span></td>
+                    <td class="p-3">
+                        ${a.role !== 'admin' ? `<button onclick="removeUser(${i})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>` : ''}
+                    </td>
+                </tr>
+            `).join('');
         }
-    }
-}
+    });
 
-function loadAccountList(data) {
-  const accounts = data || [];
-  const table = document.getElementById('admin-accounts-table');
-  if (!table) return;
-  table.innerHTML = accounts.map((a, i) => `
-    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-      <td class="p-4 font-mono dark:text-white">${a.user}</td>
-      <td class="p-4 uppercase text-xs font-bold dark:text-gray-300">${a.role}</td>
-      <td class="p-4 text-gray-400">${'*'.repeat(8)}</td>
-      <td class="p-4">
-        ${a.user !== 'admin' ? `<button onclick="deleteAccount(${i})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>` : '<span class="text-xs italic text-gray-400">System Account</span>'}
-      </td>
-    </tr>
-  `).join('');
-}
+    dataStore.onValue('students', data => {
+        if (role === 'student') {
+            const students = data || [];
+            const me = students.find(s => s.id === user);
+            if (me) {
+                const recs = me.attendanceRecords || {};
+                const total = Object.keys(recs).length;
+                if (total > 0) {
+                    const present = Object.values(recs).filter(v => v === 'P').length;
+                    const pct = Math.round((present / total) * 100);
+                    document.getElementById('student-stat-att').textContent = pct + '%';
+                }
+                
+                const gradesHtml = Object.entries(me.grades || {}).map(([sub, val]) => `
+                    <div class="flex justify-between items-center p-3 border-b dark:border-gray-700">
+                        <span class="font-medium dark:text-white capitalize">${sub}</span>
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold text-sm">${val}</span>
+                    </div>
+                `).join('');
+                const gList = document.getElementById('student-grades-list');
+                if (gList) gList.innerHTML = gradesHtml || '<p class="text-gray-500 text-center py-4">No grades recorded yet.</p>';
+            }
+        }
+    });
 
-async function removeItem(node, index) {
-  if (!confirm(`Are you sure you want to remove this record?`)) return;
-  const items = await dataStore.get(node);
-  items.splice(index, 1);
-  await dataStore.set(node, items);
-  if (window.app) window.app.toast('Record removed', 'info');
+    dataStore.onValue('assignments', data => {
+        const ass = data || [];
+        if (role === 'teacher') {
+            document.getElementById('teacher-assignments-list').innerHTML = ass.filter(a => a.teacherId === user).map(a => `<div class="p-2 border rounded dark:text-white text-xs flex justify-between"><span>${a.title}</span><span class="text-red-500 font-bold">${a.deadline}</span></div>`).join('');
+        } else if (role === 'student') {
+            document.getElementById('student-assignments-list').innerHTML = ass.map(a => `<div class="p-3 border rounded shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition"><h4 class="font-bold dark:text-white">${a.title}</h4><p class="text-[10px] text-red-500">Deadline: ${a.deadline}</p></div>`).join('');
+        }
+    });
+
+    dataStore.onValue('notices', data => {
+        const notices = data || [];
+        const listHtml = notices.map(n => `<div class="p-3 bg-red-50 dark:bg-red-900/10 rounded border-l-4 border-red-500"><h4 class="font-bold text-sm dark:text-white">${n.title}</h4><p class="text-xs text-gray-500">${n.content}</p></div>`).join('');
+        if (role === 'admin') {
+            document.getElementById('admin-stat-notices').textContent = notices.length;
+            document.getElementById('admin-notices-list').innerHTML = listHtml;
+        } else if (role === 'student') {
+            document.getElementById('student-notices-list').innerHTML = listHtml;
+        }
+    });
+
+    dataStore.onValue('resources', data => {
+        const res = data || [];
+        if (role === 'teacher') {
+            document.getElementById('teacher-stat-res').textContent = res.filter(r => r.teacherId === user).length;
+            document.getElementById('teacher-resources-list').innerHTML = res.filter(r => r.teacherId === user).map(r => `<div class="p-2 border rounded dark:text-white">${r.title} (${r.subject})</div>`).join('');
+        } else if (role === 'student') {
+            document.getElementById('student-resources-grid').innerHTML = res.map(r => `<div class="p-4 border rounded shadow hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer" onclick="window.open('${r.link}')"><h4 class="font-bold dark:text-white">${r.title}</h4><p class="text-xs text-purple-600">${r.subject}</p></div>`).join('');
+        }
+    });
+
+    dataStore.onValue('leaves', data => {
+        const leaves = data || [];
+        if (role === 'student') {
+            document.getElementById('student-leave-list').innerHTML = leaves.filter(l => l.studentId === user).map(l => `<div class="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded"><span class="text-xs dark:text-white">${l.date}: ${l.reason}</span><span class="text-[10px] font-bold uppercase">${l.status}</span></div>`).join('');
+        }
+        if (role === 'teacher') {
+            document.getElementById('teacher-leave-requests').innerHTML = leaves.filter(l => l.status === 'Pending').map((l, i) => `<div class="p-3 border rounded"><p class="text-sm font-bold dark:text-white">${l.studentId} - ${l.date}</p><p class="text-xs text-gray-500 mb-2">${l.reason}</p><div class="flex gap-2"><button onclick="updateLeave(${i}, 'Approved')" class="bg-green-500 text-white px-2 py-1 rounded text-[10px]">Approve</button><button onclick="updateLeave(${i}, 'Rejected')" class="bg-red-500 text-white px-2 py-1 rounded text-[10px]">Reject</button></div></div>`).join('');
+        }
+    });
 }
 
 function openModal(id) {
@@ -681,101 +363,163 @@ function closeModal() {
     document.querySelectorAll('.modal-content').forEach(m => m.classList.add('hidden'));
 }
 
-async function submitAddClass() {
-    const name = document.getElementById('new-class-name').value;
-    const items = await dataStore.get('classes') || [];
-    const newId = 'cls' + (items.length + 101);
-    const newClass = { id: newId, name: name };
-    items.push(newClass);
-    await dataStore.set('classes', items);
-
-    if (typeof syncToAppsScript === 'function') {
-        syncToAppsScript({ formType: 'new_class', ...newClass });
-    }
-
+async function submitAddNotice() {
+    const title = document.getElementById('notice-title').value;
+    const content = document.getElementById('notice-content').value;
+    const notices = await dataStore.get('notices') || [];
+    notices.push({ title, content, date: new Date().toISOString() });
+    await dataStore.set('notices', notices);
     closeModal();
-    document.getElementById('new-class-name').value = '';
-    if (window.app) window.app.toast('Class created!', 'success');
 }
 
-async function submitAddStudent() {
-    const name = document.getElementById('new-student-name').value;
-    const pass = document.getElementById('new-student-pass').value;
-    const clsId = document.getElementById('new-student-class').value;
-    
+async function submitAddResource() {
+    const title = document.getElementById('res-title').value;
+    const subject = document.getElementById('res-subject').value;
+    const link = document.getElementById('res-link').value;
+    const resources = await dataStore.get('resources') || [];
+    resources.push({ title, subject, link, teacherId: user });
+    await dataStore.set('resources', resources);
+    closeModal();
+}
+
+async function submitLeaveRequest() {
+    const date = document.getElementById('leave-date').value;
+    const reason = document.getElementById('leave-reason').value;
+    const leaves = await dataStore.get('leaves') || [];
+    leaves.push({ date, reason, studentId: user, status: 'Pending' });
+    await dataStore.set('leaves', leaves);
+    closeModal();
+}
+
+async function submitAddAssignment() {
+    const title = document.getElementById("assign-title").value;
+    const deadline = document.getElementById("assign-deadline").value;
+    const assignments = await dataStore.get("assignments") || [];
+    assignments.push({ title, deadline, teacherId: user });
+    await dataStore.set("assignments", assignments);
+    closeModal();
+}
+
+async function updateLeave(idx, status) {
+    const leaves = await dataStore.get('leaves') || [];
+    leaves[idx].status = status;
+    await dataStore.set('leaves', leaves);
+}
+
+function updateStats() {
+    if(role==="admin") {
+        dataStore.get("students").then(d => document.getElementById("admin-stat-students").textContent = (d||[]).length);
+        dataStore.get("teachers").then(d => document.getElementById("admin-stat-teachers").textContent = (d||[]).length);
+        dataStore.get("accounts").then(d => document.getElementById("admin-stat-classes").textContent = (d||[]).filter(a=>a.role==='teacher').length);
+    }
+}
+
+async function renderAttendanceList() {
     const students = await dataStore.get('students') || [];
-    const accounts = await dataStore.get('accounts') || [];
-    
-    const studentId = 'student' + (students.length + 101);
-    const newStudent = { id: studentId, name: name, classId: clsId, grades: { math: 'N/A' }, attendanceRecords: {} };
-    
-    // Add student record
-    students.push(newStudent);
-    // Add login account
-    accounts.push({ user: studentId, pass: pass, role: 'student' });
-    
+    const list = document.getElementById('attendance-student-list');
+    if(!list) return;
+    document.getElementById('current-date-display').textContent = new Date().toLocaleDateString();
+    list.innerHTML = students.map(s => `
+        <div class="flex justify-between items-center p-3 border-b dark:border-gray-700">
+            <span class="font-medium dark:text-white">${s.name}</span>
+            <div class="flex gap-2">
+                <label class="flex items-center gap-1 text-xs text-green-500 font-bold"><input type="radio" name="att-${s.id}" value="P" checked> P</label>
+                <label class="flex items-center gap-1 text-xs text-red-500 font-bold"><input type="radio" name="att-${s.id}" value="A"> A</label>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function renderGradingList() {
+    const students = await dataStore.get('students') || [];
+    const list = document.getElementById('grading-student-list');
+    if(!list) return;
+    list.innerHTML = students.map(s => `
+        <div class="p-3 border rounded dark:border-gray-700">
+            <p class="font-bold dark:text-white mb-2">${s.name}</p>
+            <div class="grid grid-cols-2 gap-2">
+                <input type="text" placeholder="Subject (e.g. Chemistry)" class="p-2 border rounded text-xs dark:bg-gray-700 dark:text-white" id="grade-sub-${s.id}">
+                <input type="text" placeholder="Grade (e.g. A+)" class="p-2 border rounded text-xs dark:bg-gray-700 dark:text-white" id="grade-val-${s.id}">
+            </div>
+        </div>
+    `).join('');
+}
+
+async function submitAttendance() {
+    const students = await dataStore.get('students') || [];
+    const date = new Date().toISOString().split('T')[0];
+    for (let s of students) {
+        const input = document.querySelector(`input[name="att-${s.id}"]:checked`);
+        if (input) {
+            if (!s.attendanceRecords) s.attendanceRecords = {};
+            s.attendanceRecords[date] = input.value;
+        }
+    }
     await dataStore.set('students', students);
-    await dataStore.set('accounts', accounts);
+    if(typeof syncToAppsScript === 'function') syncToAppsScript({action:'attendance', user, payload: {date, count: students.length}});
+    alert('Attendance saved successfully');
+    closeModal();
+}
 
-    if (typeof syncToAppsScript === 'function') {
-        syncToAppsScript({ formType: 'new_student', ...newStudent });
+async function submitGrades() {
+    const students = await dataStore.get('students') || [];
+    for (let s of students) {
+        const sub = document.getElementById(`grade-sub-${s.id}`).value;
+        const val = document.getElementById(`grade-val-${s.id}`).value;
+        if (sub && val) {
+            if (!s.grades) s.grades = {};
+            s.grades[sub.toLowerCase()] = val;
+        }
+    }
+    await dataStore.set('students', students);
+    if(typeof syncToAppsScript === 'function') syncToAppsScript({action:'grade', user, payload: {timestamp: new Date().toISOString()}});
+    alert('Grades updated successfully');
+    closeModal();
+}
+
+async function submitAddUser() {
+    const name = document.getElementById('new-user-name').value;
+    const uid = document.getElementById('new-user-id').value;
+    const r = document.getElementById('new-user-role').value;
+    if(!uid || !name) return;
+    
+    const accs = await dataStore.get('accounts') || [];
+    accs.push({ user: uid, pass: 'password123', role: r });
+    await dataStore.set('accounts', accs);
+    
+    if(r === 'student') {
+        const students = await dataStore.get('students') || [];
+        students.push({ id: uid, name: name, class: cls, grades: {}, attendanceRecords: {} });
+        await dataStore.set('students', students);
+    }
+
+    if(r === 'teacher') {
+        const teachers = await dataStore.get('teachers') || [];
+        teachers.push({ id: uid, name: name, subject: cls });
+        await dataStore.set('teachers', teachers);
     }
     
+    alert('User added successfully');
     closeModal();
-    document.getElementById('new-student-name').value = '';
-    document.getElementById('new-student-pass').value = '';
-    if (window.app) window.app.toast('Student & Account created!', 'success');
+    updateStats();
 }
 
-async function submitAddTeacher() {
-    const name = document.getElementById('new-teacher-name').value;
-    const sub = document.getElementById('new-teacher-subject').value;
-    const clsId = document.getElementById('new-teacher-class').value;
+async function removeUser(idx) {
+    if(!confirm('Are you sure you want to remove this user?')) return;
+    const accs = await dataStore.get('accounts') || [];
+    const removed = accs.splice(idx, 1)[0];
+    await dataStore.set('accounts', accs);
     
-    const teachers = await dataStore.get('teachers') || [];
-    const accounts = await dataStore.get('accounts') || [];
-    
-    const teacherId = 'teacher' + (teachers.length + 101);
-    const newTeacher = { id: teacherId, name: name, subject: sub, classId: clsId };
-    
-    teachers.push(newTeacher);
-    accounts.push({ user: teacherId, pass: 'teacher123', role: 'teacher' }); // Default pass
-    
-    await dataStore.set('teachers', teachers);
-    await dataStore.set('accounts', accounts);
-
-    if (typeof syncToAppsScript === 'function') {
-        syncToAppsScript({ formType: 'new_teacher', ...newTeacher });
+    if(removed.role === 'student') {
+        const students = await dataStore.get('students') || [];
+        await dataStore.set('students', students.filter(s => s.id !== removed.user));
     }
     
-    closeModal();
-    document.getElementById('new-teacher-name').value = '';
-    document.getElementById('new-teacher-subject').value = '';
-    if (window.app) window.app.toast('Teacher & Account created!', 'success');
+    alert('User removed');
+    updateStats();
 }
 
-async function submitAddAccount() {
-    const user = document.getElementById('new-acc-user').value;
-    const pass = document.getElementById('new-acc-pass').value;
-    const role = document.getElementById('new-acc-role').value;
-    
-    const accounts = await dataStore.get('accounts') || [];
-    if (accounts.find(a => a.user === user)) { alert("Username already exists."); return; }
-    accounts.push({ user, pass, role });
-    await dataStore.set('accounts', accounts);
-    closeModal();
-    document.getElementById('new-acc-user').value = '';
-    document.getElementById('new-acc-pass').value = '';
-    if (window.app) window.app.toast('Account created!', 'success');
-}
-
-async function deleteAccount(index) {
-  if (!confirm("Delete this account?")) return;
-  const accounts = await dataStore.get('accounts');
-  accounts.splice(index, 1);
-  await dataStore.set('accounts', accounts);
-  if (window.app) window.app.toast('Account deleted', 'info');
-}
+function handleLogout() { sessionStorage.clear(); window.location.href = 'login.html'; }
 </script>
 </body>
 </html>
