@@ -250,6 +250,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 <script src="js/firebase-config.js"></script>
+<script src="js/app.js"></script>
 <script>
 const role = sessionStorage.getItem('tenzin_role');
 const user = sessionStorage.getItem('tenzin_user');
@@ -274,9 +275,9 @@ function initPortal() {
             const accs = data || [];
             document.getElementById('admin-user-list').innerHTML = accs.map((a, i) => `
                 <tr class="dark:text-white">
-                    <td class="p-3"><div class="font-bold">${a.user}</div><div class="text-[10px] text-gray-500">ID: ${a.user}</div></td>
-                    <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${a.role==='admin'?'bg-red-100 text-red-600':a.role==='teacher'?'bg-green-100 text-green-600':'bg-blue-100 text-blue-600'}">${a.role.toUpperCase()}</span></td>
-                    <td class="p-3"><span class="text-xs text-gray-500">${a.class || '-'}</span></td>
+                    <td class="p-3"><div class="font-bold">${app.escapeHTML(a.user)}</div><div class="text-[10px] text-gray-500">ID: ${app.escapeHTML(a.user)}</div></td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${a.role==='admin'?'bg-red-100 text-red-600':a.role==='teacher'?'bg-green-100 text-green-600':'bg-blue-100 text-blue-600'}">${app.escapeHTML(a.role.toUpperCase())}</span></td>
+                    <td class="p-3"><span class="text-xs text-gray-500">${app.escapeHTML(a.class || '-')}</span></td>
                     <td class="p-3">
                         ${a.role !== 'admin' ? `<button onclick="removeUser(${i})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>` : ''}
                     </td>
@@ -300,8 +301,8 @@ function initPortal() {
                 
                 const gradesHtml = Object.entries(me.grades || {}).map(([sub, val]) => `
                     <div class="flex justify-between items-center p-3 border-b dark:border-gray-700">
-                        <span class="font-medium dark:text-white capitalize">${sub}</span>
-                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold text-sm">${val}</span>
+                        <span class="font-medium dark:text-white capitalize">${app.escapeHTML(sub)}</span>
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold text-sm">${app.escapeHTML(val)}</span>
                     </div>
                 `).join('');
                 const gList = document.getElementById('student-grades-list');
@@ -313,15 +314,15 @@ function initPortal() {
     dataStore.onValue('assignments', data => {
         const ass = data || [];
         if (role === 'teacher') {
-            document.getElementById('teacher-assignments-list').innerHTML = ass.filter(a => a.teacherId === user).map(a => `<div class="p-2 border rounded dark:text-white text-xs flex justify-between"><span>${a.title}</span><span class="text-red-500 font-bold">${a.deadline}</span></div>`).join('');
+            document.getElementById('teacher-assignments-list').innerHTML = ass.filter(a => a.teacherId === user).map(a => `<div class="p-2 border rounded dark:text-white text-xs flex justify-between"><span>${app.escapeHTML(a.title)}</span><span class="text-red-500 font-bold">${app.escapeHTML(a.deadline)}</span></div>`).join('');
         } else if (role === 'student') {
-            document.getElementById('student-assignments-list').innerHTML = ass.map(a => `<div class="p-3 border rounded shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition"><h4 class="font-bold dark:text-white">${a.title}</h4><p class="text-[10px] text-red-500">Deadline: ${a.deadline}</p></div>`).join('');
+            document.getElementById('student-assignments-list').innerHTML = ass.map(a => `<div class="p-3 border rounded shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition"><h4 class="font-bold dark:text-white">${app.escapeHTML(a.title)}</h4><p class="text-[10px] text-red-500">Deadline: ${app.escapeHTML(a.deadline)}</p></div>`).join('');
         }
     });
 
     dataStore.onValue('notices', data => {
         const notices = data || [];
-        const listHtml = notices.map(n => `<div class="p-3 bg-red-50 dark:bg-red-900/10 rounded border-l-4 border-red-500"><h4 class="font-bold text-sm dark:text-white">${n.title}</h4><p class="text-xs text-gray-500">${n.content}</p></div>`).join('');
+        const listHtml = notices.map(n => `<div class="p-3 bg-red-50 dark:bg-red-900/10 rounded border-l-4 border-red-500"><h4 class="font-bold text-sm dark:text-white">${app.escapeHTML(n.title)}</h4><p class="text-xs text-gray-500">${app.escapeHTML(n.content)}</p></div>`).join('');
         if (role === 'admin') {
             document.getElementById('admin-stat-notices').textContent = notices.length;
             document.getElementById('admin-notices-list').innerHTML = listHtml;
@@ -334,19 +335,19 @@ function initPortal() {
         const res = data || [];
         if (role === 'teacher') {
             document.getElementById('teacher-stat-res').textContent = res.filter(r => r.teacherId === user).length;
-            document.getElementById('teacher-resources-list').innerHTML = res.filter(r => r.teacherId === user).map(r => `<div class="p-2 border rounded dark:text-white">${r.title} (${r.subject})</div>`).join('');
+            document.getElementById('teacher-resources-list').innerHTML = res.filter(r => r.teacherId === user).map(r => `<div class="p-2 border rounded dark:text-white">${app.escapeHTML(r.title)} (${app.escapeHTML(r.subject)})</div>`).join('');
         } else if (role === 'student') {
-            document.getElementById('student-resources-grid').innerHTML = res.map(r => `<div class="p-4 border rounded shadow hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer" onclick="window.open('${r.link}')"><h4 class="font-bold dark:text-white">${r.title}</h4><p class="text-xs text-purple-600">${r.subject}</p></div>`).join('');
+            document.getElementById('student-resources-grid').innerHTML = res.map(r => `<div class="p-4 border rounded shadow hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer" onclick="window.open('${app.escapeHTML(r.link)}')"><h4 class="font-bold dark:text-white">${app.escapeHTML(r.title)}</h4><p class="text-xs text-purple-600">${app.escapeHTML(r.subject)}</p></div>`).join('');
         }
     });
 
     dataStore.onValue('leaves', data => {
         const leaves = data || [];
         if (role === 'student') {
-            document.getElementById('student-leave-list').innerHTML = leaves.filter(l => l.studentId === user).map(l => `<div class="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded"><span class="text-xs dark:text-white">${l.date}: ${l.reason}</span><span class="text-[10px] font-bold uppercase">${l.status}</span></div>`).join('');
+            document.getElementById('student-leave-list').innerHTML = leaves.filter(l => l.studentId === user).map(l => `<div class="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded"><span class="text-xs dark:text-white">${app.escapeHTML(l.date)}: ${app.escapeHTML(l.reason)}</span><span class="text-[10px] font-bold uppercase">${app.escapeHTML(l.status)}</span></div>`).join('');
         }
         if (role === 'teacher') {
-            document.getElementById('teacher-leave-requests').innerHTML = leaves.filter(l => l.status === 'Pending').map((l, i) => `<div class="p-3 border rounded"><p class="text-sm font-bold dark:text-white">${l.studentId} - ${l.date}</p><p class="text-xs text-gray-500 mb-2">${l.reason}</p><div class="flex gap-2"><button onclick="updateLeave(${i}, 'Approved')" class="bg-green-500 text-white px-2 py-1 rounded text-[10px]">Approve</button><button onclick="updateLeave(${i}, 'Rejected')" class="bg-red-500 text-white px-2 py-1 rounded text-[10px]">Reject</button></div></div>`).join('');
+            document.getElementById('teacher-leave-requests').innerHTML = leaves.filter(l => l.status === 'Pending').map((l, i) => `<div class="p-3 border rounded"><p class="text-sm font-bold dark:text-white">${app.escapeHTML(l.studentId)} - ${app.escapeHTML(l.date)}</p><p class="text-xs text-gray-500 mb-2">${app.escapeHTML(l.reason)}</p><div class="flex gap-2"><button onclick="updateLeave(${i}, 'Approved')" class="bg-green-500 text-white px-2 py-1 rounded text-[10px]">Approve</button><button onclick="updateLeave(${i}, 'Rejected')" class="bg-red-500 text-white px-2 py-1 rounded text-[10px]">Reject</button></div></div>`).join('');
         }
     });
 }
@@ -421,7 +422,7 @@ async function renderAttendanceList() {
     document.getElementById('current-date-display').textContent = new Date().toLocaleDateString();
     list.innerHTML = students.map(s => `
         <div class="flex justify-between items-center p-3 border-b dark:border-gray-700">
-            <span class="font-medium dark:text-white">${s.name}</span>
+            <span class="font-medium dark:text-white">${app.escapeHTML(s.name)}</span>
             <div class="flex gap-2">
                 <label class="flex items-center gap-1 text-xs text-green-500 font-bold"><input type="radio" name="att-${s.id}" value="P" checked> P</label>
                 <label class="flex items-center gap-1 text-xs text-red-500 font-bold"><input type="radio" name="att-${s.id}" value="A"> A</label>
@@ -436,7 +437,7 @@ async function renderGradingList() {
     if(!list) return;
     list.innerHTML = students.map(s => `
         <div class="p-3 border rounded dark:border-gray-700">
-            <p class="font-bold dark:text-white mb-2">${s.name}</p>
+            <p class="font-bold dark:text-white mb-2">${app.escapeHTML(s.name)}</p>
             <div class="grid grid-cols-2 gap-2">
                 <input type="text" placeholder="Subject (e.g. Chemistry)" class="p-2 border rounded text-xs dark:bg-gray-700 dark:text-white" id="grade-sub-${s.id}">
                 <input type="text" placeholder="Grade (e.g. A+)" class="p-2 border rounded text-xs dark:bg-gray-700 dark:text-white" id="grade-val-${s.id}">

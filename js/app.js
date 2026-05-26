@@ -1,6 +1,17 @@
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwTEA-dn3wfC6yvVwOjJqqyIah8owda_JuwlFLdW7hTVp0przXRXwQdAzb7TjKbZZPn/exec';
 
 const app = {
+
+  escapeHTML(str) {
+    if (!str) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  },
+
   theme: 'light',
   currentFormStep: 1,
   lbIndex: 0,
@@ -233,7 +244,7 @@ const app = {
       ['Previous %', fd.get('previousPercentage') + '%'],
     ];
     box.innerHTML = '<p class="font-bold text-gray-700 dark:text-white mb-2 text-xs uppercase tracking-wider">Application Summary</p>' +
-      fields.filter(f => f[1]).map(f => `<div class="flex justify-between text-xs border-b dark:border-gray-600 pb-1"><span class="text-gray-500">${f[0]}</span><span class="font-bold dark:text-white">${f[1]}</span></div>`).join('');
+      fields.filter(f => f[1]).map(f => `<div class="flex justify-between text-xs border-b dark:border-gray-600 pb-1"><span class="text-gray-500">${this.escapeHTML(f[0])}</span><span class="font-bold dark:text-white">${this.escapeHTML(f[1])}</span></div>`).join('');
   },
 
   validateField(el) {
