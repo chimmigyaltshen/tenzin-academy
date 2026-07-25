@@ -122,13 +122,13 @@ const app = {
   },
 
   initCountdown() {
-    const target = new Date('2026-07-20T08:00:00+06:00');
+    const target = new Date('2026-12-01T08:00:00+06:00');
     const tick = () => {
       const now = new Date(), diff = target - now;
       if (diff <= 0) {
         ['cd-days','cd-hrs','cd-min','cd-sec'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent='0'; });
         const lbl = document.getElementById('cd-label');
-        if (lbl) lbl.textContent = 'Second Term is now open!';
+        if (lbl) lbl.textContent = 'BCSEA Exams have started!';
         return;
       }
       const d = Math.floor(diff/86400000), h = Math.floor((diff%86400000)/3600000),
