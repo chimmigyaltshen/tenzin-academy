@@ -45,7 +45,7 @@ html { scroll-behavior: smooth; }
 .file-card{transition:all 0.2s ease}
 .file-card:hover{transform:translateX(4px);background-color:rgba(0,128,255,0.05)}
 /* Back to top */
-#back-top{position:fixed;bottom:28px;right:28px;z-index:1400;width:44px;height:44px;background:var(--primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transform:translateY(10px);transition:opacity 0.3s,transform 0.3s;box-shadow:0 4px 14px rgba(0,128,255,0.4)}
+#back-top{position:fixed;bottom:72px;right:28px;z-index:1400;width:44px;height:44px;background:var(--primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transform:translateY(10px);transition:opacity 0.3s,transform 0.3s;box-shadow:0 4px 14px rgba(0,128,255,0.4)}
 #back-top.visible{opacity:1;transform:translateY(0)}
 /* Countdown */
 .cd-box{background:rgba(255,255,255,0.15);border-radius:12px;padding:10px 16px;min-width:60px;text-align:center;backdrop-filter:blur(8px)}
