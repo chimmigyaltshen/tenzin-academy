@@ -72,7 +72,21 @@ const app = {
     {title:'Scholarship 2025',page:'admissions',keywords:'scholarship merit need sports cultural gnh financial'},
   ],
 
-  init() {
+  async loadContent() {
+    try {
+      const response = await fetch('content.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error('Content file unavailable');
+      const content = await response.json();
+      if (content.faculty && typeof content.faculty === 'object') this.facultyData = content.faculty;
+      if (Array.isArray(content.gallery)) this.galleryData = content.gallery;
+      this.contentData = content;
+    } catch (error) {
+      console.warn('Using built-in website content:', error.message);
+    }
+  },
+
+  async init() {
+    await this.loadContent();
     if (document.getElementById('stem-faculty')) this.renderFaculty();
     if (document.getElementById('facilities-grid')) this.renderAboutSections();
     this.initScrollReveal();
