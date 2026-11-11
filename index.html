@@ -14,6 +14,43 @@
 </script>
 <link rel="stylesheet" href="css/styles.css">
 <base target="_self">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+body{font-family:'DM Sans',sans-serif;background:#fff;color:#172033}
+.ta-nav{background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid #e9edf1}
+.ta-nav-link{font-weight:500;transition:color .2s}.ta-nav-link:hover,.ta-nav-link.active{color:#1d5d91}
+.ta-icon-btn{width:34px;height:34px;border-radius:50%;color:#64748b}.ta-icon-btn:hover{background:#f1f5f9}
+.ta-mobile-link{display:block;padding:13px 24px;border-bottom:1px solid #eef1f4;color:#334155;font-size:14px}
+.ta-hero{background:linear-gradient(180deg,#fbfcfd 0%,#fff 100%)}
+.ta-eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;color:#64748b;display:flex;align-items:center;gap:10px}
+.ta-eyebrow span{display:inline-block;width:22px;height:1px;background:#2b6b9d}
+.ta-display{font-family:'Manrope',sans-serif;font-size:clamp(2.8rem,5.3vw,5rem);line-height:1.08;letter-spacing:-.065em;font-weight:600;color:#172b3b;margin-top:25px}
+.ta-display span{color:#56768d}
+.ta-button-primary{display:inline-flex;align-items:center;gap:20px;padding:14px 19px;background:#214f70;color:white;font-size:13px;font-weight:600;border-radius:3px;transition:background .2s,transform .2s}
+.ta-button-primary:hover{background:#173c58;transform:translateY(-2px)}
+.ta-button-quiet{display:inline-flex;align-items:center;gap:12px;padding:14px 8px;color:#334155;font-size:13px;font-weight:600}
+.ta-hero-visual{position:relative;padding:0 0 28px 28px}
+.ta-hero-image{width:100%;height:470px;object-fit:cover;border-radius:3px}
+.ta-image-note{position:absolute;left:0;bottom:0;background:#fff;padding:16px 20px;display:flex;gap:12px;align-items:center;box-shadow:0 8px 30px rgba(20,40,60,.08)}
+.ta-note-mark{width:8px;height:8px;background:#507b98;border-radius:50%}
+.ta-image-note strong,.ta-image-note small{display:block}.ta-image-note strong{font-size:12px;color:#1e3445}.ta-image-note small{font-size:10px;color:#84909b;margin-top:3px}
+.ta-float-image{position:absolute;right:-10px;top:26px;width:112px;height:112px;object-fit:cover;border:6px solid #fff;box-shadow:0 8px 24px rgba(20,40,60,.12)}
+.ta-stat{text-align:center}.ta-stat strong{display:block;font-family:'Manrope',sans-serif;font-size:25px;letter-spacing:-.04em;font-weight:600;color:#244d69}.ta-stat span{display:block;margin-top:5px;font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:#87939e}
+.ta-section{padding:82px 0}
+.ta-section-title{font-family:'Manrope',sans-serif;font-size:clamp(2rem,3.2vw,3rem);font-weight:600;letter-spacing:-.055em;color:#1b2e3c;margin-top:12px}
+.ta-text-link{font-size:13px;font-weight:600;color:#315e7c}.ta-text-link span{margin-left:8px}
+.ta-program-card{display:flex;flex-direction:column;min-height:260px;padding:25px 23px;border:1px solid #e7ebee;background:white;transition:transform .2s,border-color .2s,box-shadow .2s}
+.ta-program-card:hover{transform:translateY(-4px);border-color:#c4d3dd;box-shadow:0 14px 34px rgba(28,53,71,.07)}
+.ta-program-number{font-size:10px;letter-spacing:.16em;color:#8a9aa5}
+.ta-program-card h3{font-family:'Manrope',sans-serif;font-size:23px;font-weight:600;color:#213b4e;margin-top:28px}
+.ta-program-card p{font-size:13px;line-height:1.8;color:#75818b;margin-top:10px}
+.ta-card-arrow{font-size:11px;font-weight:600;color:#315e7c;margin-top:auto;padding-top:24px}
+.ta-life-image{border-radius:2px}
+.ta-admissions-panel{background:#214f70;color:white;padding:38px 42px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+.ta-button-light{display:inline-flex;align-items:center;gap:18px;padding:14px 18px;background:white;color:#214f70;font-size:12px;font-weight:700;white-space:nowrap;border-radius:2px}
+@media(max-width:767px){.ta-hero-visual{padding-left:14px}.ta-hero-image{height:320px}.ta-float-image{width:82px;height:82px;right:-2px}.ta-section{padding:60px 0}.ta-admissions-panel{padding:30px 24px;align-items:flex-start;flex-direction:column}.ta-stat strong{font-size:22px}}
+</style>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
 
@@ -38,132 +75,115 @@
 </div>
 
 <!-- Navigation -->
-<nav class="bg-primary text-white shadow-lg sticky top-0 z-50 border-b-4 border-accent">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-20 items-center">
-      <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
-        <div class="w-14 h-14 flex items-center justify-center hover:rotate-12 transition-transform duration-300">
-          <img src="tenzin academy logo.png" alt="Logo" class="w-full h-full object-contain drop-shadow-lg" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-school text-accent text-2xl\'></i>'">
-        </div>
-        <div class="leading-tight">
-          <span class="font-bold text-xl tracking-wider font-serif text-accent block">TENZIN ACADEMY</span>
-          <span class="text-[10px] uppercase tracking-widest opacity-90">Paro, Bhutan</span>
-        </div>
+<nav class="ta-nav sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3 min-w-0">
+        <img src="tenzin academy logo.png" alt="Tenzin Academy logo" class="w-12 h-12 object-contain">
+        <span class="leading-tight">
+          <span class="block text-sm sm:text-base font-semibold tracking-[.13em] text-slate-900">TENZIN ACADEMY</span>
+          <span class="block text-[10px] tracking-[.22em] uppercase text-slate-500 mt-1">Paro, Bhutan</span>
+        </span>
+      </a>
+      <div class="hidden lg:flex items-center gap-7 text-sm text-slate-600">
+        <a class="ta-nav-link active" href="index.html">Home</a>
+        <a class="ta-nav-link" href="about.html">About</a>
+        <a class="ta-nav-link" href="programs.html">Academics</a>
+        <a class="ta-nav-link" href="admissions.html">Admissions</a>
+        <a class="ta-nav-link" href="faculty.html">Faculty</a>
+        <a class="ta-nav-link" href="gallery.html">Gallery</a>
+        <a class="ta-nav-link" href="contact.html">Contact</a>
+        <a class="ta-nav-link" href="vacancy.html">Vacancy</a>
+        <button onclick="app.openSearch()" class="ta-icon-btn" aria-label="Search"><i class="fas fa-search"></i></button>
+        <button onclick="app.toggleTheme()" class="ta-icon-btn" aria-label="Toggle dark mode"><i class="fas fa-moon" id="theme-icon"></i></button>
       </div>
-      <div class="hidden lg:flex items-center space-x-6">
-        <button onclick="window.location.href='index.html'" class="font-bold hover:text-accent transition relative group text-sm">Home<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='about.html'" class="font-bold hover:text-accent transition relative group text-sm">About<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='programs.html'" class="font-bold hover:text-accent transition relative group text-sm">Academics<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='admissions.html'" class="font-bold hover:text-accent transition relative group text-sm">Admissions<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='faculty.html'" class="font-bold hover:text-accent transition relative group text-sm">Faculty<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='gallery.html'" class="font-bold hover:text-accent transition relative group text-sm">Gallery<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="window.location.href='contact.html'" class="font-bold hover:text-accent transition relative group text-sm">Contact<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button><button onclick="window.location.href='vacancy.html'" class="font-bold hover:text-accent transition relative group text-sm">Vacancy<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span></button>
-        <button onclick="app.openSearch()" class="p-2 rounded-full hover:bg-white/10 transition" title="Search"><i class="fas fa-search"></i></button>
-        <button onclick="app.toggleTheme()" class="p-2 rounded-full hover:bg-white/10 transition" title="Toggle Dark Mode"><i class="fas fa-moon" id="theme-icon"></i></button>
-      </div>
-      <button class="lg:hidden text-2xl focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars"></i></button>
+      <button class="lg:hidden text-slate-700 text-xl p-2" aria-label="Open menu" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars"></i></button>
     </div>
   </div>
-  <div id="mobile-menu" class="hidden lg:hidden bg-primary border-t border-blue-400 absolute w-full shadow-xl z-50">
-    <button onclick="window.location.href='index.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Home</button>
-    <button onclick="window.location.href='about.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">About</button>
-    <button onclick="window.location.href='programs.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Academics</button>
-    <button onclick="window.location.href='admissions.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Admissions</button>
-    <button onclick="window.location.href='faculty.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Faculty</button>
-    <button onclick="window.location.href='gallery.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Gallery</button>
-    <button onclick="window.location.href='contact.html';document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500">Contact</button>
-    <button onclick="app.openSearch();document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-6 py-3 font-bold hover:bg-blue-700 border-b border-blue-500"><i class="fas fa-search mr-2"></i>Search</button>
+  <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-100 absolute w-full shadow-lg z-50">
+    <a href="index.html" class="ta-mobile-link">Home</a>
+    <a href="about.html" class="ta-mobile-link">About</a>
+    <a href="programs.html" class="ta-mobile-link">Academics</a>
+    <a href="admissions.html" class="ta-mobile-link">Admissions</a>
+    <a href="faculty.html" class="ta-mobile-link">Faculty</a>
+    <a href="gallery.html" class="ta-mobile-link">Gallery</a>
+    <a href="contact.html" class="ta-mobile-link">Contact</a>
+    <a href="vacancy.html" class="ta-mobile-link">Vacancy</a>
   </div>
 </nav>
 
 <!-- PAGE: HOME -->
 <div id="home" class="page-section active">
-  <section class="hero-animated relative min-h-[600px] flex items-center justify-center p-4">
-    <div class="container max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 relative z-10 px-4">
-      <div class="flex-1 w-full text-center md:text-left">
-        <div class="glass-card p-8 md:p-12 reveal active">
-          <h1 class="text-4xl md:text-6xl font-extrabold mb-4 gradient-text">Inspiring Excellence</h1>
-          <p class="text-lg md:text-xl text-white/90 mb-6 font-light">An educated and enlightened society of GNH, built and sustained on the unique Bhutanese values of tha-dam-tsig ley-gyu-drey.</p>
-          <!-- Countdown Timer -->
-          <div class="mb-6">
-            <p class="text-white/70 text-xs uppercase tracking-widest mb-2">BCSEA Exam Starts In</p>
-            <div class="flex gap-3 justify-center md:justify-start" id="countdown-row">
-              <div class="cd-box"><div class="text-2xl font-bold text-accent" id="cd-days">--</div><div class="text-white/60 text-xs">Days</div></div>
-              <div class="cd-box"><div class="text-2xl font-bold text-accent" id="cd-hrs">--</div><div class="text-white/60 text-xs">Hours</div></div>
-              <div class="cd-box"><div class="text-2xl font-bold text-accent" id="cd-min">--</div><div class="text-white/60 text-xs">Mins</div></div>
-              <div class="cd-box"><div class="text-2xl font-bold text-accent" id="cd-sec">--</div><div class="text-white/60 text-xs">Secs</div></div>
-            </div>
-            <p class="text-white/50 text-xs mt-1" id="cd-label">December 1, 2026 (BCSEA Exam)</p>
+  <section class="ta-hero">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 py-16 md:py-24">
+      <div class="grid lg:grid-cols-[.92fr_1.08fr] gap-12 lg:gap-16 items-center">
+        <div class="max-w-xl">
+          <p class="ta-eyebrow"><span></span> LEARNING WITH PURPOSE · PARO, BHUTAN</p>
+          <h1 class="ta-display">A place to learn.<br><span>A future to shape.</span></h1>
+          <p class="mt-7 text-base md:text-lg leading-8 text-slate-600 max-w-lg">An educated and enlightened society of GNH, built and sustained on the unique Bhutanese values of tha-dam-tsig ley-gyu-drey.</p>
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <a href="admissions.html" class="ta-button-primary">Explore admissions <span aria-hidden="true">→</span></a>
+            <a href="about.html" class="ta-button-quiet">Discover Tenzin Academy <span aria-hidden="true">↗</span></a>
           </div>
-          <div class="flex gap-4 justify-center md:justify-start flex-wrap">
-            <button onclick="window.location.href='admissions.html'" class="bg-accent text-blue-900 px-8 py-3 rounded-full font-bold shadow-lg glow-btn hover:scale-105 transition">Join Us</button>
-            <button onclick="app.scrollToSection('programs','sec-lower')" class="border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-blue-900 transition hover:scale-105">Programs</button>
-            
-          </div>
+          <p class="mt-12 text-xs tracking-wide text-slate-400">EDUCATION ROOTED IN VALUES. PREPARATION FOR WHAT'S NEXT.</p>
         </div>
-      </div>
-      <div class="flex-1 perspective-container hidden md:block w-full">
-        <div class="perspective-img">
-          <div class="w-full h-[400px] bg-gray-300 relative overflow-hidden rounded-2xl" id="hero-slideshow">
-            <img src="campuslife.jpg" alt="Campus Life" class="slideshow-img w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 opacity-100" data-index="0">
-            <img src="students.jpg" alt="Students" class="slideshow-img w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 opacity-0" data-index="1">
-            <img src="sports.jpg" alt="Sports Day" class="slideshow-img w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 opacity-0" data-index="2">
-            <img src="classroom.jpg" alt="Classroom" class="slideshow-img w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 opacity-0" data-index="3">
-            <img src="cultural.jpg" alt="Cultural Event" class="slideshow-img w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 opacity-0" data-index="4">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
-              <p class="text-white font-bold text-xl" id="slideshow-caption">Campus Life @ Tenzin</p>
-            </div>
-            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-              <button class="slideshow-dot w-2 h-2 rounded-full bg-white transition" data-index="0"></button>
-              <button class="slideshow-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition" data-index="1"></button>
-              <button class="slideshow-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition" data-index="2"></button>
-              <button class="slideshow-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition" data-index="3"></button>
-              <button class="slideshow-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition" data-index="4"></button>
-            </div>
+        <div class="ta-hero-visual">
+          <img src="campuslife.jpg" alt="Students and campus life at Tenzin Academy" class="ta-hero-image">
+          <div class="ta-image-note">
+            <span class="ta-note-mark"></span>
+            <span><strong>Life at Tenzin</strong><small>Learning beyond the classroom</small></span>
           </div>
+          <img src="students.jpg" alt="Students at Tenzin Academy" class="ta-float-image">
         </div>
       </div>
     </div>
   </section>
 
-  <div class="bg-white dark:bg-gray-800 py-12 relative z-20 shadow-xl border-b dark:border-gray-700">
-    <div class="max-w-7xl mx-auto flex justify-around flex-wrap gap-6 px-4">
-      <div class="text-center reveal hover:scale-110 transition duration-300"><div class="text-4xl font-bold text-primary">97.06%</div><div class="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Pass Rate</div></div>
-      <div class="text-center reveal hover:scale-110 transition duration-300 delay-100"><div class="text-4xl font-bold text-primary">1:20</div><div class="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Teacher Ratio</div></div>
-      <div class="text-center reveal hover:scale-110 transition duration-300 delay-200"><div class="text-4xl font-bold text-primary counter" data-target="600" data-suffix="+">0+</div><div class="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Students</div></div>
-      <div class="text-center reveal hover:scale-110 transition duration-300 delay-300"><div class="text-4xl font-bold text-primary counter" data-target="30" data-suffix="+">0+</div><div class="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Faculty Members</div></div>
-      <div class="text-center reveal hover:scale-110 transition duration-300 delay-200"><div class="text-4xl font-bold text-primary">GNH</div><div class="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Values Based</div></div>
+  <section class="bg-white border-y border-slate-100">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 py-9 grid grid-cols-2 md:grid-cols-5 gap-8">
+      <div class="ta-stat"><strong>97.06%</strong><span>Pass rate</span></div>
+      <div class="ta-stat"><strong>1:20</strong><span>Teacher ratio</span></div>
+      <div class="ta-stat"><strong>600+</strong><span>Students</span></div>
+      <div class="ta-stat"><strong>30+</strong><span>Faculty members</span></div>
+      <div class="ta-stat"><strong>GNH</strong><span>Values based</span></div>
     </div>
-  </div>
+  </section>
 
-  <section class="py-20 px-4 bg-gray-50 dark:bg-gray-900">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-12 reveal"><h2 class="text-3xl font-bold dark:text-white">Academic Pathways</h2><p class="text-gray-500 mt-2">Choose your journey to success</p></div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div onclick="window.location.href='programs.html#page-middle'" class="hover-lift bg-white dark:bg-gray-800 p-6 rounded-2xl cursor-pointer border-t-4 border-purple-600 reveal group">
-          <div class="h-12 w-12 bg-purple-100 rounded-full flex items-center justify-center mb-4 text-purple-600"><i class="fas fa-book text-xl"></i></div>
-          <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Class X</h3>
-          <p class="text-gray-600 dark:text-gray-400 mb-6">Rigorous BCSE preparation with focus on core subjects.</p>
-          <span class="text-purple-600 font-bold group-hover:translate-x-2 transition-transform inline-block">View Curriculum &rarr;</span>
-        </div>
-        <div onclick="window.location.href='programs.html#page-science'" class="hover-lift bg-white dark:bg-gray-800 p-6 rounded-2xl cursor-pointer border-t-4 border-green-600 reveal delay-100 group">
-          <div class="h-12 w-12 bg-green-100 rounded-full flex items-center justify-center mb-4 text-green-600"><i class="fas fa-flask text-xl"></i></div>
-          <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Science</h3>
-          <p class="text-gray-600 dark:text-gray-400 mb-6">Physics, Chemistry, Biology & Math for innovators.</p>
-          <span class="text-green-600 font-bold group-hover:translate-x-2 transition-transform inline-block">Explore Stream &rarr;</span>
-        </div>
-        <div onclick="window.location.href='programs.html#page-commerce'" class="hover-lift bg-white dark:bg-gray-800 p-6 rounded-2xl cursor-pointer border-t-4 border-blue-600 reveal delay-200 group">
-          <div class="h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 text-blue-600"><i class="fas fa-chart-line text-xl"></i></div>
-          <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Commerce</h3>
-          <p class="text-gray-600 dark:text-gray-400 mb-6">Accounting & Business for future leaders.</p>
-          <span class="text-blue-600 font-bold group-hover:translate-x-2 transition-transform inline-block">View Details &rarr;</span>
-        </div>
-        <div onclick="window.location.href='programs.html#page-arts'" class="hover-lift bg-white dark:bg-gray-800 p-6 rounded-2xl cursor-pointer border-t-4 border-orange-600 reveal delay-300 group">
-          <div class="h-12 w-12 bg-orange-100 rounded-full flex items-center justify-center mb-4 text-orange-600"><i class="fas fa-landmark text-xl"></i></div>
-          <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Arts</h3>
-          <p class="text-gray-600 dark:text-gray-400 mb-6">Humanities, Media & Culture for creative minds.</p>
-          <span class="text-orange-600 font-bold group-hover:translate-x-2 transition-transform inline-block">Explore Arts &rarr;</span>
-        </div>
+  <section class="ta-section">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-10">
+        <div><p class="ta-eyebrow">LEARNING PATHWAYS</p><h2 class="ta-section-title">Find your path forward.</h2></div>
+        <a href="programs.html" class="ta-text-link">Explore all academics <span>→</span></a>
+      </div>
+      <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <a href="programs.html#page-middle" class="ta-program-card"><span class="ta-program-number">01</span><h3>Class X</h3><p>Build a strong foundation through focused preparation across core subjects.</p><span class="ta-card-arrow">Explore programme ↗</span></a>
+        <a href="programs.html#page-science" class="ta-program-card"><span class="ta-program-number">02</span><h3>Science</h3><p>Explore the sciences and mathematics through curiosity, inquiry and discovery.</p><span class="ta-card-arrow">Explore programme ↗</span></a>
+        <a href="programs.html#page-commerce" class="ta-program-card"><span class="ta-program-number">03</span><h3>Commerce</h3><p>Develop knowledge of accounting, business and the world of commerce.</p><span class="ta-card-arrow">Explore programme ↗</span></a>
+        <a href="programs.html#page-arts" class="ta-program-card"><span class="ta-program-number">04</span><h3>Arts</h3><p>Engage with humanities, culture and ideas that shape society.</p><span class="ta-card-arrow">Explore programme ↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#f5f7f8] py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 grid md:grid-cols-2 gap-12 items-center">
+      <div class="grid grid-cols-2 gap-3">
+        <img src="classroom.jpg" alt="Learning in the classroom" class="ta-life-image h-64 w-full object-cover">
+        <img src="cultural.jpg" alt="Cultural activities at Tenzin Academy" class="ta-life-image h-64 w-full object-cover mt-8">
+      </div>
+      <div class="max-w-lg">
+        <p class="ta-eyebrow">MORE THAN THE CLASSROOM</p>
+        <h2 class="ta-section-title">A community for growth.</h2>
+        <p class="mt-5 text-slate-600 leading-8">Education is shaped by lessons, experiences and the people we learn alongside. Discover the activities, traditions and everyday moments that make up life at Tenzin Academy.</p>
+        <a href="gallery.html" class="ta-button-primary mt-8 inline-flex">Explore campus life <span>→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="ta-admissions-panel">
+        <div><p class="text-xs tracking-[.2em] uppercase text-blue-200">YOUR NEXT CHAPTER</p><h2 class="text-3xl md:text-4xl font-semibold mt-3">Take the next step.</h2><p class="text-blue-100 mt-4 max-w-xl leading-7">Find out more about joining the Tenzin Academy community.</p></div>
+        <a href="admissions.html" class="ta-button-light">Admissions information <span>→</span></a>
       </div>
     </div>
   </section>
