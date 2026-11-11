@@ -72,6 +72,10 @@ const app = {
     {title:'Scholarship 2025',page:'admissions',keywords:'scholarship merit need sports cultural gnh financial'},
   ],
 
+  escapeHTML(value) {
+    return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  },
+
   async loadContent() {
     try {
       const response = await fetch('content.json', { cache: 'no-store' });
@@ -161,9 +165,9 @@ const app = {
     this.lbImages = data;
     grid.innerHTML = data.map((g, i) => `
       <div class="relative h-48 rounded-xl overflow-hidden group cursor-pointer hover-lift" onclick="app.openLightbox(${i})">
-        <img src="${g.src}" alt="${g.cap}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.parentElement.innerHTML='<div class=\\\'w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center\\\'><i class=\\\'fas fa-image text-3xl text-gray-400\\\'></i></div>'">
+        <img src="${this.escapeHTML(g.src)}" alt="${this.escapeHTML(g.cap)}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.parentElement.innerHTML='<div class=\\\'w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center\\\'><i class=\\\'fas fa-image text-3xl text-gray-400\\\'></i></div>'">
         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
-          <p class="text-white text-xs font-bold">${g.cap}</p>
+          <p class="text-white text-xs font-bold">${this.escapeHTML(g.cap)}</p>
         </div>
         <div class="absolute top-2 right-2 w-7 h-7 bg-white/80 rounded-full items-center justify-center hidden group-hover:flex transition"><i class="fas fa-expand text-xs text-gray-700"></i></div>
       </div>`).join('');
@@ -323,11 +327,11 @@ const app = {
     const renderCard = f => `<div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover-lift">
       <div class="pt-8 pb-4 flex items-center justify-center bg-gray-50 dark:bg-gray-700/50">
         <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white dark:border-gray-600 shadow-lg bg-gray-200 dark:bg-gray-600">
-          <img src="${f.photo}" alt="${f.name}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center\\'><i class=\\'fas fa-user text-3xl text-gray-400\\'></i></div>'">
+          <img src="${this.escapeHTML(f.photo)}" alt="${this.escapeHTML(f.name)}" class="w-full h-full object-cover" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center\\'><i class=\\'fas fa-user text-3xl text-gray-400\\'></i></div>'">
         </div>
       </div>
-      <div class="p-6 text-center"><h3 class="font-bold text-lg dark:text-white">${f.name}</h3>
-      <p class="text-green-600 text-sm font-bold uppercase mb-2">${f.role}</p><p class="text-gray-500 text-xs">${f.creds}</p></div></div>`;
+      <div class="p-6 text-center"><h3 class="font-bold text-lg dark:text-white">${this.escapeHTML(f.name)}</h3>
+      <p class="text-green-600 text-sm font-bold uppercase mb-2">${this.escapeHTML(f.role)}</p><p class="text-gray-500 text-xs">${this.escapeHTML(f.creds)}</p></div></div>`;
     const stem = document.getElementById('stem-faculty');
     if (stem) stem.innerHTML = this.facultyData.stem.map(renderCard).join('');
     const lang = document.getElementById('lang-faculty');
