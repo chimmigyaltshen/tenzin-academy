@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Tenzin Academy | Content Manager</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand-mark">TA</span><span><strong>Tenzin Academy</strong><small>Website manager</small></span></a>
+      <p class="nav-label">CONTENT</p>
+      <button class="nav-item active" data-view="faculty"><span>▦</span> Faculty</button>
+      <button class="nav-item" data-view="gallery"><span>▧</span> Gallery</button>
+      <button class="nav-item" data-view="school"><span>⚙</span> School details</button>
+      <div class="sidebar-bottom"><a href="index.html">← View website</a><span>Content manager · v1</span></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><p class="eyebrow">TENZIN ACADEMY / WEBSITE</p><h1 id="page-title">Faculty</h1></div><div class="top-actions"><span id="save-state" class="save-state">Loading content…</span><button id="export-btn" class="button primary">Download content file</button></div></header>
+      <div class="notice"><strong>How publishing works:</strong> Changes are saved as a local draft in this browser. Download the updated <code>content.json</code>, then replace the website's existing <code>content.json</code> file on your hosting service to publish them.</div>
+      <section id="faculty-view" class="view">
+        <div class="section-head"><div><h2>Faculty directory</h2><p>Update names, subjects, credentials and photo filenames.</p></div><button class="button primary" id="add-faculty">＋ Add faculty member</button></div>
+        <div class="toolbar"><input id="faculty-search" type="search" placeholder="Search faculty…"><span id="faculty-count" class="muted"></span></div>
+        <div id="faculty-groups" class="faculty-groups"></div>
+      </section>
+      <section id="gallery-view" class="view hidden">
+        <div class="section-head"><div><h2>Photo gallery</h2><p>Manage image filenames, captions and categories.</p></div><button class="button primary" id="add-gallery">＋ Add gallery item</button></div>
+        <div id="gallery-list" class="gallery-list"></div>
+      </section>
+      <section id="school-view" class="view hidden">
+        <div class="section-head"><div><h2>School details</h2><p>Central contact and identity information for future page integrations.</p></div></div>
+        <form id="school-form" class="panel form-grid">
+          <label>School name<input name="name" required></label>
+          <label>Tagline<input name="tagline"></label>
+          <label>Address<input name="address"></label>
+          <label>Phone<input name="phone"></label>
+          <label>Email<input name="email" type="email"></label>
+          <div class="form-actions"><button class="button primary" type="submit">Save school details</button></div>
+        </form>
+      </section>
+      <footer class="footer-note">Keep image files in the website's root folder and enter their exact filenames. This page is a static content editor, not a secured multi-user CMS.</footer>
+    </main>
+  </div>
+  <dialog id="record-dialog">
+    <form id="record-form" method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">CONTENT EDITOR</p><h2 id="dialog-title">Add record</h2></div><button type="button" class="icon-button" id="dialog-close" aria-label="Close">×</button></div>
+      <div id="faculty-fields" class="form-grid">
+        <label>Faculty name<input name="name" required></label>
+        <label>Department<select name="group"><option value="stem">Science & Technology</option><option value="lang">Languages</option><option value="hum">Humanities & Commerce</option></select></label>
+        <label>Subject / role<input name="role" required></label>
+        <label>Qualifications / experience<input name="creds"></label>
+        <label class="full">Photo filename<input name="photo" placeholder="teacher-name.jpg"><small>Upload the image separately to the website root folder.</small></label>
+      </div>
+      <div id="gallery-fields" class="form-grid hidden">
+        <label>Caption<input name="cap" required></label>
+        <label>Image filename<input name="src" required placeholder="campus-photo.jpg"></label>
+        <label>Category<select name="cat"><option value="campus">Campus</option><option value="academic">Academic</option><option value="sports">Sports</option><option value="cultural">Cultural</option></select></label>
+      </div>
+      <div class="dialog-actions"><button type="button" class="button" id="cancel-record">Cancel</button><button type="submit" class="button primary">Save record</button></div>
+    </form>
+  </dialog>
+  <script src="js/admin.js" defer></script>
+</body>
+</html>
