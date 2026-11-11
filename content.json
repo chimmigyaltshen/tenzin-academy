@@ -1,0 +1,236 @@
+{
+  "version": 1,
+  "school": {
+    "name": "Tenzin Academy",
+    "tagline": "Excellence in Education",
+    "address": "Kichu, Lamgong, Paro, Bhutan",
+    "phone": "+975-17578882",
+    "email": ""
+  },
+  "faculty": {
+    "stem": [
+      {
+        "name": "K.N. Gajmer",
+        "photo": "kn_gajmer.jpg",
+        "role": "Chemistry",
+        "creds": "M.Sc., PGDE | 19 Years"
+      },
+      {
+        "name": "Tika Ram Subba",
+        "photo": "tika_ram_subba.jpg",
+        "role": "Physics",
+        "creds": "M.Sc., PGDE | 19 Years"
+      },
+      {
+        "name": "Jigme Tenzin",
+        "photo": "jigme_tenzin.jpg",
+        "role": "Biology & Chemistry",
+        "creds": "B.Ed. | 20 Years"
+      },
+      {
+        "name": "Sushma Dahal",
+        "photo": "sushma_dahal.jpg",
+        "role": "Chemistry & Physics",
+        "creds": "20 Years"
+      },
+      {
+        "name": "Yesel Zangmo",
+        "photo": "yesel_zangmo.jpg",
+        "role": "Chemistry & Biology",
+        "creds": "B.Ed. | 15 Years"
+      },
+      {
+        "name": "Promila Acharya",
+        "photo": "promila_acharya.jpg",
+        "role": "Biology",
+        "creds": "B.Sc. | 12 Years"
+      },
+      {
+        "name": "Pelden Phuntsho",
+        "photo": "pelden_phuntsho.jpg",
+        "role": "ICT",
+        "creds": "BCA | 15 Years"
+      },
+      {
+        "name": "Devi Parsad Gurung",
+        "photo": "devi_parsad_gurung.jpg",
+        "role": "Physics & Maths",
+        "creds": "B.Ed | 10 Years"
+      },
+      {
+        "name": "Chimi Yoezer",
+        "photo": "chimi_yoezer.jpg",
+        "role": "Mathematics & Physics",
+        "creds": "B.Sc. | 8 Years"
+      },
+      {
+        "name": "Phurpa Wangdi",
+        "photo": "phurpa_wangdi.jpg",
+        "role": "Chemistry",
+        "creds": "B.Sc. | 2 Years"
+      },
+      {
+        "name": "Ugyen Lhamo",
+        "photo": "ugyen_lhamo.jpg",
+        "role": "Physics",
+        "creds": "M.Ed | 18 Years"
+      }
+    ],
+    "lang": [
+      {
+        "name": "Ugyen Tenzin",
+        "photo": "ugyen_tenzin.jpg",
+        "role": "English",
+        "creds": "PGDE, B.Ed, MPA | 24 Years"
+      },
+      {
+        "name": "Shacha",
+        "photo": "shacha.jpg",
+        "role": "English & Geography",
+        "creds": "PGDE, B.Ed, MA, TEFL | 15 Years"
+      },
+      {
+        "name": "Ganga Maya Ghimery",
+        "photo": "ganga_maya_ghimery.jpg",
+        "role": "English",
+        "creds": "B.A. | 12 Years"
+      },
+      {
+        "name": "Rigzin Tshogay",
+        "photo": "rigzin_tshogay.jpg",
+        "role": "English",
+        "creds": "B.A. | 2 Years"
+      },
+      {
+        "name": "Kinzang Namgay",
+        "photo": "kinzang_namgay.jpg",
+        "role": "Dzongkha",
+        "creds": "PGDE | 12 Years"
+      },
+      {
+        "name": "Namgay Nidup",
+        "photo": "namgay_nidup.jpg",
+        "role": "Dzongkha",
+        "creds": "PGDE | 11 Years"
+      },
+      {
+        "name": "Dorji Laydra",
+        "photo": "dorji_laydra.jpg",
+        "role": "Dzongkha",
+        "creds": "M.A. | 7 Years"
+      },
+      {
+        "name": "Passang Dorji",
+        "photo": "passang_dorji.jpg",
+        "role": "Dzongkha",
+        "creds": "M.A., PGDE | 11 Years"
+      }
+    ],
+    "hum": [
+      {
+        "name": "Rinchen Tshering",
+        "photo": "rinchen_tshering.jpg",
+        "role": "Mathematics & BMT",
+        "creds": "B.Ed | 16 Years"
+      },
+      {
+        "name": "Aita Raj Rai",
+        "photo": "aita_raj_rai.jpg",
+        "role": "Economics",
+        "creds": "PGDE | 8 Years"
+      },
+      {
+        "name": "Thinley Wangdi",
+        "photo": "thinley_wangdi.jpg",
+        "role": "Accountancy & BE",
+        "creds": "B.Com | 7 Years"
+      },
+      {
+        "name": "Tandin",
+        "photo": "tandin.jpg",
+        "role": "History & Geography",
+        "creds": "B.Ed, MBS, MIT | 15 Years"
+      },
+      {
+        "name": "Yogi Nidhi Gajmer",
+        "photo": "yogi_nidhi_gajmer.jpg",
+        "role": "Geography",
+        "creds": "B.A. | 11 Years"
+      },
+      {
+        "name": "Sonam Wangmo",
+        "photo": "sonam_wangmo.jpg",
+        "role": "Geography",
+        "creds": "B.A. | 2 Years"
+      },
+      {
+        "name": "Arpana Biswa",
+        "photo": "arpana_biswa.jpg",
+        "role": "Business and Entrepreneurship",
+        "creds": "B.Ed | BE"
+      }
+    ]
+  },
+  "gallery": [
+    {
+      "src": "campuslife.jpg",
+      "cap": "Campus Life",
+      "cat": "campus"
+    },
+    {
+      "src": "students.jpg",
+      "cap": "Student Activities",
+      "cat": "campus"
+    },
+    {
+      "src": "sports.jpg",
+      "cap": "Sports Day",
+      "cat": "sports"
+    },
+    {
+      "src": "classroom.jpg",
+      "cap": "Modern Classroom",
+      "cat": "academic"
+    },
+    {
+      "src": "cultural.jpg",
+      "cap": "Cultural Celebration",
+      "cat": "cultural"
+    },
+    {
+      "src": "schoolphoto.jpg",
+      "cap": "School Annual Photo",
+      "cat": "campus"
+    },
+    {
+      "src": "sports.jpg",
+      "cap": "Basketball Tournament",
+      "cat": "sports"
+    },
+    {
+      "src": "cultural.jpg",
+      "cap": "Dance Performance",
+      "cat": "cultural"
+    },
+    {
+      "src": "classroom.jpg",
+      "cap": "Science Lab",
+      "cat": "academic"
+    },
+    {
+      "src": "campuslife.jpg",
+      "cap": "School Grounds",
+      "cat": "campus"
+    },
+    {
+      "src": "students.jpg",
+      "cap": "Award Ceremony",
+      "cat": "academic"
+    },
+    {
+      "src": "sports.jpg",
+      "cap": "Football Match",
+      "cat": "sports"
+    }
+  ]
+}
