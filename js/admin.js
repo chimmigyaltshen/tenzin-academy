@@ -50,6 +50,7 @@
     const form=$('record-form'); form.reset();
     const fields=type==='faculty'?$('faculty-fields'):$('gallery-fields');
     Object.entries(record||{}).forEach(([key,value])=>{if(form.elements[key])form.elements[key].value=value;});
+    if(type==='faculty' && location) form.elements.group.value=location[0];
     $('record-dialog').showModal();
   }
   function closeDialog(){ $('record-dialog').close(); }
